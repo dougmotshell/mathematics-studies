@@ -18,6 +18,8 @@
 
 # --- Handoff local entre CLIs (contrato transitório) ------------------------
 .agent-handoff.md
+.agent-handoff.prev.md
+.agent-handoff.*.md
 
 # --- Node / build da aplicação web ------------------------------------------
 node_modules/

@@ -51,6 +51,22 @@ Lição superada não é apagada: registre uma **nova** lição referenciando a 
 - [L-013](lessons/fixing-the-cited-line-is-not-fixing-the-defect-class.md) — 2026-08-01 —
   process — corrigir as linhas citadas no `REJECT` não elimina o defeito: varrer o artefato
   inteiro com um `grep` pelo termo do erro, incluindo rótulo de diagrama, tabela e front matter.
+- [L-015](lessons/a-monitor-that-guesses-must-guess-pessimistically.md) — 2026-08-01 —
+  devops — monitor que adivinha um limite adivinha pelo lado pessimista, e a incerteza
+  precisa sair pelo **canal automático** (hook/CI), não só no stdout de quem roda à mão:
+  falso silêncio é indistinguível de "está tudo bem".
+- [L-016](lessons/widening-a-permission-allowlist-is-not-preserving-it.md) — 2026-08-01 —
+  devops — acrescentar entrada em `permissions.allow` é afrouxar controle, não "preservar o
+  bloco"; provar preservação com `diff` de `jq -S` contra o `HEAD` e descrever a mudança pelo
+  efeito, nunca por "o diff só tem inserções".
+- [L-017](lessons/an-assumption-refuted-by-the-measurement-must-be-abandoned.md) — 2026-08-01
+  — devops — complementa L-015: presunção desmentida pela própria medição é abandonada (nunca
+  vira número autorrefutável), e alarme que satura no topo da escala precisa de rearme quando
+  a régua muda, senão o pior estado é também o mais silencioso.
+- [L-018](lessons/fixing-the-cause-is-not-fixing-the-outcome.md) — 2026-08-01 — process —
+  corrigir a causa citada no `REJECT` não é corrigir o modo de falha: encenar a promessa da
+  funcionalidade inteira (estado zerado, sequência realista, mais de um disparo) em vez de
+  reproduzir só o caso citado.
 
 ## Sucesso
 

@@ -28,3 +28,9 @@ jobs:
 
       - name: Auditoria determinística do conteúdo
         run: bash scripts/audit-content.sh
+
+      # Casos hostis de tools/context-watch.py (TCK-0012): transcript ausente/vazio/
+      # malformado, uso acima de 100%, sem usage, projeto inexistente e privacidade.
+      # Só bash + Python 3 da stdlib: nenhuma dependência a instalar.
+      - name: Suíte de casos hostis do context-watch
+        run: bash tools/context-watch-test.sh

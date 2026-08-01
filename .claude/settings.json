@@ -25,5 +25,30 @@
       "Write(./.github/chatmodes/**)",
       "Write(./.gemini/commands/**)"
     ]
+  },
+  "hooks": {
+    "PostToolBatch": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${CLAUDE_PROJECT_DIR:-.}/tools/context-watch.py\" --hook",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "auto",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PROJECT_DIR:-.}/tools/precompact-snapshot.sh\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
   }
 }

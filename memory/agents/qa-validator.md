@@ -144,6 +144,44 @@ Valida a entrega contra os critérios de aceite do ticket, executando a aplicaç
   sobrescrever `global.navigator` — só tem getter no Node 24) e chamar `mermaid.parse`. Sem o
   shim, o erro é `DOMPurify.addHook is not a function` — que é ambiente, não diagrama inválido.
 
+- **Configuração invisível ao `git status` falsifica a validação.** `.claude/settings.local.json`
+  é gitignored e não aparece em diff nem em `git status`, mas entra **primeiro** na resolução
+  da janela do `context-watch`. Antes de validar qualquer ferramenta que leia configuração,
+  perguntar "existe arquivo local ignorado que muda este resultado?" e validar com ele
+  **movido para fora**, restaurando por `diff` contra a cópia no final. Validar com ele no
+  lugar é validar a máquina, não a ferramenta.
+- **Ferramenta de alarme não se valida por chamada isolada — encena-se a sessão inteira.**
+  A prova que importa é a **travessia**: estado zerado, sem configuração nenhuma, transcripts
+  sintéticos crescentes, medindo hook e terminal em cada passo. Foi ela que mostrou 7 disparos
+  em 4 faixas em TCK-0012 (e teria mostrado o defeito B5 — um alarme falso e zero verdadeiros
+  — se ele ainda existisse). Rodar cada zona uma vez não distingue "avisa" de "avisa uma vez e
+  emudece".
+- **Dívida declarada só é aceitável depois de eu medir o modo de falha, não o rótulo.** Em
+  TCK-0012 o rótulo era "superestima a janela"; a simulação de um modelo de 400k mostrou que o
+  modo real é **um aviso na travessia e silêncio em toda a faixa de perigo** (85% e 98,8% de
+  uso reportados como `verde`). Aceitei mesmo assim, mas com **gatilho escrito**: o dia em que
+  a condição de raio-zero cair (existir modelo com janela intermediária), a dívida vira
+  defeito. Dívida sem gatilho é defeito adiado sem dono.
+- **Contar as asserções por fora do contador do próprio script.** `grep -c '^ok '` na saída,
+  cruzado com o total impresso, e `grep -ci skip` para garantir que nada foi pulado. "93
+  passaram" dito pelo script que eu estou validando não é evidência independente.
+- **`| tail` mata o exit code; `$?` de `bash script.sh | tail -1` é do `tail`.** Rodar
+  `cmd > arquivo 2>&1; echo $?` e só depois inspecionar o arquivo (já estava na memória —
+  reconfirmado aqui ao medir os cinco exit codes).
+- **Teste de canário de privacidade se faz na saída agregada de TODOS os canais.** Texto,
+  `--json`, `--hook` silencioso, `--hook` com mensagem, `--quiet` e o caminho de erro, num só
+  arquivo, com `grep -c <canario>` → 0. Espalhar o canário em 7 posições do fixture (prompt,
+  `thinking`, `text`, `tool_use.input`, `toolUseResult`, `tool_result`, `cwd`/`gitBranch`)
+  cobre a classe; testar só `message.content` cobre um caso.
+- **Hook ativo se prova por efeito colateral observado, não por invocação.** Em TCK-0012 o
+  `PostToolBatch` foi provado ativo vendo `updated_at` do arquivo de estado em
+  `~/.local/state/` avançar em lockstep com os meus lotes de ferramenta, **sem** eu invocar o
+  script. Invocar por pipe prova que o comando funciona; só o efeito colateral prova que o
+  runtime o está chamando.
+- **"Casos hostis de UI não se aplicam" exige a prova do consumidor zero.** `grep -rn` pelo
+  nome da ferramenta nas extensões de aplicação (`*.ts|*.tsx|*.js|*.astro|*.html|*.css`) → 0,
+  mais `ls package.json src/ app/` inexistentes. Sem isso é "n/a" na confiança.
+
 ## Últimas execuções
 
 | Data | Ticket/Tarefa | Resultado | Lição relacionada |
@@ -153,3 +191,4 @@ Valida a entrega contra os critérios de aceite do ticket, executando a aplicaç
 | 2026-08-01 | TCK-0005 — descrições textuais das 8 fórmulas do nó piloto | **done** — 7/7 critérios com evidência própria (contagem + **ordem**, dupla prova de LaTeX intocado, leitura adversarial às cegas de 4/10 descrições, paridade por token, verificação numérica em `Fraction`), 0 defeitos; 7 pendências herdadas confirmadas fora do diff, 4 marcadas como condicionantes da saída de `draft` | L-012 (aplicada), L-014 (não bloqueante aqui) |
 | 2026-08-01 | TCK-0003 — aceite do `ADR-0003` (stack da plataforma) | **done** — 6/6 critérios com evidência própria; validação documental (sem aplicação, casos hostis n/a e justificado); varredura própria da raiz = 186 ocorrências, só `.dev-loop/` (gitignorado), logs de ticket, `docs/specs/` e 7 pendências de área alheia; S6 julgada dívida `D-1`, não defeito; 4 `ACTION` ao `tech-lead` | L-010, L-011, L-013 (aplicadas, não violadas) |
 | 2026-08-01 | TCK-0004 — licença do projeto (CC BY-SA 4.0 conteúdo · MIT código), como `qa-validator#5` | **done** — 7/7 critérios com evidência própria; MIT conferida palavra a palavra contra o SPDX (169 vs 169, 0 diferenças), renumeração §9.6–9.8 com 49 referências classificadas e nenhuma quebrada, alcance da regra provado ferramenta a ferramenta; SG1 (ND) julgado **dívida**, não defeito; 4 dívidas + 5 pendências herdadas ao `tech-lead` | L-006, L-007, L-009, L-010 |
+| 2026-08-01 | TCK-0012 — gatilho de handoff por esgotamento de contexto, como `qa-validator#6` | **done** — 12/12 critérios com evidência própria, 0 defeitos; validado com `.claude/settings.local.json` (gitignored) movido para fora; travessia sem configuração = 7 disparos em 4 faixas (B5 morto); matriz de 17 invocações `--hook` todas exit `0`; canário próprio em 7 posições, 0 vazamentos; suíte 93/0 em 5 ambientes; `PostToolBatch` **provado ativo** por efeito colateral; 5 dívidas aceitas (D-1 `WINDOW_TIERS` com gatilho, D-2 origem ambígua, D-3 alarmes falsos pré-refutação, D-4 dev-loop fantasma, D-5 allowlist do usuário) | L-015, L-016, L-017, L-018 (aplicadas, não violadas) |

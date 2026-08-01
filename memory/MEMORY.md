@@ -65,3 +65,15 @@
 - [L-014 · theorem-hypotheses-belong-in-the-statement](lessons/theorem-hypotheses-belong-in-the-statement.md)
   — hipótese de existência faz parte do enunciado do teorema; omiti-la produz afirmação
   mal-formada, não falsa, e por isso invisível à verificação numérica.
+- [L-015 · a-monitor-that-guesses-must-guess-pessimistically](lessons/a-monitor-that-guesses-must-guess-pessimistically.md)
+  — quando o limiar depende de palpite, presumir o pior caso e fazer a incerteza sair pelo
+  canal automático; falso alarme é ruído, falso silêncio é dano.
+- [L-016 · widening-a-permission-allowlist-is-not-preserving-it](lessons/widening-a-permission-allowlist-is-not-preserving-it.md)
+  — allowlist ampliada é mudança de segurança: só é "preservado" o bloco idêntico ao do
+  `HEAD`, provado por `diff` de `jq -S`.
+- [L-017 · an-assumption-refuted-by-the-measurement-must-be-abandoned](lessons/an-assumption-refuted-by-the-measurement-must-be-abandoned.md)
+  — medida que desmente a presunção obriga a abandoná-la; alarme saturado no topo da escala
+  precisa de rearme ao trocar a régua.
+- [L-018 · fixing-the-cause-is-not-fixing-the-outcome](lessons/fixing-the-cause-is-not-fixing-the-outcome.md)
+  — o defeito sobrevive mudando de forma: verificar a promessa da funcionalidade encenada
+  inteira, não o caso citado no `REJECT`.

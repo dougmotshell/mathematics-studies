@@ -154,6 +154,99 @@ Revisa o diff de um ticket como terceiro — correção, segurança, acessibilid
   (aqui: MIT literal, paridade do `LICENSE-CONTENT` depois da S3, Mermaid, escopo) e listar
   o restante como já verificado no `[007]`.
 
+- **Ferramenta de observação: o modo de falha caro é o silêncio, não a exceção.** Ao revisar
+  um watcher/gatilho, perguntar "qual valor default faz este tool nunca falar?" — no TCK-0012
+  o mapa `DEFAULT_WINDOWS` casava um id de modelo *comprovadamente ambíguo* com a **maior**
+  janela (1M), e a mensagem do hook não tinha ramo para `confiavel: false`: contexto cheio
+  viraria "20% VERDE" e o aviso jamais sairia. Regra: quando um valor é presumido, o default
+  tem de errar para o lado de avisar cedo, e o **caminho automático** (não só a saída
+  interativa) precisa comunicar a incerteza. Aviso que só existe em `--json` ou em texto que
+  ninguém roda não existe.
+- **Invariante de exit code se testa nas bordas de I/O, não só nas de entrada.** "Hook sai 0
+  sempre" costuma ser verdade para stdin inválido/vazio, `HOME` inexistente, diretório de
+  estado sem escrita e arquivo corrompido — e falso quando o **stdout** falha:
+  `cmd --hook | true` (BrokenPipe) e `cmd --hook > /dev/full` devolveram **120** no TCK-0012,
+  porque a exceção acontece no flush do interpretador, fora do `try`. Receita de revisão:
+  rodar os dois, e conferir se o `except BrokenPipeError` de nível de módulo não sai com
+  código ≠ 0 também.
+- **Suíte hermética se prova com `HOME` sintético, não com `env -i`.** `env -i` limpa o
+  ambiente mas mantém o `HOME` real via `pwd`; o teste do TCK-0012 lia
+  `~/.claude/settings.json` e quebrava (`40/1`) num `HOME` que continha justamente a
+  configuração que a documentação do próprio ticket recomenda. Receita:
+  `env HOME=<tmp-com-a-config-recomendada> bash <suite>`. CI verde não prova hermeticidade —
+  prova só que o runner é pobre.
+- **Privacidade se audita pelos caminhos de erro e pelos campos ecoados.** Checklist que usei:
+  (1) `grep -nE 'urllib|requests|socket|http|subprocess|os\.system|popen'`; (2) toda mensagem
+  de exceção — exigir `exc.strerror`/`type(exc).__name__`, nunca `str(exc)` nem a linha lida;
+  (3) todo campo do arquivo que chega ao stdout (aqui `model` e `timestamp`) — fuzz com a
+  string-canário **nesses campos**, não só no corpo da mensagem. A suíte do produtor punha o
+  canário só em `content`, que o parser nunca toca: asserção que não podia falhar.
+- **"Diff 100% inserção" não é sinônimo de "bloco preservado".** No TCK-0012 duas entradas
+  novas entraram **dentro** de `permissions.allow` (15 → 17) auto-concedendo aprovação aos
+  comandos do próprio ticket, e o log dizia "`permissions` preservado". Prova mecânica:
+  `git show HEAD:<arquivo> | jq -r '.<bloco>[]'` × o working tree, e `diff` das duas listas.
+  Mudança em bloco de permissão exige declaração explícita no log, mesmo quando é benigna.
+
+- **Alarme que satura no topo da escala é silêncio com ruído no começo.** Ao revisar uma
+  correção de "falso verde" para "presunção conservadora", medir o que acontece **depois** do
+  primeiro aviso: se a zona pina no índice máximo, a condição `zona > anterior` nunca mais é
+  verdadeira e o mecanismo morre pelo resto da sessão. No TCK-0012 (loop 2) a sessão de 1M não
+  configurada recebia um `CRITICO` falso a 36% de uso real e **nenhum** aviso depois — mesmo
+  destino do defeito reprovado no loop 1. Receita: rodar o hook 3× com o estado zerado e ler o
+  arquivo de estado (`zone_index`, `window_warned`).
+- **Presunção refutada pela própria medição não é conservadorismo, é erro.** `usado > janela
+  presumida` prova que a presunção está errada; imprimir "181,3% (362.593/200.000)" é um número
+  autorrefutável. Ao revisar qualquer heurística com limite adivinhado, procurar o caso em que
+  o dado observado é **incompatível** com o palpite e exigir uma das duas saídas: declarar "não
+  sei" (exit de sem-telemetria) ou escalonar **com** a ressalva obrigatória no canal automático.
+- **Configuração do operador não conserta ferramenta desonesta no default** — e ainda pode
+  piorar: variável declarada no comando do hook em arquivo versionado (a) vale só para o hook,
+  criando divergência com o terminal e com o artefato gerado, e (b) marca o palpite como
+  `confiavel: true`, desligando a ressalva. Procurar o arquivo per-máquina já suportado e
+  gitignorado (aqui `.claude/settings.local.json`, lido primeiro por `resolve_window`) antes de
+  aceitar hardcode em config compartilhada.
+- **Correção de exit code se reverifica com o fd fechado, não só com o pipe quebrado.**
+  `>&-` faz `sys.stdout` virar `None`: `except (BrokenPipeError, OSError, ValueError)` não pega
+  `AttributeError`. E conferir **onde** o flush final é chamado — se está fora do
+  `try/except BaseException`, a garantia "nada escapa" é falsa por construção. Baseline útil:
+  `python3 -c 'print("x")' >&-` sai `0`; script que sai `1` está pior que o interpretador nu.
+- **Suíte pode fixar o defeito que se está contestando.** Antes de exigir mudança de
+  comportamento, `grep` na suíte pela asserção que protege o comportamento atual e citá-la no
+  REJECT (no TCK-0012, `context-watch-test.sh:196` esperava exit `30` justamente no caso
+  refutado) — senão o produtor corrige o código e a suíte reprova a correção.
+- **Recusa de sugestão se julga com medida própria, não com a do produtor.** S3 (leitura
+  reversa do transcript) foi recusada com "1,6 MB → 0,03 s"; gerei 51 MB sintéticos e medi
+  `0,24 s` com RSS constante — a recusa se sustentava, e a evidência do revisor é o que fecha
+  o assunto.
+
+- **A prova de que um monitor "voltou a viver" é a sequência, não a medida.** Aprovar a
+  correção de um alarme exige encenar a sessão inteira com transcripts sintéticos crescentes
+  e estado zerado, e ver o disparo em **cada** faixa (no TCK-0012: 650k→ATENCAO, 780k→PREPARAR,
+  900k→CRITICO). Uma medição isolada não distingue "corrigido" de "mudou de número".
+  Complementar com a travessia da fronteira que muda a régua (199.999 · 200.000 · 200.001):
+  é ali que se vê se o estado rearma ou se o mecanismo pina.
+- **Refutação por medida é um argumento válido contra a saída que eu mesmo propus.** Se o dado
+  observado é limite inferior verificado do limite desconhecido, exigir "declare não sei"
+  (exit de sem-telemetria) cega a ferramenta justamente na faixa que ela existe para cobrir.
+  Aceitar a alternativa do produtor quando ela preserva o critério **e** o resultado; a
+  condição é a incerteza continuar declarada no canal automático — verificar isso rodando o
+  hook, não lendo o código.
+- **Exit ≠ 0 do shell não é exit ≠ 0 do script.** `> arquivo-sem-permissão` e `> diretório`
+  devolvem `1` porque o **bash** falha ao abrir o redirecionamento (prefixo `bash: line 1:`) e
+  o interpretador nem executa. Antes de contar como defeito, conferir o prefixo da mensagem e
+  comparar com o baseline (`python3 -c 'print(1)' >&-` → `0`).
+- **Suíte reescrita: conferir se a substituição não trocou cobertura por conveniência.**
+  Receita: `grep -c` da asserção antiga (tem de ser 0), `grep` das novas por nome, e confirmar
+  que o comportamento **aprovado** continua exercido com fixture que o satisfaz (no TCK-0012 a
+  presunção conservadora migrou para 150k/200k → exit 20). Asserção que é a negação literal da
+  linha do REJECT costuma fixar a decisão contestada.
+- **Artefato gitignored é ponto cego do QA.** `.claude/settings.local.json` não aparece no
+  `git status`: ao aprovar, declarar no HANDOFF que ele existe, o que contém e que a validação
+  deve ser feita **com ele fora**. O mesmo vale para qualquer estado em `~/.local/state`.
+- **Lição nova × duplicata (2ª aplicação):** L-018 passou porque cita L-013 e acrescenta um
+  passo distinto (varrer o artefato × encenar a promessa do começo ao fim). O teste é o "Como
+  aplicar": se ele instrui uma ação que a lição anterior não instrui, não é duplicata.
+
 ## Últimas execuções
 
 | Data | Ticket/Tarefa | Resultado | Lição relacionada |
@@ -165,3 +258,6 @@ Revisa o diff de um ticket como terceiro — correção, segurança, acessibilid
 | 2026-08-01 | TCK-0003 — re-revisão do aceite do `ADR-0003` (loop 2/3) | REPROVADO — 1 bloqueante (B4: nó Mermaid do ADR ainda diz "KaTeX pré-renderizado", contra `:12`/`:116` e L-011) + 2 sugestões; B1/B2/B3 e S1–S3 verificados e aprovados, sync sem deriva, auditorias verdes; próximo loop esgota o limite → `tech-lead` | L-010, L-011 |
 | 2026-08-01 | TCK-0003 — re-revisão final do aceite do `ADR-0003` (loop 3/3) | APROVADO — B4 resolvido e 2ª ocorrência da classe (nó `S`) corrigida pelo produtor; `:64` HTML × KaTeX conferida; S4/S5 acatadas; L-013 julgada lição legítima (não repetição de L-011, por cronologia); 3 comandos reexecutados verdes; 2 sugestões; handoff `[014]` → `qa-validator` | L-010, L-011, L-013 |
 | 2026-08-01 | TCK-0004 — revisão do loop 2/3 (correção do B1), como `code-reviewer#4` | APROVADO → `qa-validator`; renumeração do `AGENTS.md` §9 varrida (30 refs, 0 quebradas), gerados conferidos linha a linha, `sync --check` limpo, auditorias verdes, MIT reconferida (169/169) e paridade do `LICENSE-CONTENT` mantida (494/486 palavras); compatibilidade BY-SA entre versões confirmada no legalcode 3.0 §4(b)(ii); 4 sugestões não bloqueantes | L-009 (adendo) |
+| 2026-08-01 | TCK-0012 — revisão da camada de detecção de contexto e gatilho de handoff | REPROVADO (loop 1/3) — 4 bloqueantes: falso verde por janela presumida otimista + hook sem ramo de incerteza (`context-watch.py:51`,`:357`), `--hook` saindo 120 em falha de stdout contra invariante documentada em 4 lugares, suíte não hermética (quebra com `autoCompactWindow` no `HOME`), duas entradas auto-concedidas em `permissions.allow` descritas como "bloco preservado"; 6 sugestões; privacidade auditada linha a linha sem vazamento; 5 faixas, 41 asserções, snapshot e auditorias reexecutados | — |
+| 2026-08-01 | TCK-0012 — re-revisão da camada de contexto (loop 2/3) | REPROVADO — B2/B3/B4 e S1/S2/S4/S5/S6 resolvidos e reverificados (matriz de 15 saídas do hook, suíte 65/0 em 4 ambientes, `permissions` idêntico ao HEAD por `jq -S`, S3 reprovada com 51 MB → 0,24 s); 2 bloqueantes novos: B5 — presunção conservadora satura em CRITICO e mata o hook pelo resto da sessão (1 alarme falso, 0 verdadeiros) com número autorrefutável vazando para o `.agent-handoff.md`; B6 — `flush_stdio()` sai 1 com traceback quando o fd 1 está fechado. Próximo loop esgota → `tech-lead` | L-015, L-016 |
+| 2026-08-01 | TCK-0012 — re-revisão final da camada de contexto (loop 3/3) | APROVADO → `qa-validator`; B5 resolvido pela refutação da presunção com escalonamento anunciado (reproduzi VERDE 37,8% sem setup e o hook falando em 3 faixas; travessia 199.999/200.000/200.001, degraus esgotados → 40, janela configurada não escalonada, oscilação por compactação), B6 fechado (14 invocações de fd fechado, todas 0); suíte 93/0 em 5 ambientes, substituição de asserção sem perda de cobertura, L-017/L-018 sem colisão e L-018 ≠ L-013; 4 sugestões, `WINDOW_TIERS` registrado como dívida declarada | L-015, L-016, L-017, L-018 |
