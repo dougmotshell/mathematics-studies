@@ -56,6 +56,9 @@ com `spec.md` → `plan.md` → `tasks.md` (templates em `docs/specs/templates/`
 - [ ] Exercícios com solução passo a passo, dicas progressivas e feedback diagnóstico
 - [ ] Referências gratuitas, com autor, ano, URL e licença
 - [ ] Nenhum conteúdo copiado sem atribuição compatível com a licença de origem
+- [ ] Nenhum trecho de fonte **NC / ND / sem licença** incorporado ou traduzido — essas fontes
+      são **só citáveis** como leitura externa (`ADR-0005`; contribuições vão para `content/`
+      sob CC BY-SA 4.0 e para o código sob MIT — ver `LICENSE-CONTENT` e `LICENSE`)
 
 ## 4. Contribuindo com a plataforma
 

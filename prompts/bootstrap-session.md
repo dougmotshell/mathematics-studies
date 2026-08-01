@@ -28,11 +28,16 @@ acompanhamento de progresso.
    **pt-BR**.
 4. Slugs de `content/` são **URLs públicas** — não renomear sem ADR e redirect.
 5. **Nenhuma implementação sem spec aprovada** (`docs/specs/`) e sem ADR para decisões
-   estruturais. A stack ainda não está decidida (`ADR-0003` está `proposed`).
+   estruturais. A stack está decidida (`ADR-0003`, `accepted`): site estático com ilhas de
+   interatividade e progresso local-first (IndexedDB). **Backend, conta, login e telemetria
+   identificável exigem ADR novo** — não presumir que existam.
 6. Acessibilidade (WCAG 2.2 AA), funcionamento offline, custo zero e privacidade de menores
    (LGPD/COPPA) são requisitos, não desejos.
 7. **Não** fazer commit, push, deploy ou qualquer gasto sem pedido explícito.
-8. Fontes externas só gratuitas, com autor, ano, URL e licença registrados.
+8. Fontes externas só gratuitas, com autor, ano, URL e licença registrados. Publicamos
+   `content/` sob **CC BY-SA 4.0** e o código sob **MIT** (`ADR-0005`): fonte **CC BY /
+   CC BY-SA / CC0 / domínio público** pode ser adaptada; fonte **CC BY-NC, CC BY-NC-SA, ND ou
+   sem licença** é **só citável** — nunca incorporada nem traduzida para dentro do conteúdo.
 
 **Formato de trabalho:** diga o que vai fazer, faça, e apresente evidência do resultado
 (saída de comando, trecho do arquivo). Se algo estiver ambíguo, pergunte antes de assumir.

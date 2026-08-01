@@ -34,9 +34,13 @@ diagnóstico de erros e materiais de apoio gratuitos e devidamente licenciados.
 
 **Produto (estado atual do plano):** aplicação web **PWA** (deploy na **Vercel**) com
 módulos de plataforma de cursos: trilhas de aprendizado, quizzes, progresso, fóruns de
-discussão e certificados de conclusão. A stack ainda **não está fechada** — a proposta em
-avaliação está em `docs/adr/ADR-0003-platform-stack.md` (status `proposed`). Enquanto o ADR
-não for aceito, nenhum agente deve assumir framework, banco ou biblioteca como decidido.
+discussão e certificados de conclusão. A stack foi **decidida** em 2026-08-01
+(`docs/adr/ADR-0003-platform-stack.md`, `accepted`): **site estático orientado a conteúdo
+(Astro) com ilhas de interatividade** só onde há exercício, progresso **local-first sem conta**
+(IndexedDB) e deploy estático portátil. **Não existe backend, conta, login nem telemetria
+identificável — cada um exige ADR novo.** Fóruns e certificados ainda não têm solução
+arquitetural. O que o ADR **não** decide (biblioteca de UI, de testes, service worker,
+momento de renderização do KaTeX) é decisão de implementação, tomada no ticket.
 
 ## 2. Convenções de idioma (OBRIGATÓRIO)
 
@@ -231,11 +235,25 @@ Detalhamento em `docs/content/`. Regras duras:
    (diagnóstico do equívoco, não só "errado"), dificuldade 1–5 e tags de habilidade.
 5. **Verificação:** todo resultado numérico ou algébrico não trivial deve ser verificado
    (`/math-verify`, com SymPy/numérico) antes de virar gabarito.
-6. **Fontes externas:** só materiais **gratuitos**, com licença registrada em
-   `references.json` (preferência por CC BY / CC BY-SA / domínio público). Nunca linkar
-   conteúdo pirateado. Citar autor, ano e URL.
-7. **Sem plágio:** conteúdo autoral; quando adaptar algo licenciado, atribuir explicitamente
-   e respeitar a licença (inclusive share-alike).
+6. **Fontes externas:** só materiais **gratuitos**, com licença lida na própria página e
+   registrada em `references.json` (autor, ano, URL, idioma, licença). Nunca linkar conteúdo
+   pirateado.
+7. **Compatibilidade de licença (`ADR-0005`) — regra dura, não preferência.** Publicamos
+   `content/` sob **CC BY-SA 4.0**, o que decide o que pode virar matéria-prima:
+   - **Adaptável:** **CC BY**, **CC BY-SA**, **CC0** e **domínio público** — pode ser
+     traduzido, resumido, reordenado ou reaproveitado, com atribuição completa (título,
+     autoria, URL, licença com link e o que foi alterado); o derivado sai sob CC BY-SA 4.0.
+     Domínio público é **territorial** — confirmar que vale no Brasil e nos EUA antes de
+     tratar como tal.
+   - **Só citável:** **CC BY-NC**, **CC BY-NC-SA**, qualquer **ND** e qualquer fonte **sem
+     licença declarada**. Entram em `references.json` como leitura externa e nada mais:
+     **proibido copiar ou traduzir trecho, exemplo, figura, enunciado ou sequência didática**
+     para `theory.<lang>.md`, `exercises.json` ou `assessments.json`. Mnemônico:
+     **"NC = leitura, não matéria-prima"** (lição `L-009`).
+   - Licença ambígua ou contraditória → vale a leitura **mais restritiva** (lição `L-007`).
+   Árvore de decisão e exemplos reais: `docs/content/content-standards.md`.
+8. **Sem plágio:** conteúdo autoral. Adaptar material de terceiros só é permitido dentro da
+   regra 7, com atribuição explícita e respeito à licença (inclusive share-alike).
 
 ## 10. Workflows, agents e orquestração
 
@@ -419,8 +437,10 @@ Apenas um agente pode editar o mesmo working tree por vez.
   em produção, exclusão de dados e qualquer gasto financeiro.
 - **Nenhuma implementação sem spec aprovada** (`docs/specs/`) e sem ADR para decisões
   estruturais.
-- **Não assumir stack**: enquanto `ADR-0003` estiver `proposed`, tratar framework, banco e
-  bibliotecas como hipótese, não como fato.
+- **Stack decidida, fronteira dura** (`ADR-0003`, `accepted`): site estático com ilhas de
+  interatividade e progresso local-first em IndexedDB. **Não assumir backend, conta, login
+  nem telemetria identificável** — cada um exige ADR novo. O que o ADR não decide continua
+  hipótese até o ticket decidir.
 - **Não renomear slugs** de `content/` (fazem parte da URL pública) sem ADR + redirect.
 - **Não publicar conteúdo monolíngue** — ver seção 2b.
 - **Não afirmar matemática sem verificar**: resultado não trivial passa por `/math-verify`

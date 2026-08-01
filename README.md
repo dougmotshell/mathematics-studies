@@ -6,8 +6,10 @@ interativos, feedback imediato e acompanhamento de progresso.
 
 > **Estado:** bootstrap. O repositório contém, neste momento, a **superfície de IA** e os
 > padrões de trabalho (documentação, conteúdo, memória, agentes). A aplicação ainda não foi
-> implementada — a stack está em avaliação em
-> [`docs/adr/ADR-0003-platform-stack.md`](docs/adr/ADR-0003-platform-stack.md) (`proposed`).
+> implementada, mas a stack já está **decidida** em
+> [`docs/adr/ADR-0003-platform-stack.md`](docs/adr/ADR-0003-platform-stack.md) (`accepted`,
+> 2026-08-01): site estático orientado a conteúdo com ilhas de interatividade, progresso
+> local-first no próprio dispositivo (IndexedDB) e deploy estático — sem backend e sem conta.
 
 ## O que este projeto é
 
@@ -110,5 +112,17 @@ nada de gabarito não verificado, nada de implementação sem spec.**
 
 ## Licença
 
-A definir (ver `docs/adr/`). A intenção declarada é conteúdo sob licença aberta compatível
-com reuso educacional.
+Duas licenças, decididas em 2026-08-01 ([`ADR-0005`](docs/adr/ADR-0005-project-license.md)):
+
+| O quê | Licença | Arquivo |
+|---|---|---|
+| **Conteúdo** — `content/` (teoria, exercícios, avaliações, trilhas, assets autorais) | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) | [`LICENSE-CONTENT`](LICENSE-CONTENT) |
+| **Código e processo** — aplicação, `scripts/`, `tools/`, `docs/`, `memory/`, `tickets/` | MIT | [`LICENSE`](LICENSE) |
+
+Você pode copiar, traduzir e adaptar o conteúdo, inclusive comercialmente, desde que **dê
+crédito** e mantenha as adaptações sob a **mesma licença**. Forma de atribuição esperada em
+[`LICENSE-CONTENT`](LICENSE-CONTENT).
+
+Materiais de terceiros citados em `references.json` mantêm a licença de seus autores. Fontes
+com cláusula **não-comercial** (CC BY-NC / CC BY-NC-SA) são incompatíveis com CC BY-SA 4.0:
+podem ser **citadas como leitura externa**, nunca incorporadas ao conteúdo.

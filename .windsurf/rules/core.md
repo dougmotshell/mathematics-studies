@@ -32,15 +32,19 @@ exercícios interativos com feedback diagnóstico e acompanhamento de progresso.
 4. **Slugs são URLs públicas.** `content/<stage>/<area>/<topic>` não se renomeia sem ADR e
    redirect.
 5. **Nada de implementação sem spec aprovada** (`docs/specs/`) e sem ADR para decisões
-   estruturais. A stack **não está decidida** — `docs/adr/ADR-0003-platform-stack.md` está
-   `proposed`; trate framework, banco e bibliotecas como hipótese.
+   estruturais. A stack está **decidida** (`docs/adr/ADR-0003-platform-stack.md`,
+   `accepted`): site estático com ilhas de interatividade e progresso local-first
+   (IndexedDB). **Backend, conta, login e telemetria identificável exigem ADR novo.**
 6. **Acessibilidade WCAG 2.2 AA** é requisito de entrada: teclado, foco visível, contraste,
    fórmulas em KaTeX com descrição textual (nunca imagem de fórmula).
 7. **Custo zero.** Free tier e soluções estáticas; qualquer gasto exige aprovação explícita.
 8. **Privacidade de menores.** O público inclui crianças: minimização de dados; qualquer
    coleta identificável exige ADR tratando LGPD/COPPA **antes** da implementação.
 9. **Fontes externas** só gratuitas, com autor, ano, URL e licença registrados. Nunca
-   material pirateado nem plágio.
+   material pirateado nem plágio. **Licença (`ADR-0005`):** conteúdo sai sob CC BY-SA 4.0 e
+   código sob MIT; fonte **CC BY / CC BY-SA / CC0 / domínio público** pode ser adaptada, mas
+   fonte **CC BY-NC, CC BY-NC-SA, ND ou sem licença** é **só citável** — nunca incorporada
+   nem traduzida para dentro do conteúdo.
 10. **Não fazer commit, push, deploy ou qualquer gasto sem pedido explícito** do usuário.
 
 ## Onde as coisas ficam

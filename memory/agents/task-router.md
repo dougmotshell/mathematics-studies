@@ -16,3 +16,5 @@ Classifica a tarefa recebida e define a cadeia mínima de agents do /dev-loop (q
 
 | Data | Ticket/Tarefa | Resultado | Lição relacionada |
 |---|---|---|---|
+| 2026-08-01 | TCK-0002 / minimum-learning-slice | cadeia definida: product-analyst → docs-writer → code-reviewer → retrospective-curator | n/a |
+| 2026-08-01 | dev-loop `analyze-open-tickets` (diagnóstico de backlog sem ticket próprio) | cadeia mínima definida: execute(tech-lead) → curate(retrospective-curator); `plan`/`review` pulados por não haver artefato novo a projetar nem risco de rigor/i18n/a11y | L-005 |

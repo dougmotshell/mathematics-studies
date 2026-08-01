@@ -5,14 +5,20 @@
 > qualquer ticket que mude esse conhecimento. Conhecimento generalizável sobre **erros** vai
 > para `memory/lessons/`, não para cá.
 
-**Última atualização:** 2026-08-01
+**Última atualização:** 2026-08-01 (dev-loop `analyze-open-tickets`)
 
 ## Estado atual
 
 - Superfície de IA cobre 12 ferramentas a partir de **três fontes canônicas**:
   `.claude/agents/`, `.claude/skills/` e `.github/instructions/`. Todo o resto é gerado por
   `python3 scripts/sync-ai-adapters.py`. Matriz: `docs/ai/tool-support.md`.
-- Fluxo de trabalho por tickets ativo (ADR-0004); TCK-0001 aberto.
+- Fluxo de trabalho por tickets ativo (ADR-0004). Backlog em 2026-08-01:
+  - `TCK-0001` (verificar referências do nó piloto) — `triaged`, owner `researcher`,
+    P2/P. Plano de execução já registrado no log; **handoff ainda não disparado** — acionar
+    com `/ticket-loop TCK-0001` quando o usuário pedir execução (não diagnóstico).
+  - `TCK-0002` (definir a fatia mínima de aprendizagem) — `triaged`, owner `task-router`,
+    P1/M. Dev-loop em `.dev-loop/minimum-learning-slice/` parado na etapa `plan`
+    (`product-analyst`) — **retomar, nunca reiniciar** (`loop.md` guarda a iteração 1/3).
 
 ## Pegadinhas conhecidas
 

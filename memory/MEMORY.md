@@ -38,3 +38,30 @@
   — slug de `content/` é contrato público; renomear quebra links de terceiros.
 - [L-004 · global-prompt-dirs-collide-between-repos](lessons/global-prompt-dirs-collide-between-repos.md)
   — comandos em diretório global por usuário colidem entre projetos; isolar ou prefixar.
+- [L-005 · triage-is-not-handoff](lessons/triage-is-not-handoff.md)
+  — triar um ticket não é `HANDOFF`; só o `HANDOFF` dispara execução imediata do próximo
+  agente.
+- [L-006 · openstax-license-varies-by-book](lessons/openstax-license-varies-by-book.md)
+  — licença do OpenStax varia por livro; verificar na própria página antes de registrar.
+- [L-007 · license-must-be-readable-without-javascript](lessons/license-must-be-readable-without-javascript.md)
+  — sem licença legível fora de JS, a fonte não entra em `references.json`.
+- [L-008 · client-side-answer-key-is-a-product-constraint](lessons/client-side-answer-key-is-a-product-constraint.md)
+  — sem servidor, o gabarito viaja no cliente; o ADR declara o que a decisão proíbe ao
+  produto e o que exige ADR novo.
+- [L-009 · share-alike-license-excludes-nc-sources](lessons/share-alike-license-excludes-nc-sources.md)
+  — sob CC BY-SA 4.0, fonte NC só pode ser citada como leitura externa, nunca adaptada.
+- [L-010 · accepting-an-adr-means-updating-the-rules-agents-read](lessons/accepting-an-adr-means-updating-the-rules-agents-read.md)
+  — ADR aceito sem propagação para `AGENTS.md` e as regras das ferramentas é desbloqueio
+  inerte: o agente obedece a regra, não o ADR.
+- [L-011 · adr-decides-constraints-not-implementation-timing](lessons/adr-decides-constraints-not-implementation-timing.md)
+  — ADR fixa resultado exigido, não mecanismo nem momento de execução; o resto é decisão do
+  ticket.
+- [L-012 · formula-description-is-checked-by-order-not-by-count](lessons/formula-description-is-checked-by-order-not-by-count.md)
+  — descrição de fórmula em display se verifica pela ordem (alternância estrita fórmula →
+  descrição), não pela contagem; descrever é ler a estrutura, não nomear a fórmula.
+- [L-013 · fixing-the-cited-line-is-not-fixing-the-defect-class](lessons/fixing-the-cited-line-is-not-fixing-the-defect-class.md)
+  — o `REJECT` lista evidências, não o inventário: varrer o artefato inteiro pelo termo do
+  defeito, diagrama e tabela incluídos.
+- [L-014 · theorem-hypotheses-belong-in-the-statement](lessons/theorem-hypotheses-belong-in-the-statement.md)
+  — hipótese de existência faz parte do enunciado do teorema; omiti-la produz afirmação
+  mal-formada, não falsa, e por isso invisível à verificação numérica.

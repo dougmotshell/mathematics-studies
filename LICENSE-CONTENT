@@ -1,0 +1,179 @@
+Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+Creative Commons Atribuição-CompartilhaIgual 4.0 Internacional (CC BY-SA 4.0)
+
+Copyright (c) 2026 Douglas Silva and the mathematics-studies contributors
+https://creativecommons.org/licenses/by-sa/4.0/
+https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br
+https://creativecommons.org/licenses/by-sa/4.0/legalcode
+
+================================================================================
+PORTUGUÊS (pt-BR)
+================================================================================
+
+## O que esta licença cobre
+
+Todo o conteúdo de aprendizagem deste repositório — o diretório `content/` e tudo
+que há dentro dele: teoria (`theory.pt-BR.md`, `theory.en-US.md`), exercícios
+(`exercises.json`), avaliações (`assessments.json`), metadados (`meta.json`),
+trilhas de aprendizado (`content/paths/`) e os assets autorais em `assets/` — é
+licenciado sob **Creative Commons Atribuição-CompartilhaIgual 4.0 Internacional
+(CC BY-SA 4.0)**.
+
+Texto legal completo: https://creativecommons.org/licenses/by-sa/4.0/legalcode
+Resumo em português: https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br
+
+**Qual texto prevalece:** as seções deste arquivo (pt-BR e en-US) são um resumo em linguagem
+comum, escrito para orientar quem usa e quem contribui — elas não substituem a licença. Em
+caso de divergência, dúvida ou omissão, prevalece o texto legal (legalcode) da CC BY-SA 4.0
+em https://creativecommons.org/licenses/by-sa/4.0/legalcode. O mesmo vale para o resumo
+("deed"), que também não é a licença.
+
+## O que esta licença NÃO cobre
+
+- **Código-fonte** (aplicação, `scripts/`, `tools/`, configuração) e material de
+  processo (`docs/`, `memory/`, `tickets/`): licenciados sob **MIT** — ver
+  `LICENSE`.
+- **Materiais de terceiros** referenciados em `references.json` ou incluídos em
+  `assets/`: permanecem sob a licença de seus respectivos autores, indicada no
+  próprio arquivo de referência. A licença CC BY-SA 4.0 deste repositório não se
+  estende a eles.
+
+## Você pode
+
+- **Compartilhar** — copiar e redistribuir o material em qualquer suporte ou
+  formato, inclusive para fins comerciais.
+- **Adaptar** — remixar, transformar e criar a partir do material, inclusive
+  traduzi-lo para outros idiomas, para qualquer fim, inclusive comercial.
+
+Desde que cumpra as duas condições abaixo.
+
+## Sob as seguintes condições
+
+1. **Atribuição (BY)** — dê o crédito apropriado, forneça um link para a licença
+   e indique se mudanças foram feitas.
+2. **CompartilhaIgual (SA)** — se você remixar, transformar ou criar a partir do
+   material, deve distribuir suas contribuições sob a **mesma licença**
+   (CC BY-SA 4.0) que o original.
+
+Sem restrições adicionais: você não pode aplicar termos jurídicos ou medidas
+tecnológicas que restrinjam legalmente terceiros de fazer algo que a licença
+permita.
+
+## Forma de atribuição esperada
+
+Ao redistribuir ou adaptar, use um crédito com estes cinco elementos: título do
+material, autoria, fonte (URL), licença (com link) e menção às alterações.
+
+Modelo para uso sem alterações:
+
+    "Equações quadráticas" (content/high-school/algebra/quadratic-equations),
+    por mathematics-studies (Douglas Silva e colaboradores), disponível em
+    <URL do repositório ou da página>, sob licença CC BY-SA 4.0
+    (https://creativecommons.org/licenses/by-sa/4.0/).
+
+Modelo para uso com alterações:
+
+    Adaptado de "Equações quadráticas"
+    (content/high-school/algebra/quadratic-equations), por mathematics-studies
+    (Douglas Silva e colaboradores), disponível em <URL>, sob licença CC BY-SA
+    4.0 (https://creativecommons.org/licenses/by-sa/4.0/). Alterações: <descreva
+    resumidamente o que mudou — tradução, corte, reordenação, novos exercícios>.
+
+Ao traduzir, deixe claro que a tradução é sua e que o original é de outra
+autoria.
+
+## Ao contribuir com este projeto
+
+Ao enviar conteúdo para `content/`, você concorda em licenciá-lo sob CC BY-SA
+4.0; ao enviar código, sob MIT. Não envie material de terceiros que você não
+tenha o direito de licenciar assim — em particular, material sob cláusula
+não-comercial (**CC BY-NC** ou **CC BY-NC-SA**) **não pode ser incorporado nem
+adaptado** aqui; ele só pode ser **citado como leitura externa** em
+`references.json`. Ver `docs/adr/ADR-0005-project-license.md` e
+`docs/content/content-standards.md`.
+
+================================================================================
+ENGLISH (en-US)
+================================================================================
+
+## What this license covers
+
+All learning content in this repository — the `content/` directory and
+everything inside it: theory (`theory.pt-BR.md`, `theory.en-US.md`), exercises
+(`exercises.json`), assessments (`assessments.json`), metadata (`meta.json`),
+learning paths (`content/paths/`) and original assets in `assets/` — is licensed
+under the **Creative Commons Attribution-ShareAlike 4.0 International license
+(CC BY-SA 4.0)**.
+
+Full legal text: https://creativecommons.org/licenses/by-sa/4.0/legalcode
+Human-readable summary: https://creativecommons.org/licenses/by-sa/4.0/
+
+**Which text prevails:** the sections in this file (pt-BR and en-US) are a plain-language
+summary written to guide users and contributors — they do not replace the license. In case of
+divergence, doubt or omission, the legal text (legalcode) of CC BY-SA 4.0 at
+https://creativecommons.org/licenses/by-sa/4.0/legalcode prevails. The same applies to the
+Creative Commons "deed", which is also not the license.
+
+## What this license does NOT cover
+
+- **Source code** (application, `scripts/`, `tools/`, configuration) and process
+  material (`docs/`, `memory/`, `tickets/`): licensed under **MIT** — see
+  `LICENSE`.
+- **Third-party materials** referenced in `references.json` or included in
+  `assets/`: they remain under their own authors' licenses, as stated in the
+  reference file itself. This repository's CC BY-SA 4.0 license does not extend
+  to them.
+
+## You are free to
+
+- **Share** — copy and redistribute the material in any medium or format, for
+  any purpose, even commercially.
+- **Adapt** — remix, transform, and build upon the material, including
+  translating it into other languages, for any purpose, even commercially.
+
+As long as you follow the two conditions below.
+
+## Under the following terms
+
+1. **Attribution (BY)** — you must give appropriate credit, provide a link to
+   the license, and indicate if changes were made.
+2. **ShareAlike (SA)** — if you remix, transform, or build upon the material,
+   you must distribute your contributions under the **same license**
+   (CC BY-SA 4.0) as the original.
+
+No additional restrictions: you may not apply legal terms or technological
+measures that legally restrict others from doing anything the license permits.
+
+## Expected form of attribution
+
+When redistributing or adapting, include these five elements: title of the
+material, author, source (URL), license (with link), and a note about changes.
+
+Template for unmodified use:
+
+    "Quadratic Equations" (content/high-school/algebra/quadratic-equations) by
+    mathematics-studies (Douglas Silva and contributors), available at
+    <repository or page URL>, licensed under CC BY-SA 4.0
+    (https://creativecommons.org/licenses/by-sa/4.0/).
+
+Template for adapted use:
+
+    Adapted from "Quadratic Equations"
+    (content/high-school/algebra/quadratic-equations) by mathematics-studies
+    (Douglas Silva and contributors), available at <URL>, licensed under
+    CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/). Changes:
+    <briefly describe what changed — translation, cuts, reordering, new
+    exercises>.
+
+When translating, make clear that the translation is yours and that the original
+is by someone else.
+
+## When contributing to this project
+
+By submitting content to `content/`, you agree to license it under CC BY-SA 4.0;
+by submitting code, under MIT. Do not submit third-party material you do not
+have the right to license this way — in particular, material under a
+non-commercial clause (**CC BY-NC** or **CC BY-NC-SA**) **cannot be incorporated
+or adapted** here; it may only be **cited as external reading** in
+`references.json`. See `docs/adr/ADR-0005-project-license.md` and
+`docs/content/content-standards.md`.

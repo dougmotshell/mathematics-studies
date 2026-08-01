@@ -4,11 +4,21 @@ applyTo: "src/**,app/**,api/**,tests/**,e2e/**"
 
 # Instruções para o código da aplicação
 
-> A stack ainda **não está decidida** (`docs/adr/ADR-0003-platform-stack.md`, status
-> `proposed`). Não introduzir framework, banco ou serviço sem ADR aceito.
+> Stack decidida em `docs/adr/ADR-0003-platform-stack.md` (`accepted`): **site estático
+> orientado a conteúdo com ilhas de interatividade** e progresso **local-first sem conta**
+> (IndexedDB). Framework, banco ou serviço fora disso exige ADR novo.
 
 - **Nenhuma implementação sem spec aprovada** (`docs/specs/<slug>/`) e ticket
   (`tickets/TCK-NNNN-<slug>/`).
+- **JavaScript mínimo por padrão**: página de conteúdo é HTML + CSS; interatividade só dentro
+  de uma ilha, com fronteira explícita. Recurso que exija hidratar a página inteira está mal
+  desenhado — reprojetar antes de implementar.
+- **Sem backend, conta, login ou telemetria identificável.** Não existem e não podem ser
+  presumidos; introduzir qualquer um exige ADR próprio.
+- **O gabarito viaja no cliente**: nada pode depender do segredo da resposta (sem avaliação
+  valendo nota, ranking ou certificado verificável).
+- **Deploy estático portátil**: a build produz arquivos servíveis por qualquer host estático.
+  Recurso proprietário da Vercel que quebre isso exige ADR.
 - Identificadores em **en-US**; comentários e mensagens de commit (corpo) em **pt-BR**.
 - **i18n**: nenhuma string voltada ao usuário hard-coded — tudo em catálogo pt-BR/en-US.
 - **Acessibilidade** é requisito: semântica correta, foco visível, operação por teclado,

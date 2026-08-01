@@ -5,7 +5,9 @@ seguindo [`../DOC-STANDARDS.md`](../DOC-STANDARDS.md).
 
 | Documento | Nível | Estado |
 |---|---|---|
-| [c4-context.md](c4-context.md) | Context | Parcialmente proposto (stack pendente — ADR-0003) |
+| [c4-context.md](c4-context.md) | Context | Decidido, exceto CI/CD e previews por branch (marcados como propostos) — stack aceita em ADR-0003, 2026-08-01 |
 
-> Enquanto `ADR-0003` estiver `proposed`, elementos da aplicação são marcados como
-> **proposto** nos diagramas — não desenhar hipótese como se fosse fato.
+> Regra permanente: elemento ainda não decidido em ADR aceito é marcado como **proposto** no
+> diagrama — não desenhar hipótese como se fosse fato. Com o `ADR-0003` aceito, a aplicação
+> deixou de ser hipótese; falta o nível **Container** (site estático, ilhas de
+> interatividade, IndexedDB), ainda não desenhado.

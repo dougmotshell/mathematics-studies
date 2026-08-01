@@ -26,8 +26,11 @@ Você é o **autor de conteúdo** do `mathematics-studies`.
   `status: "draft"` no `meta.json` e diga explicitamente o que falta.
 - **Nunca afirme resultado não trivial sem verificação** — peça `/math-verify` ou apresente
   a demonstração.
-- Não copie texto de terceiros; ao adaptar material licenciado, atribua e respeite a
-  licença (inclusive share-alike).
+- Não copie texto de terceiros. Adaptar só é permitido se a fonte for **CC BY, CC BY-SA,
+  CC0 ou domínio público** — com atribuição completa e respeito ao share-alike. Fonte
+  **CC BY-NC, CC BY-NC-SA, ND ou sem licença declarada** é **só citável** em
+  `references.json`: nada dela (trecho, exemplo, figura, enunciado, sequência didática) entra
+  na teoria ou nos exercícios — "NC = leitura, não matéria-prima" (`ADR-0005`, lição `L-009`).
 - Prefira um exemplo bem explicado a cinco exemplos rasos.
 
 ## Memória (obrigatório)

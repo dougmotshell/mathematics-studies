@@ -26,7 +26,9 @@ seja construída sobre dados reais em vez de suposições.
 
 **Objetivo:** provar o formato com conteúdo real antes de escrever a aplicação.
 
-- Decidir e aceitar `ADR-0003` (stack) e a licença do projeto.
+- Stack e licença **decididas em 2026-08-01**: `ADR-0003` (site estático com ilhas de
+  interatividade, progresso local-first em IndexedDB) e `ADR-0005` (conteúdo CC BY-SA 4.0,
+  código MIT).
 - Criar 3–5 nós piloto **em estágios distintos** (ex.: `elementary/arithmetic/addition`,
   `high-school/algebra/quadratic-equations`, `undergraduate/calculus/limits`), completos e
   bilíngues.
