@@ -16,6 +16,25 @@
 - Ainda **não decididos** (implementação, não ADR): biblioteca de UI dentro das ilhas,
   framework de testes, estratégia/ferramenta de service worker e o **momento de renderização
   do KaTeX** (build × runtime).
+- **Esqueleto da aplicação: proposto, não decidido** (`ADR-0007`, `proposed` desde 2026-08-01,
+  TCK-0011). Enquanto não for aceito pelo usuário, **nada disso é fato** — é a hipótese em
+  avaliação: Astro como gerador concreto; projeto na raiz do repositório; `src/` com
+  `content-contract/`, `pages/`, `layouts/`, `components/`, `islands/`, `styles/`;
+  `package.json` mínimo (só `astro`, `private: true`, `engines.node >= 22.12.0`, com
+  `validate:content` como ponto de entrada nomeado do validador); URL com prefixo de idioma em
+  minúsculas (`/pt-br/…`, `/en-us/…`) e taxonomia intacta. O aceite destrava a task 5 da fatia
+  mínima.
+- **Não decidido, e nenhum ADR deve decidir:** **onde** roda o portão que impede publicar
+  acervo reprovado — script do projeto, job de CI ou os dois. A spec aprovada atribui isso ao
+  ticket (`docs/specs/minimum-learning-slice/plan.md`, item 5). O ADR só exige o **resultado**:
+  nó que viole o contrato não vira página publicada, com falha visível e registrada (RF-18).
+- **CI/CD e publicação: propostos** (`ADR-0006`, `proposed`) — GitHub Actions como portão de
+  merge, Vercel como construtor/publicador, previews por PR, deploy no push em `main`.
+  Nenhum ticket implementa pipeline antes do aceite.
+- **C4 Container desenhado** em `docs/architecture/c4-container.md` (2026-08-01): acervo,
+  validador, build, host, páginas por idioma, ilha, camada offline e progresso local, com o
+  contrato de cada fronteira. O que não tem ADR aceito está marcado `PROPOSTO (ADR-NNNN)`; o
+  que é decisão de ticket, `EM ABERTO (ticket)`.
 
 ## Pegadinhas conhecidas
 

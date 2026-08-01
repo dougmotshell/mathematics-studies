@@ -61,11 +61,46 @@ Desenha a arquitetura da plataforma web/PWA — estrutura da aplicação, modelo
 - **Declarar no log todo arquivo tocado, inclusive os da própria área** (AGENTS.md §10,
   regra 2). Reescrevi `docs/architecture/*` sem declarar e virou defeito bloqueante — o
   `qa-validator` não valida o que não foi declarado.
-- **Diagrama C4 não mistura decidido com proposto**: CI/CD e previews por branch não têm ADR
-  aceito e ficam marcados `PROPOSTO` no `c4-context.md`; afirmação absoluta do tipo "nada aqui
-  é hipótese" é armadilha.
+- **Diagrama C4 não mistura decidido com proposto**: desde o TCK-0011, CI/CD, previews e
+  gatilho de deploy remetem ao `ADR-0006` (`proposed`) e o esqueleto ao `ADR-0007`
+  (`proposed`) — `PROPOSTO` sem ADR nomeado é órfão e volta como defeito. Afirmação absoluta
+  do tipo "nada aqui é hipótese" é armadilha.
 - **`docs/adr/README.md` é editado por vários agentes** — sempre edição cirúrgica da linha do
   próprio ADR, nunca reescrita do arquivo.
+- **Régua para arbitrar ADR × ticket** (L-020): permanência observável de fora. "Se eu trocar
+  isto em seis meses, quem quebra?" — link de terceiro, arquivo do acervo, fatura ou outro ADR
+  → ADR; só o nosso código → ticket. Serviu para decidir **dentro** do `ADR-0007` a forma da
+  URL bilíngue (contrato público) e para **deixar fora** biblioteca de UI, teste, cache e
+  momento do KaTeX. É o complemento operacional de L-011, que só dizia o que não fazer.
+- **Três marcadores no diagrama, não dois** (`docs/architecture/README.md`): sem marcador =
+  decidido em ADR aceito; `PROPOSTO (ADR-NNNN)` = espera aceite; `EM ABERTO (ticket)` = o ADR
+  decidiu **não** decidir. Sem o terceiro, toda escolha de ticket vira `PROPOSTO` órfão — o
+  defeito B4 do TCK-0003 pelo avesso. Marcar de **mais** é o mesmo defeito que marcar de
+  menos: rotulei um boundary inteiro como `PROPOSTO` e ele continha uma build que o `ADR-0003`
+  já exige.
+- **ADR `proposed` do qual um ticket depende é bloqueio, não pendência decorativa.** Entregar
+  o esqueleto como `proposed` significa que a task 5 da fatia mínima não começa sem aceite
+  humano — declarar isso no handoff e no relatório, senão o executor descobre sozinho e
+  improvisa.
+- **Gratuidade tem condição de elegibilidade, não só limite:** GitHub Actions é grátis porque
+  o repositório é **público** (`gh repo view --json visibility` → `PUBLIC`), e a Vercel Hobby
+  porque a conta é **pessoal** e o uso **não comercial** (projeto de organização não conecta no
+  Hobby). Citar o limite sem a condição é o tipo de afirmação que envelhece em silêncio.
+- **Portão só existe onde a publicação acontece.** Validação que só roda no CI não impede push
+  direto em `main`; e o runtime do validador precisa existir onde o portão for posto. **Mas
+  escolher o lugar do portão é do ticket, não do ADR** (`plan.md`, item 5) — o ADR exige o
+  resultado (nó reprovado não vira página publicada) e para por aí. Foi exatamente aqui que
+  reincidi em L-011 no TCK-0011.
+- **A segunda leitura é obrigatória, e é sobre o texto pronto** (adendo de L-020): a régua
+  ADR × ticket aplicada só na triagem das decisões candidatas não pega o que entra depois como
+  *justificativa de apoio*, rótulo de Mermaid ou linha de `scripts`. Frase delatora, com forma
+  fixa: **"é isso que faz X ser Y, e não Z"**.
+- **Comparar as consequências gêmeas dos ADRs irmãos** antes do handoff: no TCK-0011 o
+  `ADR-0006` chamava de "hipótese" a mesma consequência que o `ADR-0007` afirmava como fato.
+  Dois documentos da mesma entrega discordando é sintoma detectável sozinho.
+- **Marcação tem duas direções** (adendo de L-013): corrigi um "marcar de mais" e entreguei um
+  "marcar de menos" na mesma malha. Receita barata: listar **cada** nó e **cada** `Rel` do bloco
+  e escrever ao lado a fonte que o sustenta; o que ficar sem fonte é o defeito.
 - Auditorias relevantes ao encerrar: `bash scripts/audit-ai-surface.sh` e
   `bash scripts/audit-content.sh` (ambas devem sair com exit 0).
 
@@ -73,6 +108,8 @@ Desenha a arquitetura da plataforma web/PWA — estrutura da aplicação, modelo
 
 | Data | Ticket/Tarefa | Resultado | Lição relacionada |
 |---|---|---|---|
+| 2026-08-01 | TCK-0011 — correção do `[006] REJECT` (loop 1/3) | B1: `ADR-0007` fechava `prebuild` como lugar do portão do RF-18, que a spec aprovada dá ao ticket — trocado por resultado exigido, com varredura de `prebuild`/"portão da build" nos 3 documentos + memória; B2: `Rel(build, validator)` sem marcador → `EM ABERTO (ticket)`, mais varredura nó a nó e correção do excesso em `ci`; S1–S4 acatadas. Terceira ocorrência da família hoje: adendos em L-011, L-013 e L-020, sem lição nova | L-011, L-013, L-020 |
+| 2026-08-01 | TCK-0011 — C4 Container + ADR de CI/CD + esqueleto da aplicação | `c4-container.md` (3 marcadores: decidido / `PROPOSTO (ADR-NNNN)` / `EM ABERTO (ticket)`), `ADR-0006` (CI/CD, `proposed`, custo zero com fonte e data) e `ADR-0007` (esqueleto: Astro, raiz, `src/content-contract/`, `package.json` mínimo, URL `/pt-br/`, `proposed`); `c4-context.md` sem `PROPOSTO` órfão; nenhuma linha de código, nenhum `package.json`; auditorias verdes | L-020 |
 | 2026-08-01 | TCK-0003 — aceite do `ADR-0003` (stack da plataforma) | `accepted`: opção C (estático + ilhas) + persistência local-first sem conta; consequências, restrição do contrato de dados e propagação para README/memória; auditorias verdes; handoff → `code-reviewer` | L-008 |
 | 2026-08-01 | TCK-0003 — correção do `[010] REJECT` (loop 2/3) | B4: rótulo do Mermaid do ADR ainda dizia "KaTeX pré-renderizado", contradizendo o texto; corrigido + varredura da classe no arquivo (achou 2ª ocorrência: nó do service worker); leitura do diagrama e S4/S5 acatadas | L-013 |
 | 2026-08-01 | TCK-0003 — correção do `[006] REJECT` (loop 1/3) | B1 propagação inerte (7 pontos: `AGENTS.md` §1/§11, `core`/`app` instructions, `.claude/agents/platform-architect.md`, `roadmap.md`, `README.md`, `prompts/bootstrap-session.md`) + sync; B2 ADR deixou de fixar build × runtime do KaTeX; B3 `docs/architecture/*` declarados e contradição de CI/preview resolvida; S1–S3 acatadas | L-010, L-011 |
