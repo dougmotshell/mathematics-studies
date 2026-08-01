@@ -1,18 +1,26 @@
 # Slash commands e comandos por ferramenta
 
 Inventário da superfície de IA do projeto. A tabela abaixo é **gerada** por
-`python3 scripts/sync-slash-commands.py` a partir de `.claude/skills/` e `.claude/agents/` —
+`python3 scripts/sync-ai-adapters.py` a partir de `.claude/skills/` e `.claude/agents/` —
 não editar à mão o trecho entre os marcadores.
 
 ## Como cada ferramenta enxerga a superfície
 
-| Ferramenta | Instruções | Skills | Agents | Como instalar |
-|---|---|---|---|---|
-| **Claude Code** | `CLAUDE.md` → `AGENTS.md` | nativas (`/<skill>`) | subagentes + `/<agent>` | nada a fazer |
-| **GitHub Copilot** | `.github/copilot-instructions.md` | prompt files (`/<skill>`) | chat modes | `python3 scripts/sync-slash-commands.py` |
-| **Gemini CLI** | `GEMINI.md` → `AGENTS.md` | `/<skill>` | `/agent:<agent>` | `python3 scripts/sync-slash-commands.py` |
-| **OpenAI Codex** | `AGENTS.md` | prompts pessoais | prompts pessoais | `python3 scripts/sync-slash-commands.py --codex` |
-| **Outros (GPT etc.)** | `AGENTS.md` (manual) | ler o `SKILL.md` | ler `.claude/agents/<name>.md` | — |
+| Ferramenta | Skills | Agents | Setup |
+|---|---|---|---|
+| **Claude Code** | nativas `/<skill>` | subagentes + `/<agent>` | nenhum |
+| **Grok CLI** | lê `.claude/skills/` | lê `.claude/agents/` | nenhum |
+| **Cursor** | `/<skill>` | `/agent-<nome>` | nenhum |
+| **GitHub Copilot** | prompt files `/<skill>` | chat modes | nenhum |
+| **Gemini CLI** | `/<skill>` | `/agent:<nome>` | nenhum |
+| **Antigravity** | `/<skill>` | `/agent-<nome>` | ativar rules na UI |
+| **Windsurf** | `/<skill>` | `/agent-<nome>` | nenhum |
+| **OpenAI Codex** | prompts globais | prompts globais | `--codex` (ver matriz) |
+| **Zed · Cline · Junie** | abrir o `SKILL.md` | abrir `.claude/agents/<nome>.md` | nenhum |
+| **ChatGPT · Grok · Claude (web)** | manual | manual | colar `prompts/bootstrap-session.md` |
+
+Detalhes, limitações e o que fazer quando falta suporte nativo:
+[`docs/ai/tool-support.md`](docs/ai/tool-support.md).
 
 ## Fluxos principais
 
@@ -53,8 +61,10 @@ Invocar apenas quando o usuário pedir orquestração multi-agente.
 
 ## Inventário gerado
 
-<!-- BEGIN GENERATED COMMANDS (sync-slash-commands.py) -->
-### Skills (`.claude/skills/`)
+<!-- BEGIN GENERATED COMMANDS (sync-ai-adapters.py) -->
+### Capacidades (skills)
+
+Fonte: `.claude/skills/<nome>/SKILL.md`
 
 | Comando | O que faz |
 |---|---|
@@ -79,7 +89,10 @@ Invocar apenas quando o usuário pedir orquestração multi-agente.
 | `/ticket` | Cria um ticket de desenvolvimento no fluxo de agentes — coleta o pedido, gera tickets/TCK-NNNN-<slug>/ (ticket.md + log.md) a par… |
 | `/ticket-loop` | Executa o ciclo completo de um ticket — triagem → implementação → code review → validação de QA — com handoffs e logs a cada etap… |
 
-### Agents (`.claude/agents/`)
+### Papéis (agents)
+
+Fonte: `.claude/agents/<nome>.md`. No Gemini são `/agent:<nome>`; no Cursor,
+Antigravity e Windsurf, `/agent-<nome>`.
 
 | Comando | Papel |
 |---|---|
@@ -105,7 +118,18 @@ Invocar apenas quando o usuário pedir orquestração multi-agente.
 | `/tech-lead` | Orquestrador técnico — recebe todo ticket novo, faz triagem, decide a abordagem, delega ao agente certo e desbloqueia loops trava… |
 | `/ui-ux-designer` | Projeta fluxos, telas, design system e microinterações da plataforma, com foco em carga cognitiva, acessibilidade e público amplo… |
 
-> No Gemini CLI os agents ficam no namespace `agent:` (ex.: `/agent:math-reviewer`).
-> No Copilot, agents são **chat modes** e skills são **prompt files**.
-> No Codex, ambos são prompts pessoais instalados por `--codex`.
+### Regras por escopo
+
+Fonte: `.github/instructions/<nome>.instructions.md` (o campo `applyTo` vira o glob
+de cada ferramenta).
+
+| Regra | Escopo | Ativação |
+|---|---|---|
+| `app` | `src/**,app/**,api/**,tests/**,e2e/**` | por glob |
+| `content` | `content/**` | por glob |
+| `core` | `**` | sempre ativa |
+| `docs` | `docs/**` | por glob |
+| `memory` | `memory/**` | por glob |
+| `tickets` | `tickets/**` | por glob |
+
 <!-- END GENERATED COMMANDS -->

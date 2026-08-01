@@ -9,12 +9,27 @@
 
 ## Estado atual
 
-- Área ainda sem histórico registrado (repositório recém-inicializado em 2026-08-01).
+- Superfície de IA cobre 12 ferramentas a partir de **três fontes canônicas**:
+  `.claude/agents/`, `.claude/skills/` e `.github/instructions/`. Todo o resto é gerado por
+  `python3 scripts/sync-ai-adapters.py`. Matriz: `docs/ai/tool-support.md`.
+- Fluxo de trabalho por tickets ativo (ADR-0004); TCK-0001 aberto.
 
 ## Pegadinhas conhecidas
 
-- Nenhuma registrada.
+- **Nunca editar adapter gerado à mão** — a próxima geração sobrescreve. Arquivos com o
+  marcador `managed-by:mathematics-studies/sync-ai-adapters` são gerados; sem o marcador,
+  são preservados (é assim que se personaliza um adapter de propósito).
+- **Limite de 12.000 caracteres** em regras do Antigravity e do Windsurf. O `AGENTS.md`
+  (≈ 25 mil) não cabe: por isso existe `.github/instructions/core.instructions.md`, o resumo
+  sempre ativo. O gerador falha se alguma regra passar do limite.
+- **O corpo do `core.instructions.md` é reaproveitado em várias profundidades** de diretório
+  (`.cursor/rules/`, `.junie/`, raiz). Links relativos ali quebram em alguns destinos —
+  citar caminhos como texto, a partir da raiz.
+- **`$CODEX_HOME/prompts` é global por usuário** — ver lição L-004.
 
 ## Decisões operacionais em vigor
 
-- Nenhuma registrada.
+- Ao alterar agent, skill ou regra: rodar `python3 scripts/sync-ai-adapters.py` na mesma
+  entrega. O CI falha se os adapters estiverem desatualizados.
+- Ferramenta nova entra pelo passo a passo de `docs/ai/tool-support.md`
+  ("Adicionando uma ferramenta nova"), nunca com arquivos escritos à mão.

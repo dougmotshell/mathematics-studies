@@ -2,7 +2,7 @@
 description: Refina pedidos em requisitos claros e critérios de aceite verificáveis, confrontando-os com a visão do produto, o roadmap e as specs. Usar quando um ticket chega ambíguo ou quando é preciso decidir o…
 argument-hint: [tarefa ou pergunta para o agente]
 ---
-<!-- managed-by:mathematics-studies/sync-slash-commands -->
+<!-- managed-by:mathematics-studies/sync-ai-adapters -->
 
 Delegue ao subagent `product-analyst` (definido em @.claude/agents/product-analyst.md) a seguinte tarefa:
 

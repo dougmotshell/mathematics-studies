@@ -2,7 +2,7 @@
 description: Implementa a camada de dados e serviços — persistência de progresso, sincronização, autenticação, APIs, pipeline de build do conteúdo e integrações. Usar para executar tickets de backend/dados.
 argument-hint: [tarefa ou pergunta para o agente]
 ---
-<!-- managed-by:mathematics-studies/sync-slash-commands -->
+<!-- managed-by:mathematics-studies/sync-ai-adapters -->
 
 Delegue ao subagent `backend-developer` (definido em @.claude/agents/backend-developer.md) a seguinte tarefa:
 

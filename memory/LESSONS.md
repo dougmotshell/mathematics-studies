@@ -31,6 +31,9 @@ Lição superada não é apagada: registre uma **nova** lição referenciando a 
 - [L-002](lessons/verify-before-publishing-answers.md) — 2026-08-01 — conteúdo —
   gabarito afirmado sem verificação independente é a principal fonte de erro em plataformas
   de exercícios.
+- [L-004](lessons/global-prompt-dirs-collide-between-repos.md) — 2026-08-01 — process —
+  diretórios de comandos globais por usuário (ex.: `$CODEX_HOME/prompts`) colidem entre
+  repositórios; isolar ou prefixar antes de instalar.
 
 ## Sucesso
 

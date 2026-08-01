@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# audit-ai-surface.sh — inventário e paridade da superfície de IA nos quatro CLIs.
+# audit-ai-surface.sh — inventário e paridade da superfície de IA em todas as ferramentas.
+# Matriz de suporte: docs/ai/tool-support.md
 set -euo pipefail
 
 repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -13,37 +14,45 @@ check_file() {
   fi
 }
 
+count() { find "$1" -type f -name "$2" 2>/dev/null | wc -l; }
+
 printf '%s\n' 'AI surface audit — mathematics-studies' '======================================'
 
-printf '\n%s\n' 'Claude agents:'
-find .claude/agents -maxdepth 1 -type f -name '*.md' -printf '  %f\n' | sort
+printf '\n%s\n' 'Fontes canônicas:'
+printf '  agents ....... %s\n' "$(count .claude/agents '*.md')"
+printf '  skills ....... %s\n' "$(find .claude/skills -mindepth 2 -maxdepth 2 -name SKILL.md 2>/dev/null | wc -l)"
+printf '  rules ........ %s\n' "$(count .github/instructions '*.instructions.md')"
+printf '  workflows .... %s (exclusivos do Claude Code)\n' "$(count .claude/workflows '*.js')"
 
-printf '\n%s\n' 'Claude skills:'
-find .claude/skills -mindepth 2 -maxdepth 2 -name SKILL.md -printf '%h\n' \
-  | sed 's#^.claude/skills/#  #' | sort
+printf '\n%s\n' 'Adapters gerados:'
+printf '  Claude commands ......... %s\n' "$(count .claude/commands '*.md')"
+printf '  Copilot prompts ......... %s\n' "$(count .github/prompts '*.prompt.md')"
+printf '  Copilot chat modes ...... %s\n' "$(count .github/chatmodes '*.chatmode.md')"
+printf '  Gemini commands ......... %s\n' "$(count .gemini/commands '*.toml')"
+printf '  Cursor commands ......... %s\n' "$(count .cursor/commands '*.md')"
+printf '  Cursor rules ............ %s\n' "$(count .cursor/rules '*.mdc')"
+printf '  Antigravity workflows ... %s\n' "$(count .agents/workflows '*.md')"
+printf '  Antigravity rules ....... %s\n' "$(count .agents/rules '*.md')"
+printf '  Windsurf workflows ...... %s\n' "$(count .windsurf/workflows '*.md')"
+printf '  Windsurf rules .......... %s\n' "$(count .windsurf/rules '*.md')"
 
-printf '\n%s\n' 'Claude workflows:'
-find .claude/workflows -maxdepth 1 -type f -name '*.js' -printf '  %f\n' 2>/dev/null | sort
-
-printf '\n%s\n' 'Copilot prompts:'
-find .github/prompts -maxdepth 1 -type f -name '*.prompt.md' -printf '  %f\n' 2>/dev/null | sort
-
-printf '\n%s\n' 'Copilot chat modes:'
-find .github/chatmodes -maxdepth 1 -type f -name '*.chatmode.md' -printf '  %f\n' 2>/dev/null | sort
-
-printf '\n%s\n' 'Gemini commands:'
-find .gemini/commands -type f -name '*.toml' -printf '  %P\n' 2>/dev/null | sort
-
-printf '\n%s\n' 'Arquivos canônicos:'
+printf '\n%s\n' 'Arquivos canônicos e ponteiros:'
 for file in \
   AGENTS.md \
   CLAUDE.md \
   GEMINI.md \
   SLASH_COMMANDS.md \
+  .rules \
+  .clinerules \
+  .junie/guidelines.md \
   .codex/README.md \
   .github/copilot-instructions.md \
+  .github/instructions/core.instructions.md \
   docs/ai/ticket-protocol.md \
   docs/ai/cross-agent-handoff.md \
+  docs/ai/tool-support.md \
+  prompts/bootstrap-session.md \
+  prompts/assume-agent-role.md \
   tickets/README.md \
   tickets/TICKET-TEMPLATE.md; do
   check_file "$file"
@@ -82,7 +91,8 @@ done
 
 printf '\n%s\n' 'Ferramentas:'
 for file in \
-  scripts/sync-slash-commands.py \
+  scripts/sync-ai-adapters.py \
+  scripts/setup-ai-tools.sh \
   scripts/audit-content.py \
   scripts/audit-content.sh \
   tools/dev-loop.sh \
@@ -92,27 +102,55 @@ for file in \
   check_file "$file"
 done
 
-printf '\n%s\n' 'Paridade por agent (chatmode + command + gemini + memória):'
+printf '\n%s\n' 'Paridade por agent (Claude · Copilot · Gemini · Cursor · Antigravity · Windsurf · memória):'
 for agent_file in .claude/agents/*.md; do
   name="$(basename "$agent_file" .md)"
-  check_file ".github/chatmodes/$name.chatmode.md"
   check_file ".claude/commands/$name.md"
+  check_file ".github/chatmodes/$name.chatmode.md"
   check_file ".gemini/commands/agent/$name.toml"
+  check_file ".cursor/commands/agent-$name.md"
+  check_file ".agents/workflows/agent-$name.md"
+  check_file ".windsurf/workflows/agent-$name.md"
   check_file "memory/agents/$name.md"
 done
 
-printf '\n%s\n' 'Paridade por skill (prompt Copilot + command Gemini):'
+printf '%s\n' 'Paridade por skill (Copilot · Gemini · Cursor · Antigravity · Windsurf):'
 for skill_file in .claude/skills/*/SKILL.md; do
   name="$(basename "$(dirname "$skill_file")")"
   check_file ".github/prompts/$name.prompt.md"
   check_file ".gemini/commands/$name.toml"
+  check_file ".cursor/commands/$name.md"
+  check_file ".agents/workflows/$name.md"
+  check_file ".windsurf/workflows/$name.md"
 done
 
-printf '\n%s\n' 'Adapters gerados atualizados (sync-slash-commands.py --check):'
-if python3 scripts/sync-slash-commands.py --check >/dev/null 2>&1; then
+printf '%s\n' 'Paridade por regra (Cursor · Windsurf · Antigravity):'
+for rule_file in .github/instructions/*.instructions.md; do
+  name="$(basename "$rule_file" .instructions.md)"
+  check_file ".cursor/rules/$name.mdc"
+  check_file ".windsurf/rules/$name.md"
+  check_file ".agents/rules/$name.md"
+done
+
+printf '\n%s\n' 'Limite de 12.000 caracteres nas regras (Antigravity/Windsurf):'
+oversized=0
+while IFS= read -r f; do
+  [[ -f "$f" ]] || continue
+  size="$(wc -c < "$f")"
+  if (( size > 12000 )); then
+    printf '  OVERSIZED\t%s\t%s chars\n' "$f" "$size"
+    oversized=1
+    status=1
+  fi
+done < <(find .cursor/rules .windsurf/rules .agents/rules -type f 2>/dev/null; \
+         printf '%s\n' .rules .clinerules .junie/guidelines.md)
+(( oversized )) || printf '  todas dentro do limite\n'
+
+printf '\n%s\n' 'Adapters gerados atualizados (sync-ai-adapters.py --check):'
+if python3 scripts/sync-ai-adapters.py --check >/dev/null 2>&1; then
   printf '  up-to-date\n'
 else
-  printf '  OUTDATED — rode: python3 scripts/sync-slash-commands.py\n'
+  printf '  OUTDATED — rode: python3 scripts/sync-ai-adapters.py\n'
   status=1
 fi
 

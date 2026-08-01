@@ -2,7 +2,7 @@
 description: Orquestrador técnico — recebe todo ticket novo, faz triagem, decide a abordagem, delega ao agente certo e desbloqueia loops travados. Ponto de entrada de qualquer tarefa de desenvolvimento, manutençã…
 argument-hint: [tarefa ou pergunta para o agente]
 ---
-<!-- managed-by:mathematics-studies/sync-slash-commands -->
+<!-- managed-by:mathematics-studies/sync-ai-adapters -->
 
 Delegue ao subagent `tech-lead` (definido em @.claude/agents/tech-lead.md) a seguinte tarefa:
 

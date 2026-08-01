@@ -1,0 +1,16 @@
+# .envrc.example — isolamento do CODEX_HOME por projeto (opcional).
+#
+# Os prompts do Codex são globais por usuário ($CODEX_HOME/prompts), então dois
+# repositórios que instalam prompts com o mesmo nome se sobrescrevem. Isolar o
+# CODEX_HOME resolve sem prefixos.
+#
+# Uso com direnv:
+#   cp .envrc.example .envrc && direnv allow
+#
+# Sem direnv, exporte manualmente (ou crie um alias no seu shell):
+#   export CODEX_HOME="$HOME/.codex-mathematics-studies"
+#
+# Depois, instale os prompts deste projeto nesse CODEX_HOME:
+#   bash scripts/setup-ai-tools.sh --codex
+
+export CODEX_HOME="$HOME/.codex-mathematics-studies"

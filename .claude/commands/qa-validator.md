@@ -2,7 +2,7 @@
 description: Valida a entrega contra os critérios de aceite do ticket, executando a aplicação de verdade e produzindo evidência por critério. Único agente que pode marcar um ticket como done.
 argument-hint: [tarefa ou pergunta para o agente]
 ---
-<!-- managed-by:mathematics-studies/sync-slash-commands -->
+<!-- managed-by:mathematics-studies/sync-ai-adapters -->
 
 Delegue ao subagent `qa-validator` (definido em @.claude/agents/qa-validator.md) a seguinte tarefa:
 

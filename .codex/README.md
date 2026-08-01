@@ -11,7 +11,7 @@ registro de erros e padrões de documentação (C4, ADR, SDD).
   repositório). Para replicar toda a superfície deste projeto, rode:
 
   ```bash
-  python3 scripts/sync-slash-commands.py --codex
+  python3 scripts/sync-ai-adapters.py --codex
   ```
 
   Isso instala no `$CODEX_HOME/prompts` um prompt para cada skill (`.claude/skills/`) e para

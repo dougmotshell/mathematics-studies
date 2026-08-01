@@ -35,31 +35,38 @@ Detalhes e listas canônicas: [`docs/content/taxonomy.md`](docs/content/taxonomy
 
 ## Trabalhando com agentes de IA
 
-Este repositório é preparado para ser operado por **Claude Code, OpenAI Codex, GitHub
-Copilot, Gemini CLI** e qualquer outro assistente que leia `AGENTS.md`.
+Funciona com **qualquer** assistente de código: Claude Code, Grok CLI, Cursor, GitHub
+Copilot, Gemini CLI, Google Antigravity, Windsurf, OpenAI Codex, Zed, Cline/Roo, JetBrains
+Junie e ferramentas web (ChatGPT, Grok, Claude).
 
-| Arquivo | Papel |
+Três fontes canônicas, escritas uma única vez, geram os adapters de todas elas:
+
+| Fonte | O que define |
 |---|---|
-| [`AGENTS.md`](AGENTS.md) | **Fonte única** de instruções (todos os CLIs). |
-| [`CLAUDE.md`](CLAUDE.md) | Adaptador do Claude Code (agents, skills, workflows). |
-| [`GEMINI.md`](GEMINI.md) | Adaptador do Gemini CLI (custom commands). |
-| [`.github/copilot-instructions.md`](.github/copilot-instructions.md) | Adaptador do Copilot (prompts, chatmodes, instructions). |
-| [`.codex/README.md`](.codex/README.md) | Adaptador do Codex (prompts pessoais, loop assistido). |
-| [`SLASH_COMMANDS.md`](SLASH_COMMANDS.md) | Inventário de comandos disponíveis em cada CLI. |
+| [`AGENTS.md`](AGENTS.md) | Regras completas do projeto |
+| [`.claude/agents/`](.claude/agents/) | Papéis (escopo exclusivo, limites, memória) |
+| [`.claude/skills/`](.claude/skills/) | Capacidades (procedimentos executáveis) |
+| [`.github/instructions/`](.github/instructions/) | Regras por escopo de caminho |
+
+Matriz de suporte, limitações e instalação por ferramenta:
+[`docs/ai/tool-support.md`](docs/ai/tool-support.md). Inventário de comandos:
+[`SLASH_COMMANDS.md`](SLASH_COMMANDS.md).
 
 ### Setup rápido
 
 ```bash
-# Gera/atualiza os adapters de Claude, Copilot e Gemini a partir de skills e agents
-python3 scripts/sync-slash-commands.py
+# Gera os adapters de todas as ferramentas e mostra o que cada uma precisa
+bash scripts/setup-ai-tools.sh
 
-# Instala também os prompts pessoais do Codex em $CODEX_HOME/prompts
-python3 scripts/sync-slash-commands.py --codex
+# Codex: os prompts são globais por usuário — isole ou prefixe para não colidir
+bash scripts/setup-ai-tools.sh --codex --codex-prefix ms
 
 # Auditorias determinísticas
 bash scripts/audit-ai-surface.sh     # paridade da superfície de IA
 bash scripts/audit-content.sh        # estrutura e paridade do conteúdo
 ```
+
+A maioria das ferramentas não precisa de setup algum: basta abrir o repositório.
 
 ### Fluxos mais usados
 

@@ -8,7 +8,7 @@
 ## Específico do Gemini CLI
 
 - **Custom commands**: `.gemini/commands/*.toml` — gerados por
-  `python3 scripts/sync-slash-commands.py` a partir das skills (`.claude/skills/`) e dos
+  `python3 scripts/sync-ai-adapters.py` a partir das skills (`.claude/skills/`) e dos
   agents (`.claude/agents/`). Comandos de agente ficam no namespace `agent:` (ex.:
   `/agent:math-reviewer`), skills no nível raiz (ex.: `/new-topic`). **Não editar os
   arquivos com o marcador `managed-by` à mão.**

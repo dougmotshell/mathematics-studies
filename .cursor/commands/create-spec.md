@@ -1,0 +1,18 @@
+<!-- managed-by:mathematics-studies/sync-ai-adapters -->
+
+# /create-spec
+
+> Inicia trabalho novo pelo fluxo Spec-Driven Development em docs/specs/<slug>/ — spec.md (o quê/por quê) → plan.md (como) → tasks.md (passos executáveis). Usar antes de qualquer implementação de funci…
+
+Leia e siga integralmente as instruções da skill em `.claude/skills/create-spec/SKILL.md` deste repositório.
+
+Antes de agir, leia também `AGENTS.md` (fonte única de regras) e, para tarefa
+significativa, `memory/MEMORY.md` e `docs/errors/README.md`. Respeite os arquivos de apoio
+da skill (`references/`, `scripts/`).
+
+Se a skill depender de um MCP (por exemplo `chrome-devtools` em `/pwa-audit` e
+`/a11y-audit`), verifique se ele está disponível; sem ele, use o fallback documentado na
+própria skill e **declare o que não foi verificado**.
+
+Aplique a skill ao que o usuário pedir nesta conversa. Se nada for informado, pergunte o que
+a skill precisa antes de prosseguir.

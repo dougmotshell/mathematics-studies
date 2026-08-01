@@ -2,7 +2,7 @@
 description: Desenha a arquitetura da plataforma web/PWA — estrutura da aplicação, modelo de dados de conteúdo e progresso, renderização, offline, i18n, autenticação e deploy na Vercel. Usar para decisões estrutu…
 argument-hint: [tarefa ou pergunta para o agente]
 ---
-<!-- managed-by:mathematics-studies/sync-slash-commands -->
+<!-- managed-by:mathematics-studies/sync-ai-adapters -->
 
 Delegue ao subagent `platform-architect` (definido em @.claude/agents/platform-architect.md) a seguinte tarefa:
 

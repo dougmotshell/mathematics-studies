@@ -1,0 +1,18 @@
+<!-- managed-by:mathematics-studies/sync-ai-adapters -->
+<!-- Ativação sugerida: Glob — `docs/**` (configurável na UI do Antigravity) -->
+
+# Instruções para `docs/` (documentação interna)
+
+- `docs/` explica **como o projeto funciona**; `content/` é o produto. Não misturar.
+- Idioma: nomes de arquivo en-US kebab-case, conteúdo pt-BR.
+- Seguir `docs/DOC-STANDARDS.md`:
+  - **ADR** (`docs/adr/`) para toda decisão estrutural, com alternativas reais e
+    consequências; status `proposed | accepted | deprecated | superseded`.
+  - **C4** (`docs/architecture/`) em Mermaid, com leitura do diagrama e marcação do que é
+    proposta × estado atual.
+  - **SDD** (`docs/specs/`): spec → plan → tasks; nenhuma implementação sem spec `approved`.
+- **Visualização obrigatória**: havendo fluxo, dependência, hierarquia ou ciclo, incluir
+  Mermaid com leitura curta e fontes. Tabelas para contratos e inventários.
+- Manter os índices sincronizados: `docs/adr/README.md`, `docs/errors/README.md`,
+  `docs/specs/README.md`, `docs/architecture/README.md`.
+- Ao mover ou renomear documento, corrigir todos os links que apontam para ele.

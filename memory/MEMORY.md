@@ -36,3 +36,5 @@
   — gabarito só existe depois de verificação independente.
 - [L-003 · content-slugs-are-public-urls](lessons/content-slugs-are-public-urls.md)
   — slug de `content/` é contrato público; renomear quebra links de terceiros.
+- [L-004 · global-prompt-dirs-collide-between-repos](lessons/global-prompt-dirs-collide-between-repos.md)
+  — comandos em diretório global por usuário colidem entre projetos; isolar ou prefixar.

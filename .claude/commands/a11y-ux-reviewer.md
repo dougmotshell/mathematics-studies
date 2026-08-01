@@ -2,7 +2,7 @@
 description: Revisa acessibilidade (WCAG 2.2 AA, matemática acessível a leitor de tela, teclado, contraste) e UX de aprendizagem (carga cognitiva, feedback, navegação, progresso). Usar antes de publicar interface…
 argument-hint: [tarefa ou pergunta para o agente]
 ---
-<!-- managed-by:mathematics-studies/sync-slash-commands -->
+<!-- managed-by:mathematics-studies/sync-ai-adapters -->
 
 Delegue ao subagent `a11y-ux-reviewer` (definido em @.claude/agents/a11y-ux-reviewer.md) a seguinte tarefa:
 

@@ -2,7 +2,7 @@
 description: Revisa o diff de um ticket como terceiro — correção, segurança, acessibilidade, performance, convenções e testes — aprovando para QA ou devolvendo com defeitos numerados. Usar após toda implementação.
 argument-hint: [tarefa ou pergunta para o agente]
 ---
-<!-- managed-by:mathematics-studies/sync-slash-commands -->
+<!-- managed-by:mathematics-studies/sync-ai-adapters -->
 
 Delegue ao subagent `code-reviewer` (definido em @.claude/agents/code-reviewer.md) a seguinte tarefa:
 

@@ -2,7 +2,7 @@
 description: Pesquisa fontes gratuitas, referências bibliográficas, licenças, bancos de exercícios abertos e literatura de didática da matemática, sintetizando com citação de fontes. Usar antes de escrever conteú…
 argument-hint: [tarefa ou pergunta para o agente]
 ---
-<!-- managed-by:mathematics-studies/sync-slash-commands -->
+<!-- managed-by:mathematics-studies/sync-ai-adapters -->
 
 Delegue ao subagent `researcher` (definido em @.claude/agents/researcher.md) a seguinte tarefa:
 

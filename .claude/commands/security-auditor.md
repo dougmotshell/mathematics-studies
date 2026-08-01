@@ -2,7 +2,7 @@
 description: Audita segurança e privacidade — dados de menores (LGPD/COPPA), autenticação, regras de acesso, segredos, dependências e superfície de ataque. Usar em tickets sensíveis e em auditorias periódicas.
 argument-hint: [tarefa ou pergunta para o agente]
 ---
-<!-- managed-by:mathematics-studies/sync-slash-commands -->
+<!-- managed-by:mathematics-studies/sync-ai-adapters -->
 
 Delegue ao subagent `security-auditor` (definido em @.claude/agents/security-auditor.md) a seguinte tarefa:
 

@@ -2,7 +2,7 @@
 description: Garante paridade e qualidade das versões pt-BR e en-US de todo conteúdo e da interface — mesmas seções, mesma matemática, convenções locais corretas (vírgula/ponto decimal, nomes de teoremas, termino…
 argument-hint: [tarefa ou pergunta para o agente]
 ---
-<!-- managed-by:mathematics-studies/sync-slash-commands -->
+<!-- managed-by:mathematics-studies/sync-ai-adapters -->
 
 Delegue ao subagent `i18n-steward` (definido em @.claude/agents/i18n-steward.md) a seguinte tarefa:
 

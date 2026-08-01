@@ -14,7 +14,7 @@ aplicação nem conteúdo ainda.
 |---|---|
 | **Conteúdo** (`content/`) | 1 nó piloto (`high-school/algebra/quadratic-equations`, `draft`) validando o contrato de dados; taxonomia em `docs/content/taxonomy.md`. |
 | **Plataforma** (aplicação web/PWA) | Não iniciada. Stack em avaliação — `ADR-0003` com status `proposed`. |
-| **Superfície de IA** | Completa: 21 agents, 20 skills, 5 workflows, sistema de tickets, adapters para Claude Code, Codex, Copilot e Gemini. Auditorias verdes. |
+| **Superfície de IA** | Completa: 21 agents, 20 skills, 6 regras, 5 workflows, sistema de tickets. Adapters gerados para 12 ferramentas (Claude Code, Grok, Cursor, Copilot, Gemini, Antigravity, Windsurf, Codex, Zed, Cline, Junie, web). Auditorias verdes. |
 | **Documentação** | Padrões estabelecidos (C4 + ADR + SDD), padrões de conteúdo escritos, 3 ADRs iniciais. |
 | **Memória** | Estrutura criada; sem lições registradas além das de bootstrap. |
 

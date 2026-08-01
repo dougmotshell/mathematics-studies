@@ -2,7 +2,7 @@
 description: Desenha e mantém a taxonomia de conteúdo, as trilhas de aprendizado e o grafo de pré-requisitos (estágio → área → tópico → sub-tópico). Usar para decidir onde um assunto entra, criar/reorganizar tópi…
 argument-hint: [tarefa ou pergunta para o agente]
 ---
-<!-- managed-by:mathematics-studies/sync-slash-commands -->
+<!-- managed-by:mathematics-studies/sync-ai-adapters -->
 
 Delegue ao subagent `curriculum-architect` (definido em @.claude/agents/curriculum-architect.md) a seguinte tarefa:
 

@@ -48,7 +48,7 @@ Todo desenvolvimento, bug, infra ou conteúdo de porte passa por um ticket em
 - `.github/prompts/*.prompt.md` — prompt files reutilizáveis, espelhando as skills
   (`/new-topic`, `/new-exercise-set`, `/math-verify`, `/content-audit`, `/i18n-parity`,
   `/a11y-audit`, `/pwa-audit`, `/create-adr`, `/create-spec`, …). **Gerados** por
-  `scripts/sync-slash-commands.py` — não editar à mão.
+  `scripts/sync-ai-adapters.py` — não editar à mão.
 - `.github/chatmodes/*.chatmode.md` — chat modes espelhando os agents
   (`curriculum-architect`, `content-author`, `math-reviewer`, `exercise-designer`,
   `i18n-steward`, `platform-architect`, `web-implementer`, `a11y-ux-reviewer`,

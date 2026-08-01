@@ -2,7 +2,7 @@
 description: Escreve a teoria didática bilíngue (pt-BR + en-US) de um nó de conteúdo, seguindo a estrutura mínima do projeto — objetivo, pré-requisitos, intuição, definição formal, exemplos resolvidos, erros comu…
 argument-hint: [tarefa ou pergunta para o agente]
 ---
-<!-- managed-by:mathematics-studies/sync-slash-commands -->
+<!-- managed-by:mathematics-studies/sync-ai-adapters -->
 
 Delegue ao subagent `content-author` (definido em @.claude/agents/content-author.md) a seguinte tarefa:
 

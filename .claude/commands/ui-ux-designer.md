@@ -2,7 +2,7 @@
 description: Projeta fluxos, telas, design system e microinterações da plataforma, com foco em carga cognitiva, acessibilidade e público amplo (crianças a pesquisadores). Usar antes de implementar interface nova…
 argument-hint: [tarefa ou pergunta para o agente]
 ---
-<!-- managed-by:mathematics-studies/sync-slash-commands -->
+<!-- managed-by:mathematics-studies/sync-ai-adapters -->
 
 Delegue ao subagent `ui-ux-designer` (definido em @.claude/agents/ui-ux-designer.md) a seguinte tarefa:
 

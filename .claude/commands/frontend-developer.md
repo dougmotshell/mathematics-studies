@@ -2,7 +2,7 @@
 description: Implementa a interface da plataforma web/PWA — componentes, rotas, renderização de conteúdo com KaTeX, exercícios interativos, i18n, offline, temas e testes de UI. Usar para executar tickets de front…
 argument-hint: [tarefa ou pergunta para o agente]
 ---
-<!-- managed-by:mathematics-studies/sync-slash-commands -->
+<!-- managed-by:mathematics-studies/sync-ai-adapters -->
 
 Delegue ao subagent `frontend-developer` (definido em @.claude/agents/frontend-developer.md) a seguinte tarefa:
 

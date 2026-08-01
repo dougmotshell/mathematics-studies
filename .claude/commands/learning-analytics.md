@@ -2,7 +2,7 @@
 description: Modela progresso, domínio de habilidades, estatísticas de acerto/erro, diagnóstico de lacunas e recomendação do próximo passo do aluno. Usar para definir métricas, eventos de telemetria, relatórios d…
 argument-hint: [tarefa ou pergunta para o agente]
 ---
-<!-- managed-by:mathematics-studies/sync-slash-commands -->
+<!-- managed-by:mathematics-studies/sync-ai-adapters -->
 
 Delegue ao subagent `learning-analytics` (definido em @.claude/agents/learning-analytics.md) a seguinte tarefa:
 

@@ -1,10 +1,14 @@
 # AGENTS.md — Instruções Canônicas para Agentes de IA
 
-> Este é o **arquivo-fonte único** de instruções do projeto. Ele é lido nativamente pelo
-> **OpenAI Codex**, pelo **GitHub Copilot** (coding agent e VS Code) e por qualquer CLI que
-> siga a convenção `AGENTS.md`; é importado pelo **Claude Code** via `CLAUDE.md` e pelo
-> **Gemini CLI** via `GEMINI.md`. Qualquer regra nova deve ser adicionada **AQUI** — os
-> demais arquivos apenas referenciam este.
+> Este é o **arquivo-fonte único** de instruções do projeto. É lido nativamente por
+> **Codex**, **Grok CLI**, **Cursor**, **Antigravity**, **Zed** e qualquer ferramenta que
+> siga a convenção `AGENTS.md`; é importado pelo **Claude Code** (`CLAUDE.md`) e pelo
+> **Gemini CLI** (`GEMINI.md`); e é resumido em
+> `.github/instructions/core.instructions.md`, de onde saem as regras do **Copilot**,
+> **Cursor**, **Windsurf**, **Antigravity**, **Zed**, **Cline** e **Junie**.
+>
+> Qualquer regra nova deve ser adicionada **AQUI** — os demais arquivos apenas referenciam
+> este ou são gerados a partir dele. Matriz por ferramenta: `docs/ai/tool-support.md`.
 
 ## 1. Sobre o projeto
 
@@ -107,8 +111,9 @@ verifica isso.
 **Regra de escopo:** conhecimento sobre *como o projeto funciona* vai para `docs/`;
 conhecimento *matemático entregue ao usuário* vai para `content/`. Nunca misturar.
 
-Camadas **operacionais** (fora da taxonomia de conteúdo): `memory/`, `docs/`, `scripts/`,
-`tools/`, `prompts/`, `.claude/`, `.github/`, `.codex/`, `.gemini/`.
+Camadas **operacionais** (fora da taxonomia de conteúdo): `memory/`, `docs/`, `tickets/`,
+`scripts/`, `tools/`, `prompts/` e os diretórios de configuração das ferramentas de IA
+(`.claude/`, `.github/`, `.codex/`, `.gemini/`, `.cursor/`, `.agents/`, `.windsurf/`).
 
 ## 4. Estrutura do repositório
 
@@ -116,15 +121,22 @@ Camadas **operacionais** (fora da taxonomia de conteúdo): `memory/`, `docs/`, `
 AGENTS.md                    # Este arquivo (fonte única de instruções)
 CLAUDE.md                    # Adaptador para Claude Code (importa AGENTS.md)
 GEMINI.md                    # Adaptador para Gemini CLI (importa AGENTS.md)
-SLASH_COMMANDS.md            # Inventário de comandos nos quatro CLIs (parcialmente gerado)
-.claude/                     # Claude Code: agents, skills, workflows, commands, settings
+SLASH_COMMANDS.md            # Inventário de comandos por ferramenta (parcialmente gerado)
+.claude/agents/              # FONTE: papéis (todos os CLIs derivam daqui)
+.claude/skills/              # FONTE: capacidades (todos os CLIs derivam daqui)
+.claude/workflows/           # Claude Code: workflows determinísticos (.js)
+.claude/commands/            # Claude Code: slash commands dos agents — gerados
+.github/instructions/        # FONTE: regras por escopo (applyTo) — origem das rules
+.github/copilot-instructions.md   # Adaptador para GitHub Copilot
+.github/prompts/             # Copilot: prompt files — gerados
+.github/chatmodes/           # Copilot: chat modes — gerados
+.github/workflows/           # CI (auditoria da superfície de IA e do conteúdo)
 .codex/README.md             # Adaptador/notas para OpenAI Codex
 .gemini/commands/            # Gemini CLI: custom commands (.toml) — gerados
-.github/copilot-instructions.md   # Adaptador para GitHub Copilot
-.github/instructions/        # Copilot: instruções por escopo de caminho (applyTo)
-.github/prompts/             # Copilot: prompt files reutilizáveis — gerados
-.github/chatmodes/           # Copilot: chat modes (agentes customizados) — gerados
-.github/workflows/           # CI (auditoria da superfície de IA e do conteúdo)
+.cursor/rules/ + commands/   # Cursor: rules (.mdc) e comandos — gerados
+.agents/rules/ + workflows/  # Google Antigravity: rules e workflows — gerados
+.windsurf/rules/ + workflows/# Windsurf: rules e workflows — gerados
+.rules · .clinerules · .junie/  # Zed, Cline/Roo e JetBrains Junie — gerados
 content/                     # CONTEÚDO do produto (taxonomia da seção 3)
 content/paths/               # Trilhas de aprendizado (descritores JSON)
 tickets/                     # Unidades de trabalho: TCK-NNNN-<slug>/ (ticket.md + log.md)
@@ -227,17 +239,33 @@ Detalhamento em `docs/content/`. Regras duras:
 
 ## 10. Workflows, agents e orquestração
 
-- **Claude Code**: workflows determinísticos em `.claude/workflows/*.js` (fan-out de
-  subagentes, verificação adversarial, síntese); subagentes em `.claude/agents/`; skills em
-  `.claude/skills/`.
-- **Copilot**: prompt files em `.github/prompts/` e chat modes em `.github/chatmodes/`
-  espelham as mesmas capacidades.
-- **Codex**: usa este AGENTS.md; prompts pessoais instalados por
-  `python3 scripts/sync-slash-commands.py --codex`.
-- **Gemini CLI**: lê `GEMINI.md`; custom commands em `.gemini/commands/*.toml`, gerados pelo
-  mesmo script.
-- **Outros CLIs/modelos (GPT, etc.)**: ler este arquivo + a skill/agent alvo em Markdown;
-  não há carregamento automático.
+O repositório é operável por **qualquer** assistente de código. Há três fontes canônicas,
+escritas uma única vez, das quais todo o resto é **gerado**:
+
+| Fonte | O que define |
+|---|---|
+| `.claude/agents/<nome>.md` | Papéis: missão, escopo exclusivo, limites, memória |
+| `.claude/skills/<nome>/SKILL.md` | Capacidades: procedimentos executáveis |
+| `.github/instructions/<nome>.instructions.md` | Regras por escopo (`applyTo` = glob) |
+
+`python3 scripts/sync-ai-adapters.py` gera, a partir delas, os adapters de Claude Code,
+Copilot, Gemini CLI, Cursor, Antigravity, Windsurf, Zed, Cline/Roo, Junie e Codex.
+Matriz completa, limitações e instalação: **`docs/ai/tool-support.md`**.
+
+- **Carregam tudo sozinhas** (zero setup): Claude Code (`CLAUDE.md`), Grok CLI (lê
+  `AGENTS.md`, `CLAUDE.md` e `.claude/`), Cursor, Copilot, Gemini CLI, Windsurf,
+  Zed, Cline/Roo, Junie.
+- **Antigravity**: lê `AGENTS.md`; as regras em `.agents/rules/` precisam do modo de ativação
+  escolhido na UI (a sugestão está no topo de cada arquivo).
+- **Codex**: lê `AGENTS.md` nativamente; prompts são **globais por usuário** — instalar com
+  `--codex`, usando `--codex-prefix` ou um `CODEX_HOME` próprio para não colidir com outros
+  repositórios.
+- **Ferramentas web (ChatGPT, Grok, Claude)**: colar `prompts/bootstrap-session.md` ou
+  `prompts/assume-agent-role.md`.
+
+**Só o Claude Code tem subagentes isolados em paralelo e os workflows `.js`.** Nas demais, os
+papéis são executados em sequência pelo próprio modelo — a regra "quem produz não valida"
+passa a depender de disciplina e deve ser declarada no `log.md` do ticket.
 
 ### Agents (`.claude/agents/`, espelhados como chatmodes/commands)
 
@@ -315,39 +343,35 @@ Regras estruturais:
 8. Commits usam prefixo `TCK-NNNN:`; commit, push, deploy em produção e gasto financeiro
    exigem pedido explícito do usuário.
 
-### Capacidades espelhadas nos CLIs (mesma semântica, mesmos nomes)
+### Capacidades (`.claude/skills/`) — mesmo nome em todas as ferramentas
 
-| Capacidade | Claude Code | Copilot | Codex | Gemini CLI |
-|---|---|---|---|---|
-| Criar ticket + triagem | `/ticket` | prompt `/ticket` | prompt instalado | `/ticket` |
-| Executar o ticket em loop | `/ticket-loop` | prompt `/ticket-loop` (assistido) | assistido | `/ticket-loop` (assistido) |
-| Handoff dentro do ticket | `/handoff` | prompt `/handoff` | prompt instalado | `/handoff` |
-| Criar ADR | `/create-adr` | prompt `/create-adr` | prompt instalado | `/create-adr` |
-| Criar spec (SDD) | `/create-spec` | prompt `/create-spec` | prompt instalado | `/create-spec` |
-| Diagrama C4 | `/c4-diagram` | prompt `/c4-diagram` | prompt instalado | `/c4-diagram` |
-| Registrar erro | `/log-error` | prompt `/log-error` | prompt instalado | `/log-error` |
-| Capturar lição | `/capture-lesson` | prompt `/capture-lesson` | prompt instalado | `/capture-lesson` |
-| Novo nó de conteúdo | `/new-topic` | prompt `/new-topic` | prompt instalado | `/new-topic` |
-| Novo conjunto de exercícios | `/new-exercise-set` | prompt `/new-exercise-set` | prompt instalado | `/new-exercise-set` |
-| Verificar matemática | `/math-verify` | prompt `/math-verify` | prompt instalado | `/math-verify` |
-| Trilha de aprendizado | `/learning-path` | prompt `/learning-path` | prompt instalado | `/learning-path` |
-| Auditoria de conteúdo | `/content-audit` | prompt `/content-audit` | prompt instalado | `/content-audit` |
-| Paridade de idiomas | `/i18n-parity` | prompt `/i18n-parity` | prompt instalado | `/i18n-parity` |
-| Auditoria de acessibilidade | `/a11y-audit` | prompt `/a11y-audit` | prompt instalado | `/a11y-audit` |
-| Auditoria PWA/performance | `/pwa-audit` | prompt `/pwa-audit` | prompt instalado | `/pwa-audit` |
-| Revisão de spec | `/spec-review` | prompt `/spec-review` | prompt instalado | `/spec-review` |
-| Contexto do projeto | `/generate-project-context` | prompt homônimo | prompt instalado | `/generate-project-context` |
-| Loop de dev entre agents | `/dev-loop` | prompt `/dev-loop` (assistido) | assistido via `tools/dev-loop.sh` | assistido |
-| Handoff entre CLIs | `/agent-handoff` | prompt `/agent-handoff` | `tools/agent-handoff.sh` | `/agent-handoff` |
-| Auditoria da superfície de IA | `scripts/audit-ai-surface.sh` | executar script | executar script | executar script |
-| Auditoria determinística de conteúdo | `scripts/audit-content.sh` | executar script | executar script | executar script |
+| Capacidade | Comando |
+|---|---|
+| Criar ticket + triagem, e entrar no ciclo | `/ticket` |
+| Executar/retomar o ticket em loop | `/ticket-loop` |
+| Handoff dentro do ticket | `/handoff` |
+| Loop leve entre agents, sem ticket | `/dev-loop` |
+| Handoff entre ferramentas | `/agent-handoff` |
+| Criar ADR · spec · revisar spec | `/create-adr` · `/create-spec` · `/spec-review` |
+| Diagrama C4 | `/c4-diagram` |
+| Registrar erro · capturar lição | `/log-error` · `/capture-lesson` |
+| Regenerar o contexto do projeto | `/generate-project-context` |
+| Novo nó de conteúdo · exercícios · trilha | `/new-topic` · `/new-exercise-set` · `/learning-path` |
+| Verificar matemática | `/math-verify` |
+| Auditar conteúdo · idiomas | `/content-audit` · `/i18n-parity` |
+| Auditar acessibilidade · PWA/performance | `/a11y-audit` · `/pwa-audit` |
+| Auditoria determinística (qualquer ferramenta) | `bash scripts/audit-ai-surface.sh` · `bash scripts/audit-content.sh` |
 
-**Paridade é gerada, não escrita à mão:** `scripts/sync-slash-commands.py` descobre as
-skills (`.claude/skills/`) e os agents (`.claude/agents/`) e gera os adapters — slash
-commands Claude, prompts e chatmodes Copilot, commands Gemini (`.toml`) e prompts Codex
-(`--codex`). Adapters **sem** o marcador `managed-by:mathematics-studies/sync-slash-commands`
-são considerados escritos à mão e preservados. `--check` falha se algo estiver desatualizado
-ou se faltar `memory/agents/<name>.md`. Inventário em `SLASH_COMMANDS.md`.
+Os **papéis** usam o mesmo nome do agente. Duas exceções de namespace: no Gemini CLI são
+`/agent:<nome>`; no Cursor, Antigravity e Windsurf, `/agent-<nome>`.
+
+**Paridade é gerada, não escrita à mão:** `scripts/sync-ai-adapters.py` lê as três fontes
+canônicas e escreve os adapters de todas as ferramentas. Arquivos **sem** o marcador
+`managed-by:mathematics-studies/sync-ai-adapters` são tratados como escritos à mão e
+preservados. `--check` falha se algo estiver desatualizado, se faltar
+`memory/agents/<name>.md` ou se alguma regra passar de 12.000 caracteres (limite de
+Antigravity e Windsurf). Inventário em `SLASH_COMMANDS.md`; matriz por ferramenta em
+`docs/ai/tool-support.md`.
 
 ### Workflows (`.claude/workflows/`)
 
@@ -355,7 +379,7 @@ ou se faltar `memory/agents/<name>.md`. Inventário em `SLASH_COMMANDS.md`.
 |---|---|
 | `content-review` | Revisão multidimensional de um nó de conteúdo (rigor, didática, exercícios, i18n, a11y) com verificação adversarial. |
 | `curriculum-audit` | Auditoria da taxonomia: lacunas, ciclos de pré-requisito, dificuldade inconsistente, cobertura por estágio. |
-| `ai-surface-audit` | Paridade e saúde da superfície de IA nos quatro CLIs. |
+| `ai-surface-audit` | Paridade e saúde da superfície de IA em todas as ferramentas. |
 | `feature-plan-review` | Revisão adversarial de um plano de implementação/estimativa. |
 | `research-sweep` | Varredura multi-ângulo de fontes gratuitas e referências para um tópico. |
 

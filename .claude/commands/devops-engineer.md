@@ -2,7 +2,7 @@
 description: Cuida de CI/CD, build, deploy na Vercel, previews, variáveis de ambiente, monitoramento e performance de entrega. Usar para tickets de infraestrutura, pipeline e publicação.
 argument-hint: [tarefa ou pergunta para o agente]
 ---
-<!-- managed-by:mathematics-studies/sync-slash-commands -->
+<!-- managed-by:mathematics-studies/sync-ai-adapters -->
 
 Delegue ao subagent `devops-engineer` (definido em @.claude/agents/devops-engineer.md) a seguinte tarefa:
 

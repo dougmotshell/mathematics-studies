@@ -28,13 +28,16 @@
   multi-agente**.
 - **Agents como slash commands**: todo agent também é acessível como `/agente <tarefa>`
   (ex.: `/math-reviewer`, `/content-author`) — comandos gerados em `.claude/commands/` por
-  `scripts/sync-slash-commands.py`. **Não editar os gerados à mão.**
+  `scripts/sync-ai-adapters.py`. **Não editar os gerados à mão.**
 - **MCPs úteis neste projeto** (quando configurados): `chrome-devtools` para `/pwa-audit` e
   verificação visual da aplicação; Figma para design. Sem o MCP, usar o fallback documentado
   na skill.
+- **Ao editar agents, skills ou `.github/instructions/`**: são as **fontes canônicas** de
+  todas as ferramentas. Rode `python3 scripts/sync-ai-adapters.py` depois de mexer nelas —
+  o CI falha se os adapters estiverem desatualizados. Nunca edite os gerados à mão.
 - **Memória do projeto**: além da memória interna do Claude Code, manter a memória
   compartilhada do repositório em `memory/` (seção 5 do AGENTS.md) — ela é lida também por
-  Codex, Copilot e Gemini. Cada agent mantém a própria memória em `memory/agents/<name>.md`;
+  Codex, Copilot, Gemini, Cursor, Grok e as demais ferramentas. Cada agent mantém a própria memória em `memory/agents/<name>.md`;
   lições são indexadas em `memory/LESSONS.md`.
 
 ## Ao encerrar tarefas significativas

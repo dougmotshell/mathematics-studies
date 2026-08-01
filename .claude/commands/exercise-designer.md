@@ -2,7 +2,7 @@
 description: Cria exercícios, quizzes e avaliações com feedback diagnóstico, dicas progressivas, solução passo a passo e metadados (tipo, dificuldade, habilidade, tempo estimado), conforme docs/content/exercise-s…
 argument-hint: [tarefa ou pergunta para o agente]
 ---
-<!-- managed-by:mathematics-studies/sync-slash-commands -->
+<!-- managed-by:mathematics-studies/sync-ai-adapters -->
 
 Delegue ao subagent `exercise-designer` (definido em @.claude/agents/exercise-designer.md) a seguinte tarefa:
 
