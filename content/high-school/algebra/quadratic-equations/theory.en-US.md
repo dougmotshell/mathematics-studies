@@ -63,6 +63,9 @@ When two roots $x_1$ and $x_2$ exist, **Vieta's formulas** hold:
 
 $$x_1 + x_2 = -\frac{b}{a}, \qquad x_1 \cdot x_2 = \frac{c}{a}.$$
 
+*Reading:* x subscript 1 plus x subscript 2 equals minus b divided by a; and x subscript 1
+times x subscript 2 equals c divided by a.
+
 ## Worked examples
 
 ### Example 1 — two roots
@@ -73,10 +76,18 @@ Coefficients: $a = 1$, $b = -5$, $c = 6$.
 
 $$\Delta = (-5)^2 - 4 \cdot 1 \cdot 6 = 25 - 24 = 1 > 0,$$
 
+*Reading:* delta equals open parenthesis minus five close parenthesis squared, minus four
+times one times six, equals twenty-five minus twenty-four, equals one, which is greater than
+zero.
+
 so there are two distinct real roots:
 
 $$x = \frac{-(-5) \pm \sqrt{1}}{2 \cdot 1} = \frac{5 \pm 1}{2}
 \;\Longrightarrow\; x_1 = 3, \quad x_2 = 2.$$
+
+*Reading:* x equals minus, open parenthesis minus five close parenthesis, plus or minus the
+square root of one, all divided by two times one; that equals five plus or minus one, all
+divided by two; which implies x subscript 1 equals three and x subscript 2 equals two.
 
 **Checking:** $3^2 - 5\cdot3 + 6 = 9 - 15 + 6 = 0$ and $2^2 - 5\cdot2 + 6 = 4 - 10 + 6 = 0$.
 Substituting back is the cheapest way to catch a sign mistake.
@@ -89,6 +100,9 @@ Coefficients: $a = 1$, $b = -4$, $c = 5$. Then
 
 $$\Delta = (-4)^2 - 4 \cdot 1 \cdot 5 = 16 - 20 = -4 < 0.$$
 
+*Reading:* delta equals open parenthesis minus four close parenthesis squared, minus four
+times one times five, equals sixteen minus twenty, equals minus four, which is less than zero.
+
 Since $\Delta < 0$, the equation has **no real root**. The parabola $y = x^2 - 4x + 5$ opens
 upwards and its vertex lies above the $x$-axis, so it never touches it.
 
@@ -100,6 +114,9 @@ Exactly one root means $\Delta = 0$:
 
 $$k^2 - 4 \cdot 1 \cdot 9 = 0 \;\Longrightarrow\; k^2 = 36 \;\Longrightarrow\; k = 6
 \ \text{or} \ k = -6.$$
+
+*Reading:* k squared minus four times one times nine equals zero, which implies k squared
+equals thirty-six, which implies k equals six or k equals minus six.
 
 Notice that the condition produced **two** values of $k$ — each one yields an equation with a
 single root. Confusing "one root in $x$" with "one answer in $k$" is a frequent mistake.

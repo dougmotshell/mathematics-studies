@@ -65,6 +65,9 @@ Quando existem duas raízes $x_1$ e $x_2$, valem as **relações de Girard**:
 
 $$x_1 + x_2 = -\frac{b}{a}, \qquad x_1 \cdot x_2 = \frac{c}{a}.$$
 
+*Leitura:* x índice 1 mais x índice 2 é igual a menos b dividido por a; e x índice 1 vezes
+x índice 2 é igual a c dividido por a.
+
 ## Exemplos resolvidos
 
 ### Exemplo 1 — duas raízes
@@ -75,10 +78,18 @@ Coeficientes: $a = 1$, $b = -5$, $c = 6$.
 
 $$\Delta = (-5)^2 - 4 \cdot 1 \cdot 6 = 25 - 24 = 1 > 0,$$
 
+*Leitura:* delta é igual a abre parênteses menos cinco fecha parênteses ao quadrado, menos
+quatro vezes um vezes seis, igual a vinte e cinco menos vinte e quatro, igual a um, que é
+maior que zero.
+
 logo há duas raízes reais distintas:
 
 $$x = \frac{-(-5) \pm \sqrt{1}}{2 \cdot 1} = \frac{5 \pm 1}{2}
 \;\Longrightarrow\; x_1 = 3, \quad x_2 = 2.$$
+
+*Leitura:* x é igual a menos, abre parênteses menos cinco fecha parênteses, mais ou menos a
+raiz quadrada de um, tudo dividido por dois vezes um; isso é igual a cinco mais ou menos um,
+tudo dividido por dois; o que implica x índice 1 igual a três e x índice 2 igual a dois.
 
 **Conferindo:** $3^2 - 5\cdot3 + 6 = 9 - 15 + 6 = 0$ e $2^2 - 5\cdot2 + 6 = 4 - 10 + 6 = 0$.
 Substituir de volta é o modo mais barato de detectar um erro de sinal.
@@ -91,6 +102,10 @@ Coeficientes: $a = 1$, $b = -4$, $c = 5$. Então
 
 $$\Delta = (-4)^2 - 4 \cdot 1 \cdot 5 = 16 - 20 = -4 < 0.$$
 
+*Leitura:* delta é igual a abre parênteses menos quatro fecha parênteses ao quadrado, menos
+quatro vezes um vezes cinco, igual a dezesseis menos vinte, igual a menos quatro, que é menor
+que zero.
+
 Como $\Delta < 0$, a equação **não tem raiz real**. A parábola $y = x^2 - 4x + 5$ tem
 concavidade para cima e vértice acima do eixo $x$, portanto nunca o toca.
 
@@ -102,6 +117,9 @@ Uma única raiz significa $\Delta = 0$:
 
 $$k^2 - 4 \cdot 1 \cdot 9 = 0 \;\Longrightarrow\; k^2 = 36 \;\Longrightarrow\; k = 6
 \ \text{ou} \ k = -6.$$
+
+*Leitura:* k ao quadrado menos quatro vezes um vezes nove é igual a zero, o que implica k ao
+quadrado igual a trinta e seis, o que implica k igual a seis ou k igual a menos seis.
 
 Repare que a condição produziu **dois** valores de $k$ — cada um deles gera uma equação com
 uma única raiz. Confundir "uma raiz em $x$" com "uma resposta em $k$" é um erro frequente.
