@@ -1,0 +1,5 @@
+# mathematics-studies — conteúdo público e gratuito, indexação liberada.
+# Sem `Sitemap:` enquanto não houver sitemap gerado: apontar para um arquivo
+# inexistente é pior que não apontar.
+User-agent: *
+Allow: /

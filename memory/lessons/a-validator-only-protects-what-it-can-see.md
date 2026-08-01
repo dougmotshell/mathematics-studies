@@ -71,3 +71,70 @@ de profundidade**, não para o exemplo que apareceu primeiro.
 - Ao registrar lição sobre um defeito, escrever a **classe** ("nada some da varredura",
   "nenhum canal muda o veredito"), nunca a lista de casos corrigidos — a lista é o que o
   próximo defeito vai contornar.
+
+## Adendo — 2026-08-01, TCK-0015, REJECT [006]: a mesma classe fora do validador
+
+Terceira reincidência, agora em **devops**, em duas formas que a redação anterior não
+alcançava porque falavam do validador como programa, não do portão como posição:
+
+- **B2 — a verificação não verifica.** Dois passos de CI usavam
+  `if grep -r <padrão> <alvo>; then falha; fi`. `grep -r` sai **2** quando o alvo não existe,
+  e o `if` só trata `0` — então o passo imprimia `OK` e ficava **verde justamente no cenário
+  que ele existia para pegar** (o diretório `src/content-contract/` desaparecer, absorvido
+  pelo gerador). É literalmente o "testar o caminho vazio" que a regra já mandava fazer, na
+  palavra "verificação de CI" que já estava escrita — e ainda assim escapou, porque `grep`
+  parece binário (achou / não achou) e tem **três** desfechos.
+- **B1 — o portão certo, fora do caminho.** O portão do contrato de carga foi posto no
+  `prebuild` **e** no CI, com a justificativa correta ("a Vercel não lê o resultado do
+  Actions; portão fora do caminho não é portão") — e a auditoria editorial, única que enxerga
+  a paridade bilíngue, ficou só no CI. Resultado medido: push direto em `main` publicava
+  `dist/pt-br/…/index.html` de um nó `languages: ["pt-BR"]`, com o CI vermelho ao lado. O
+  argumento estava certo e foi aplicado a **uma** das ferramentas.
+
+**Como aplicar (extensão da regra):**
+
+- **Código de saída de ferramenta de linha de comando tem mais de dois valores.** Em portão
+  de CI, tratar `0`, `1` e "qualquer outro" explicitamente (`case "$rc" in`), e conferir a
+  **existência e a não-vacuidade do alvo** antes de rodar a busca. Verificação inconclusiva
+  vale como reprovação, nunca como aprovação.
+- **Portão se lista por caminho, não por ferramenta.** Enumerar os caminhos que chegam ao
+  usuário (merge, push direto, publicação pelo host, execução local) × as verificações que
+  existem, e conferir a matriz completa. Uma verificação que só existe em um caminho protege
+  só aquele caminho, por mais correta que ela seja.
+- **A prova de um passo de CI é executá-lo**, com o alvo presente **e** ausente. O texto do
+  passo é extraível do próprio arquivo do workflow; rodar uma cópia paráfrase não prova nada
+  sobre o que está versionado.
+
+## Adendo — 2026-08-01, TCK-0015, REJECT [010]: estreitar para tirar falso positivo abre falso negativo
+
+Quarta reincidência, na correção da anterior. O passo "sem recurso de terceiro" reprovava
+qualquer `https://` — inclusive link de referência bibliográfica, que será conteúdo legítimo.
+Troquei o padrão genérico por uma lista de formas específicas (`<script`, `src="https:`,
+`@font-face`…), rodei **seis** casos, todos passaram, e entreguei. Medição do revisor: **8 de
+18 vetores passavam calados** — protocolo relativo (`//host`, a forma clássica de pixel),
+aspas simples, `@import` sem `url()`, `<object data>`, `<a ping>` (beacon, palavra que o
+próprio critério nomeia), `meta refresh`, `<image href>` em SVG e **qualquer tag em
+maiúscula**, porque o `grep` perdeu o `-i` e nome de tag em HTML é case-insensitive. Um
+arquivo em `public/` — copiado verbatim para a saída — publicava rastreador com o passo
+verde.
+
+**A classe:** *afrouxar um detector para eliminar falso positivo é reescrevê-lo por inteiro, e
+o novo detector precisa da bateria inteira, não do delta.* Falso positivo custa uma build
+vermelha; falso negativo publica o que o portão existia para impedir — a assimetria manda
+errar para o lado de recusar (é o adendo de L-022 aplicado a portão de CI). O erro de método
+é o de L-013/L-021: eu troquei uma **regra de classe** ("qualquer URL absoluta") por uma
+**lista de casos** e testei a lista contra ela mesma.
+
+**Como aplicar:**
+
+- Ao substituir um padrão de detecção, escrever antes a **classe em uma frase** ("tudo que faz
+  o navegador buscar bytes de outra origem") e derivar os vetores da classe — sintaxe
+  alternativa (aspas simples/duplas/sem aspas), forma abreviada (`//host`), caixa alta,
+  atributo equivalente (`data`, `ping`, `poster`, `formaction`, `background`, `srcset`) e o
+  canal equivalente (`@import` sem `url()`, `meta refresh`).
+- Toda bateria tem os **dois lados**: vetores que precisam reprovar **e** casos legítimos que
+  precisam passar. Só o segundo lado prova que o padrão não voltou a ser genérico.
+- Nunca comparar o padrão novo com o antigo só pelo que ele ganhou: listar o que ele
+  **deixou** de pegar. Se a lista não estiver vazia, é regressão.
+- Rodar a bateria contra o **passo versionado**, com o artefato real incluso — e lembrar que a
+  saída da build contém arquivos que ninguém escreveu na aplicação (`public/`).

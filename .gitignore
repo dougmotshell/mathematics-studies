@@ -23,6 +23,7 @@
 
 # --- Node / build da aplicação web ------------------------------------------
 node_modules/
+.astro/
 .next/
 out/
 dist/

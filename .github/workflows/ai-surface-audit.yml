@@ -1,7 +1,17 @@
-name: AI surface & content audit
+name: CI — superfície de IA, acervo e build
 
-# Garante que a superfície de IA (agents, skills, adapters dos quatro CLIs) e o acervo
-# permaneçam consistentes. Roda em PR, no push para main e semanalmente.
+# Portão de mérito do repositório (`ADR-0006`, **accepted** em 2026-08-01 pelo
+# TCK-0016): nada deveria entrar em `main` sem este job verde. Roda em PR, no push
+# para main e semanalmente — o agendado detecta deriva sem commit.
+#
+# O nome do ARQUIVO é mantido (`ai-surface-audit.yml`) de propósito: ele é citado
+# por `ADR-0006`, por `memory/context/devops.md` e por tickets fechados; renomeá-lo
+# invalidaria essas referências sem ganho. Só o nome exibido mudou, porque o job
+# passou a fazer mais que auditar a superfície de IA.
+#
+# A publicação NÃO acontece aqui: quem constrói e publica é a Vercel, pela
+# integração Git, sem token guardado no repositório. Este workflow constrói apenas
+# para verificar. Consequência aceita no ADR-0006: a build roda duas vezes.
 on:
   push:
     branches: [main]
@@ -9,6 +19,9 @@ on:
   schedule:
     - cron: '0 6 * * 1'
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   audit:
@@ -19,6 +32,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.x'
+
+      # Piso do ADR-0007 (>= 22.12.0). O ambiente local usa 24.x; manter os dois
+      # iguais evita "passa aqui, quebra no CI".
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
 
       - name: Auditoria da superfície de IA
         run: bash scripts/audit-ai-surface.sh
@@ -34,3 +54,137 @@ jobs:
       # Só bash + Python 3 da stdlib: nenhuma dependência a instalar.
       - name: Suíte de casos hostis do context-watch
         run: bash tools/context-watch-test.sh
+
+      # Portão do RF-18 no caminho do MERGE. O mesmo comando roda no `prebuild`,
+      # que é o portão do caminho de PUBLICAÇÃO (push direto em main não passa por
+      # PR). Redundância deliberada: são dois caminhos até o aluno, e o ADR-0006
+      # exige um portão em cada um.
+      - name: Contrato de carga do acervo (RF-18)
+        run: bash scripts/validate-content.sh
+
+      - name: Instalar dependências da aplicação
+        run: npm ci
+
+      # ADR-0003: o acervo não pode depender da aplicação. Se o leitor do acervo
+      # citar o gerador de site, uma troca de stack passa a custar reescrever o
+      # contrato de dados — e este grep é o teste falseável que o ADR-0007 nomeia.
+      #
+      # L-019: o alvo é conferido ANTES do grep e o código de saída é tratado nos
+      # três casos. `grep -r` sai 2 quando o caminho não existe, e um `if grep`
+      # que só trata 0 imprimiria "OK" justamente no cenário que este passo existe
+      # para pegar — o módulo independente deixar de existir.
+      - name: Contrato de dados independente do gerador
+        run: |
+          set -euo pipefail
+          alvo=src/content-contract
+          if [ ! -d "$alvo" ]; then
+            echo "::error::$alvo não existe — o teste falseável do ADR-0007 não pôde ser executado"
+            exit 1
+          fi
+          # Conta só `*.js` de propósito: é a extensão do módulo hoje. Renomear
+          # para `.mjs`/`.ts` faz este passo REPROVAR até que a linha abaixo seja
+          # atualizada junto — falha fechada, e é o comportamento desejado (S12).
+          modulos=$(find "$alvo" -type f -name '*.js' | wc -l)
+          if [ "$modulos" -eq 0 ]; then
+            echo "::error::$alvo sem nenhum módulo .js — 'nada encontrado' é erro de uso, não aprovação (L-019)"
+            exit 1
+          fi
+          set +e
+          grep -rniE 'astro|@astrojs|vite' "$alvo"
+          rc=$?
+          set -e
+          case "$rc" in
+            0) echo "::error file=$alvo::o leitor do acervo cita o gerador de site (ADR-0003)"; exit 1 ;;
+            1) echo "OK: $modulos módulo(s) em $alvo, nenhum cita o gerador de site." ;;
+            *) echo "::error::grep terminou com $rc — verificação inconclusiva vale como reprovação"; exit 1 ;;
+          esac
+
+      # Build de verificação: build que quebra reprova o PR (ADR-0006 ii).
+      # `npm run build` dispara o `prebuild`, então o validador roda de novo aqui —
+      # é assim que se verifica que o portão do caminho de publicação está ligado.
+      - name: Build de verificação
+        run: npm run build
+
+      # RNF-7 / critério 12 do TCK-0015: zero coleta de dados no HTML publicado.
+      # Verificado no artefato, não na intenção — e o alvo inclui tudo que a build
+      # emite, inclusive o que `public/` copia verbatim (vetor real: B4).
+      #
+      # Duas exigências que puxam em sentidos opostos, e o padrão tem de atender às
+      # duas ao mesmo tempo:
+      #   1. NÃO reprovar `https://` em texto ou em `<a href>` — quando a task 6
+      #      renderizar a teoria, os links de `references.json` são conteúdo
+      #      legítimo (S5 do REJECT [006]);
+      #   2. reprovar TUDO que faz o navegador buscar bytes de outra origem.
+      # Trocar (2) por um padrão estreito ao atender (1) foi o defeito B4: oito
+      # vetores passavam calados. A regra que governa o padrão é de CLASSE, não
+      # lista de casos — "o que carrega recurso", em qualquer sintaxe válida:
+      #   - protocolo relativo `//host` tanto quanto `https://host`;
+      #   - aspas simples, aspas duplas ou sem aspas;
+      #   - tag e atributo em QUALQUER caixa (`-i`): HTML é case-insensitive;
+      #   - atributo que busca bytes: src, srcset, data, poster, action,
+      #     formaction, background, ping (beacon) e href de link/image/use;
+      #   - CSS: `url(...)`, `@import` com ou sem `url()`, `@font-face`;
+      #   - navegação forçada: `<meta http-equiv=refresh>` para fora;
+      #   - nomes de rastreadores conhecidos, que não dependem de sintaxe.
+      # Falso positivo aqui falha FECHADO (build vermelha, ninguém rastreado);
+      # falso negativo publica rastreio. Na dúvida, reprovar.
+      # Dívida conhecida: fonte auto-hospedada (`@font-face` + `.woff` da própria
+      # origem, permitida pelo ADR-0007) vai reprovar — quando o ticket de tipografia
+      # existir, refinar aqui em vez de afrouxar a classe.
+      - name: HTML publicado sem recurso de terceiro
+        run: |
+          set -euo pipefail
+          if [ ! -d dist ]; then
+            echo "::error::dist/ não existe — a build não produziu saída para inspecionar"
+            exit 1
+          fi
+          paginas=$(find dist -type f -name '*.html' | wc -l)
+          if [ "$paginas" -eq 0 ]; then
+            echo "::error::dist/ sem nenhum HTML — 'nada encontrado' é erro de uso, não aprovação (L-019)"
+            exit 1
+          fi
+          # A aspa simples entra por variável: dentro de string entre aspas simples
+          # não existe forma de escapá-la.
+          q=$(printf "\047")
+          externo="(https?:)?//"
+          padrao="<script|<iframe|<object|<embed|@font-face|@import|\\.woff2?"
+          padrao="$padrao|url\\([\"$q]?$externo"
+          padrao="$padrao|(src|data|poster|action|formaction|background|ping)=[\"$q]?$externo"
+          padrao="$padrao|srcset=[\"$q][^\"$q>]*$externo"
+          padrao="$padrao|<(link|image|use)[^>]+href=[\"$q]?$externo"
+          padrao="$padrao|http-equiv=[\"$q]?refresh[^>]*$externo"
+          padrao="$padrao|googletagmanager|google-analytics|gtag\\(|fbq\\(|connect\\.facebook"
+          padrao="$padrao|hotjar|plausible\\.io|umami|clarity\\.ms|sendBeacon"
+          set +e
+          grep -rIniE "$padrao" dist/
+          rc=$?
+          set -e
+          case "$rc" in
+            0) echo "::error::recurso externo no HTML publicado — script, iframe, pixel, beacon ou fonte remota"; exit 1 ;;
+            1) echo "OK: $paginas página(s) em dist/, nenhuma carrega recurso de terceiro." ;;
+            *) echo "::error::grep terminou com $rc — verificação inconclusiva vale como reprovação"; exit 1 ;;
+          esac
+
+      # Terceira consequência falseável do ADR-0007 (§7): nenhuma rota emitida
+      # contém letra maiúscula. URL servida por host estático é sensível a
+      # maiúsculas, e um slug fora de kebab-case passa hoje pelas duas auditorias
+      # do acervo — sem este passo, a consequência é promessa sem guarda (S3 do
+      # REJECT [006]).
+      - name: Nenhuma rota publicada em caixa mista
+        run: |
+          set -euo pipefail
+          if [ ! -d dist ]; then
+            echo "::error::dist/ não existe — a build não produziu saída para inspecionar"
+            exit 1
+          fi
+          if [ "$(find dist -mindepth 1 | wc -l)" -eq 0 ]; then
+            echo "::error::dist/ vazio — 'nada encontrado' é erro de uso, não aprovação (L-019)"
+            exit 1
+          fi
+          maiusculas=$(find dist -path '*[A-Z]*' | wc -l)
+          if [ "$maiusculas" -ne 0 ]; then
+            find dist -path '*[A-Z]*'
+            echo "::error::rota publicada com letra maiúscula — a URL pública é minúscula (ADR-0007 §7)"
+            exit 1
+          fi
+          echo "OK: nenhuma rota emitida com letra maiúscula."

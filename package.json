@@ -1,0 +1,32 @@
+{
+  "name": "mathematics-studies",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "Plataforma gratuita e aberta de estudos de matematica (pt-BR / en-US)",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "//": [
+    "A ORDEM DO prebuild E LOAD-BEARING, NAO ESTILO: validate:content vem antes de",
+    "audit:content porque, com content/ ausente ou vazio, o auditor sozinho devolve 0",
+    "('nada a auditar') enquanto o validador sai 2 e o && corta a cadeia. Inverter, ou",
+    "trocar && por ;, reabre o buraco de acervo sumido publicando site vazio.",
+    "Os dois juntos formam o portao do RF-18 no caminho de PUBLICACAO; os mesmos dois",
+    "sao passos do Actions, que e o portao do caminho de MERGE (ADR-0006, TCK-0015).",
+    "npm ignora chaves chamadas '//'."
+  ],
+  "scripts": {
+    "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
+    "validate:content": "bash scripts/validate-content.sh",
+    "audit:content": "bash scripts/audit-content.sh",
+    "prebuild": "npm run validate:content && npm run audit:content",
+    "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview"
+  },
+  "dependencies": {
+    "astro": "^7.1.6"
+  },
+  "devDependencies": {}
+}

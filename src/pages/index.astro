@@ -1,0 +1,70 @@
+---
+// Raiz `/`: página estática de escolha de idioma (ADR-0007 §7). Detectar idioma
+// por cabeçalho exigiria execução no servidor, que esta arquitetura não tem.
+//
+// Enquanto o índice de navegação não existe (task 5 da spec), cada idioma leva
+// direto ao nó disponível no acervo. Este arquivo é substituído por aquele
+// ticket — não é o índice do produto.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { LANGUAGES, loadAllNodes, routesOf } from '../content-contract/index.js';
+
+// DÍVIDA DECLARADA (S11 do REJECT [010]): `.github/instructions/app.instructions.md`
+// passou a exigir, durante este ticket, que nenhuma string voltada ao usuário fique
+// hard-coded — tudo em catálogo pt-BR/en-US. Os literais desta página (o par de
+// frases de escolha, `LANGUAGE_NAME`, `title` e `description`) são caso de fronteira:
+// a página é a escolha de idioma, existe nos dois idiomas ao mesmo tempo e **some**
+// quando o índice da task 5 entrar. O catálogo de verdade nasce com aquele ticket;
+// refatorar aqui seria mobiliar uma casa que vai ser demolida.
+const LANGUAGE_NAME = {
+  'pt-BR': 'Português (Brasil)',
+  'en-US': 'English (United States)',
+};
+
+const nodes = loadAllNodes();
+
+// Uma entrada por idioma do contrato, com as rotas que existem naquele idioma.
+const entries = LANGUAGES.map((language) => ({
+  language,
+  routes: nodes.flatMap((node) =>
+    routesOf(node)
+      .filter((route) => route.language === language)
+      .map((route) => ({ ...route, title: node.meta.title[language] })),
+  ),
+})).filter((entry) => entry.routes.length > 0);
+---
+
+<BaseLayout
+  language="pt-BR"
+  title="mathematics-studies"
+  description="Plataforma gratuita e aberta de estudos de matemática, em português e inglês. — Free and open mathematics study platform, in Portuguese and English."
+>
+  <h1>mathematics-studies</h1>
+  {/*
+    Dois parágrafos, não dois `<span>` irmãos: o compressor de HTML do gerador
+    remove o espaço entre elementos irmãos e o texto visível saía colado
+    ('Escolha o idioma.Choose your language.') — B3 do REJECT [006]. Separação
+    estrutural não depende de espaço em branco sobreviver ao compressor, e ainda
+    marca cada frase com o `lang` certo para o leitor de tela.
+  */}
+  <p lang="pt-BR">Escolha o idioma.</p>
+  <p lang="en-US">Choose your language.</p>
+
+  <ul class="language-list">
+    {
+      entries.map((entry) => (
+        <li lang={entry.language}>
+          <strong>{LANGUAGE_NAME[entry.language]}</strong>
+          <ul>
+            {entry.routes.map((route) => (
+              <li>
+                <a href={route.path} hreflang={entry.language}>
+                  {route.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>

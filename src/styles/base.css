@@ -1,0 +1,99 @@
+/*
+ * Estilos base.
+ *
+ * Restrição do RNF-7 / ADR-0006: **nenhuma fonte remota**. A pilha abaixo usa
+ * apenas fontes já instaladas no dispositivo — nada é buscado em CDN de
+ * terceiro, e por isso nenhuma requisição sai do navegador do aluno para outro
+ * domínio. Fonte própria, se um dia houver, é servida de `public/`.
+ *
+ * O design system é do ticket do `ui-ux-designer`; aqui há só o mínimo legível.
+ */
+
+:root {
+  --color-text: #16181d;
+  --color-muted: #4a4f57;
+  --color-background: #ffffff;
+  --color-accent: #123a6b;
+  --color-badge-background: #fdf3d8;
+  --color-badge-border: #8a6d1f;
+  --measure: 68ch;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text: #f2f4f7;
+    --color-muted: #c2c8d2;
+    --color-background: #14161a;
+    --color-accent: #9dc4ff;
+    --color-badge-background: #3a2f10;
+    --color-badge-border: #e0c469;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+}
+
+body {
+  margin: 0;
+  padding: 2rem 1.25rem 4rem;
+  color: var(--color-text);
+  background: var(--color-background);
+}
+
+main {
+  max-width: var(--measure);
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: clamp(1.6rem, 1.2rem + 2vw, 2.4rem);
+  line-height: 1.2;
+  margin: 0 0 0.5rem;
+}
+
+a {
+  color: var(--color-accent);
+}
+
+a:focus-visible,
+:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 2px;
+}
+
+.muted {
+  color: var(--color-muted);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.15em 0.6em;
+  border: 1px solid var(--color-badge-border);
+  border-radius: 999px;
+  background: var(--color-badge-background);
+  color: var(--color-text);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.language-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.node-path {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  overflow-wrap: anywhere;
+}

@@ -1,0 +1,26 @@
+---
+// Esqueleto de página: só o suficiente para uma página válida e acessível.
+// Cabeçalho, alternador de idioma e rodapé de verdade são do ticket de interface
+// (tasks 5-8 da spec da fatia mínima).
+//
+// `lang` recebe o identificador canônico do dado (`pt-BR` / `en-US`), nunca o
+// segmento minúsculo da URL: minúsculo é grafia de URL, não chave de idioma.
+import '../styles/base.css';
+
+const { language, title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang={language}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+  </head>
+  <body>
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>

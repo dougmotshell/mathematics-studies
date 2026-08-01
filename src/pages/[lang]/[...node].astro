@@ -1,0 +1,72 @@
+---
+// Página mínima de um nó do acervo, uma rota estática por idioma.
+//
+// ISTO NÃO É O LEITOR DE NÓ. O leitor (teoria renderizada, matemática
+// acessível, navegação, player de exercícios) é das tasks 5-8 da spec, em
+// tickets próprios do `frontend-developer`. Esta página existe para provar que
+// a cadeia acervo -> validação -> build -> HTML publicável funciona ponta a
+// ponta, e some quando a task 6 entrar.
+//
+// A URL é `/<segmento-de-idioma>/<caminho-do-nó>`, com o caminho da taxonomia
+// intacto: sem tradução, sem normalização, sem maiúscula (RNF-5, L-003).
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { loadAllNodes, routesOf } from '../../content-contract/index.js';
+
+export function getStaticPaths() {
+  return loadAllNodes().flatMap((node) =>
+    routesOf(node).map((route) => ({
+      params: { lang: route.urlSegment, node: node.id },
+      props: { node, language: route.language },
+    })),
+  );
+}
+
+const UI = {
+  'pt-BR': {
+    status: { draft: 'Rascunho', review: 'Em revisão', published: 'Publicado' },
+    proof: 'Página mínima de verificação do pipeline: título, estado e contagem de exercícios foram lidos do acervo versionado durante a build. O leitor de teoria e o player de exercícios ainda não existem.',
+    nodeLabel: 'Nó do acervo',
+    exercises: (n) => (n === 1 ? '1 exercício no acervo' : `${n} exercícios no acervo`),
+  },
+  'en-US': {
+    status: { draft: 'Draft', review: 'In review', published: 'Published' },
+    proof: 'Minimal pipeline verification page: title, status and exercise count were read from the versioned corpus at build time. The theory reader and the exercise player do not exist yet.',
+    nodeLabel: 'Content node',
+    exercises: (n) => (n === 1 ? '1 exercise in the corpus' : `${n} exercises in the corpus`),
+  },
+};
+
+// Rótulo do link de idioma escrito **no idioma de destino** e marcado com o
+// `lang` dele: é o que permite ao leitor de tela trocar de voz na palavra certa.
+const LANGUAGE_LINK = {
+  'pt-BR': 'Ler em português',
+  'en-US': 'Read in English',
+};
+
+const { node, language } = Astro.props;
+const t = UI[language];
+const statusLabel = t.status[node.status] ?? node.status;
+const otherRoute = routesOf(node).find((route) => route.language !== language);
+---
+
+<BaseLayout
+  language={language}
+  title={node.meta.title[language]}
+  description={node.meta.summary[language]}
+>
+  <h1>{node.meta.title[language]}</h1>
+  <p><span class="badge">{statusLabel}</span></p>
+  <p class="muted">{t.proof}</p>
+  <p>
+    {t.nodeLabel}: <code class="node-path">{node.id}</code> &middot; {t.exercises(node.exercises.length)}
+  </p>
+  {
+    otherRoute && (
+      <p>
+        <a href={otherRoute.path} hreflang={otherRoute.language} lang={otherRoute.language}>
+          {LANGUAGE_LINK[otherRoute.language]}
+        </a>
+      </p>
+    )
+  }
+</BaseLayout>
