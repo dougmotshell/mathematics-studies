@@ -10,6 +10,6 @@ Criar com `/create-spec`; revisar com `/spec-review`; executar via tickets
 
 | Spec | Título | Status | Atualizada |
 |---|---|---|---|
-| — | *nenhuma spec criada ainda* | — | — |
+| [minimum-learning-slice](minimum-learning-slice/spec.md) | Fatia mínima de aprendizagem | approved | 2026-08-01 |
 
 Status: `draft` · `in-review` · `approved` · `done`.
