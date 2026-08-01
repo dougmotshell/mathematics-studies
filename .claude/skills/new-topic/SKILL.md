@@ -63,8 +63,13 @@ Estrutura mínima obrigatória (`docs/content/content-standards.md`):
 6. **Erros comuns** — o equívoco típico e por que ele acontece
 7. **Resumo** — o que levar
 
-Regras: KaTeX (`$…$`, `$$…$$`); toda equação em display com descrição textual; linguagem
-calibrada ao estágio; **as duas versões equivalentes** (mesmas seções, mesmos exemplos).
+Regras: KaTeX (`$…$`, `$$…$$`); toda equação em **display** com leitura textual integral
+(`*Leitura:*` / `*Reading:*`) logo abaixo, e fórmula **inline** com o agrupamento dito em
+palavras quando o teste de marcação de agrupamento dispara — **(a)** argumento composto **ou
+(b)** base elevada ambígua, entre parênteses ou com sinal unário à frente
+(`$\frac{5 \pm 1}{2}$`, `$(x+3)^2$`, `$-x^2$` sim; `$\frac{b}{a}$`, `$x_1$`,
+`$ax^2 + bx + c = 0$` não — `docs/content/accessibility.md`); linguagem calibrada ao estágio;
+**as duas versões equivalentes** (mesmas seções, mesmos exemplos).
 
 ## 4. Exercícios e referências
 

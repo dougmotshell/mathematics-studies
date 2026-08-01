@@ -9,8 +9,16 @@ Acessibilidade é requisito do projeto, não acabamento (AGENTS.md §1).
 
 ## 1. Conteúdo (sempre possível, sem browser)
 
-- [ ] Toda equação em **display** tem leitura textual associada (parágrafo, `aria-label` ou
-      descrição no `alt`)
+- [ ] Toda equação em **display** tem leitura textual **integral** associada (parágrafo
+      `*Leitura:*` / `*Reading:*`, `aria-label` ou descrição no `alt`), conferida por
+      **posição** e não por contagem: a alternância bloco → descrição não pode ter órfão
+      (`L-012`)
+- [ ] Toda fórmula **inline** marcada como *exige* pelo **teste de marcação de agrupamento**
+      (`docs/content/accessibility.md`) tem o agrupamento dito em palavras. Varrer **as duas
+      partes**: (a) argumento composto — `\frac`, `\dfrac`, `\sqrt`, `^{…}` com mais de um
+      símbolo; (b) base elevada ambígua — `grep -nF ')^'` e sinal **unário** antes de base
+      elevada (`$-x^2$`, que **não** tem argumento composto). Em `theory.<lang>.md`,
+      `exercises.json` e `assessments.json`, nos dois idiomas, fora de `$$…$$`
 - [ ] Nenhuma fórmula existe **apenas** como imagem
 - [ ] Imagens e gráficos têm `alt` que descreve o **conteúdo matemático**, não o arquivo
 - [ ] Tabelas têm cabeçalho semântico e são compreensíveis linearmente

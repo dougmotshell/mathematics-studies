@@ -55,11 +55,22 @@ Tipos disponíveis (`docs/content/exercise-schema.md`): `multiple-choice`, `nume
 - Itens `numeric` declaram `tolerance` e `unit` quando aplicável.
 - Enunciado bilíngue e matematicamente idêntico; decimais conforme o idioma
   (`docs/content/i18n.md`).
+- **Agrupamento dito em palavras** em toda fórmula inline com argumento composto — operador,
+  relação, fatores justapostos (`2a`), agrupamento aninhado ou parênteses — ou com base
+  elevada ambígua: entre parênteses (`$(-5)^2$`, `$(x+3)^2$`) ou com sinal unário à frente
+  (`$-x^2$`). Exigem: `$\frac{5 \pm 1}{2}$`, `$(x+3)^2$`. Não exigem: `$\frac{b}{a}$`,
+  `$x_1$`, `$ax^2 + bx + c = 0$`. Aqui **não há** parágrafo `*Leitura:*`: a marcação entra no
+  próprio campo (`stem`, `hints`, `solution`, `feedback`), nos dois idiomas. Item cujo
+  gabarito depende de agrupamento não falado é **ambíguo em áudio**. Teste em
+  `docs/content/accessibility.md`.
 - Sem contexto que exija conhecimento externo à matemática ou culturalmente restrito.
 
 ## 4. Verificar
 
 - Resolva cada item de forma independente **antes** de fixar o gabarito.
 - Rode `/math-verify` nos resultados não triviais.
-- Rode `bash scripts/audit-content.sh` para validar o schema.
-- Peça revisão a `math-reviewer` (gabaritos) e `i18n-steward` (paridade).
+- Rode `bash scripts/audit-content.sh` para validar o schema. Ele **não** verifica leitura de
+  fórmula: aplique o teste do argumento composto a cada `\frac`, `\dfrac`, `\sqrt` e `^` do
+  arquivo, à mão.
+- Peça revisão a `math-reviewer` (gabaritos), `i18n-steward` (paridade) e `a11y-ux-reviewer`
+  (marcação de agrupamento) — este último quando o conjunto tiver fração, radical ou potência.

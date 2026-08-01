@@ -24,6 +24,17 @@ Você é o **designer de exercícios** do `mathematics-studies`.
   `docs/content/exercise-schema.md` — validar com `bash scripts/audit-content.sh`.
 - Todo gabarito passa por verificação (`/math-verify`) ou por solução escrita passo a passo
   conferida.
+- **Fórmula acessível em áudio — vale dentro de `exercises.json` e `assessments.json`.** Não
+  existe parágrafo de leitura aqui: a marcação mora no próprio campo (`stem`, `hints`,
+  `solution`, `feedback`), **nos dois idiomas**. Uma fórmula inline exige que o **agrupamento
+  seja dito em palavras** quando algum argumento (numerador, denominador, radicando, expoente,
+  subscrito, base) for **composto** — operador, relação, fatores justapostos (`2a`),
+  agrupamento aninhado ou parênteses — **ou** quando a base elevada for ambígua na fala: entre
+  parênteses (`$(-5)^2$`, `$(x+3)^2$`) ou com sinal unário à frente (`$-x^2$`). Exigem:
+  `$\frac{5 \pm 1}{2}$`, `$(x+3)^2$`, `$-x^2$`. Não exigem: `$\frac{b}{a}$`, `$x_1$`,
+  `$ax^2 + bx + c = 0$`. Isso é crítico em item de múltipla escolha: se o gabarito depende do
+  agrupamento e ele não é falado, o item fica **ambíguo em áudio** e o distrator vira resposta
+  defensável. Teste completo: `docs/content/accessibility.md`.
 - Múltipla escolha: distratores plausíveis e derivados de erros reais; nunca alternativas
   absurdas de enchimento; nunca duas corretas.
 - Itens numéricos declaram tolerância (`tolerance`) e unidade quando aplicável.

@@ -2,8 +2,8 @@
 id: TCK-0006
 title: Registrar as convenções de leitura de fórmula e decidir o escopo inline da §9.2
 type: docs
-status: triaged
-owner: docs-writer
+status: done
+owner: qa-validator
 priority: P1
 size: M
 created: 2026-08-01
@@ -46,40 +46,40 @@ critério que um revisor aplica mecanicamente, não por gosto.
 
 Cada critério é observável e falharia se a implementação estivesse errada.
 
-- [ ] 1. `docs/content/accessibility.md` contém uma tabela de convenções de leitura com as
+- [x] 1. `docs/content/accessibility.md` contém uma tabela de convenções de leitura com as
       **nove** construções de `TCK-0005/log.md` `[008]` §6 (subscrito; índice de radical;
       fração de numerador composto; fração de numerador de um token; parênteses; `\cdot` ×
       justaposição; `\Longrightarrow`; relação encadeada `= 1 > 0`; números por extenso),
       cada uma com coluna **pt-BR** e coluna **en-US** preenchidas. Falha se qualquer uma
       das nove faltar ou vier com uma coluna vazia.
-- [ ] 2. A regra de fração está enunciada como critério **operacional**, não como exemplo:
+- [x] 2. A regra de fração está enunciada como critério **operacional**, não como exemplo:
       numerador com mais de um token → "tudo dividido por" / "all divided by"; numerador de
       um token → "dividido por" / "divided by". O documento traz um exemplo de cada caso.
       Falha se um revisor precisar consultar o autor para decidir qual usar.
-- [ ] 3. O glossário de `docs/content/i18n.md` ganha a linha `subscrito (índice) |
+- [x] 3. O glossário de `docs/content/i18n.md` ganha a linha `subscrito (índice) |
       subscript |` com nota de desambiguação citando o índice do radical (`\sqrt[n]{a}`,
       *root index*). `grep -n 'subscript' docs/content/i18n.md` retorna a linha dentro da
       tabela do glossário, com as três colunas preenchidas.
-- [ ] 4. A fronteira display × inline está decidida e escrita: o documento enuncia **quando**
+- [x] 4. A fronteira display × inline está decidida e escrita: o documento enuncia **quando**
       uma fórmula inline exige leitura textual, por um critério verificável por inspeção
       (p. ex. "fração, radical, expoente ou índice cujo sentido dependa de agrupamento"), e
       declara o que **não** exige. Falha se a regra final for "avaliar caso a caso" sem
       critério, ou se depender de julgamento sobre a intenção do autor.
-- [ ] 5. `AGENTS.md` §9.2 remete à regra de (4) — o texto canônico deixa de sugerir que só
+- [x] 5. `AGENTS.md` §9.2 remete à regra de (4) — o texto canônico deixa de sugerir que só
       `$$…$$` está coberto. `grep -n "inline" AGENTS.md docs/content/accessibility.md`
       mostra a regra nos dois pontos, sem contradição entre eles.
-- [ ] 6. O checklist de `published` em `docs/content/content-standards.md` reflete a decisão
+- [x] 6. O checklist de `published` em `docs/content/content-standards.md` reflete a decisão
       de (4): a linha "Toda equação em display tem descrição textual" passa a cobrir também
       o caso inline decidido, ou ganha linha própria. Falha se o checklist ficar mais frouxo
       que a norma.
-- [ ] 7. O log lista, **sem executar**, as ocorrências do nó piloto atingidas pela decisão
+- [x] 7. O log lista, **sem executar**, as ocorrências do nó piloto atingidas pela decisão
       de (4) — `theory.pt-BR.md:143-144` / `theory.en-US.md:140-141` e as 10 ocorrências de
       `\frac` em `exercises.json` — com o veredito por ocorrência (exige leitura / não
       exige) para o TCK-0007 aplicar. Falha se a lista vier sem veredito item a item.
-- [ ] 8. Rastreabilidade: cada convenção registrada cita a origem (`TCK-0005` `[008]` §6 /
+- [x] 8. Rastreabilidade: cada convenção registrada cita a origem (`TCK-0005` `[008]` §6 /
       `[007]`) e a data (2026-08-01), como manda `docs/DOC-STANDARDS.md` para conhecimento
       derivado de decisão anterior.
-- [ ] 9. `python3 scripts/sync-ai-adapters.py --check` → exit 0;
+- [x] 9. `python3 scripts/sync-ai-adapters.py --check` → exit 0;
       `bash scripts/audit-ai-surface.sh` → `Resultado: OK`;
       `bash scripts/audit-content.sh` → `0 erros · 0 avisos`, exit 0 (códigos capturados sem
       pipe). Se `AGENTS.md` ou `.github/instructions/` forem tocados, os gerados acompanham
@@ -126,4 +126,33 @@ Cada critério é observável e falharia se a implementação estivesse errada.
 
 ## Resultado final
 
-<preenchido pelo qa-validator ao marcar `done`>
+**`done`** — validado por `qa-validator#10` em 2026-08-01, commit base `dac8255`.
+**9/9 critérios com evidência própria, 0 defeitos.** Detalhe em `log.md` `[014]`.
+
+- **Teste aplicado de forma independente:** implementei o critério a partir do texto de
+  `docs/content/accessibility.md:60-111`, sem consultar a tabela de vereditos, e rodei contra
+  **41 fórmulas** — 23 reais extraídas por mim dos três arquivos do nó piloto, os 18 casos da
+  tabela normativa e 8 fronteiras que inventei. **0 divergências.** O critério 4 não é só
+  "verificável por inspeção": é mecanizável, e duas implementações independentes concordam.
+- **Inventário recontado por método próprio:** 24 ocorrências disparam o teste; 2 já dizem o
+  agrupamento em palavras (`theory.pt-BR.md:132` / `theory.en-US.md:129`, 2ª `$(-5)^2$`).
+  **22 pontos de trabalho** — 8 em `theory.*.md` (4/idioma) + 14 em `exercises.json`
+  (7/idioma). Confirma `[007]` §2 e o dimensionamento do TCK-0007.
+- **Critério 9:** as auditorias estão vermelhas na árvore por edições não sincronizadas de
+  **outra cadeia** (`core.instructions.md` item 5 + `app.instructions.md`). Atribuição provada
+  por **janela verde medida em cópia isolada** com todos os artefatos deste ticket no lugar:
+  `--check` 0 · `audit-ai-surface.sh` OK 0 · `audit-content.sh` `0 erros · 0 avisos` 0.
+  `git status --porcelain content/` vazio; Mermaid reparseado (`flowchart-v2`); nenhum gerado
+  editado à mão; `AGENTS.md` §9 com 8 itens e nenhuma referência `§9.N` quebrada.
+- **Dívidas aceitas:** D-1 "e" por "ou" no portão · D-2 resumos omitem a exceção do unário
+  (mais estritos, direção segura) · D-3 `$(a+b)_1$` fora do gatilho (b)1 · D-4 sem portão
+  mecânico · D-5 padrão de busca (b)2 perde 3 dos 5 exemplos do próprio documento · D-6
+  leitura falada de decimal não normada.
+- **Encaminhado ao `tech-lead`:** A-1 (TCK-0007 vale 22, não 18) · A-2 (corrigir o padrão
+  (b)2) · A-3 (a dívida do portão mecânico está roteada a um ticket `done` — precisa de ticket
+  novo) · A-4 (décima convenção: decimal falado) · A-5 (`content-review.js` só cita display) ·
+  A-6 (`validate-content.sh` também não vê a norma e não é declarado) · A-7 (sincronizar os
+  9 gerados da outra cadeia).
+- **Não verificado:** nada foi exercitado em leitor de tela, teclado, tema, zoom ou offline —
+  não há aplicação que consuma estes artefatos (`grep` por consumidor em `src/`/`public/` → 0).
+  A norma está provada **aplicável e consistente**, não **eficaz em áudio real**.

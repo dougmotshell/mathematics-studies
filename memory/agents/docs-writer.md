@@ -57,6 +57,56 @@ Produz e mantém a documentação interna do projeto (docs/) nos padrões do rep
 - **Rodar o sync com outra cadeia ativa** regenera adapters que carregam mudanças alheias
   ainda não sincronizadas. Não é erro, mas precisa ser declarado no handoff, senão o revisor
   atribui esse diff ao ticket errado.
+- **Estreitar uma norma para torná-la verificável cria uma permissão silenciosa.** O caso que
+  a redação deixa de fora não fica neutro — fica permitido (§9.2 dizia "display", e a fórmula
+  inline ficou sem regra). Ao fechar a lacuna, quase nunca se estende a mesma obrigação: dá-se
+  ao caso frequente uma obrigação **diferente e mais barata**, com **gatilho mecânico**
+  inspecionável no artefato. "Avaliar caso a caso" não é regra — é devolver o problema ao
+  autor. Lição `L-021`.
+- **Calibrar o gatilho rodando-o contra o artefato real, antes de publicar a norma.** Foi o
+  que dimensionou o passivo do nó piloto e revelou ocorrências que nenhuma revisão anterior
+  tinha listado. O inventário com **veredito item a item** é o que torna o ticket de correção
+  executável sem reinterpretar a norma (`L-013`).
+- **O padrão de busca vem da definição da classe, nunca das ocorrências que já vi** — e o
+  mesmo método vale para **todos** os artefatos. No TCK-0006 escrevi
+  `grep '(-[0-9a-z]*)\^'` a partir dos `(-4)^2` conhecidos e perdi `(x+3)^2`, depois de usar
+  parser em `theory.*.md` e `grep` estreito em `exercises.json` — e declarei varredura
+  completa nos três. Teste do padrão antes de usá-lo: *ele acharia uma ocorrência que eu ainda
+  não vi?* Adendo de `L-021`.
+- **A lista de propagação se deriva dos artefatos que a regra nomeia**, não dos arquivos que
+  já abri: para cada artefato citado na norma, quem o **escreve** e quem o **revisa**. A regra
+  do TCK-0006 nomeava `exercises.json` desde a primeira versão e mesmo assim não chegou ao
+  `exercise-designer` nem a `/new-exercise-set`.
+- **Enumeração fechada repetida fora do documento-fonte é dívida.** Quem **reenuncia** uma
+  regra deve citar o **veredito do teste** ("toda fórmula que o teste X marca como *exige*"),
+  não a lista de gatilhos — senão o gatilho novo passa pela formulação antiga em silêncio, e
+  cada frase continua verdadeira isoladamente. **Checklist e portão referenciam, nunca
+  reenunciam:** no TCK-0006, o checklist de `published` dizia "com argumento composto" e
+  `-x^2` (que não tem argumento composto) atravessava o portão. 2º adendo de `L-021`.
+- **Acrescentar gatilho a regra já propagada não é editar o documento-fonte** — é `grep` pela
+  **formulação antiga** em toda a superfície, gerados incluídos, e conferir que nenhum ponto
+  ficou com a enumeração fechada. Métrica que usei:
+  `for f in <20 arquivos>; do grep -c '<termo do gatilho novo>' $f; done` → nenhum zero.
+- **Se o teste tem mais de uma parte, dê nome a cada uma** e escreva no documento-fonte que
+  repetir só uma delas é defeito. O aviso viaja junto com a regra e sobrevive ao próximo
+  agente que a copiar.
+- **Somar totais a partir da tabela publicada, não da lembrança de tê-la escrito.** "3 pontos
+  por idioma" com quatro linhas EXIGE logo acima passou por mim e foi para a memória
+  compartilhada, de onde o ticket dependente ia ler.
+- **Caso citado como justificativa precisa de veredito próprio.** Usei `-5^2` para justificar
+  "base entre parênteses é composta" e deixei `-5^2` sem obrigação — a exceção do sinal unário
+  é inócua na fração ($-(7/2) = (-7)/2$) e **não** na potência ($-25 \ne 25$). Se o exemplo
+  serve de argumento, ele é um caso da norma.
+- **Adapter de agent/skill é ponteiro; adapter de regra é cópia.** `.claude/commands/`,
+  `.github/chatmodes/` e `.gemini/commands/` só apontam para `.claude/agents/*.md` — editar um
+  agent **não** muda esses arquivos, e o `--check` continua verde. Só
+  `.github/instructions/*.md` é embutido em `.cursor/rules/`, `.windsurf/rules/`,
+  `.agents/rules/`, `.rules`, `.clinerules` e `.junie/guidelines.md`. Consequência: propagar
+  regra exige tocar as **instructions**, não só o agent.
+- **Prova de que o sync não arrastou trabalho alheio:** conferir que o `git diff --stat` dos
+  gerados bate com a aritmética das próprias edições (regra `core` × 6 destinos + regra
+  `content` × 3 = 9 arquivos, +54/−12). Declarar essa conta no handoff resolve a dúvida do
+  revisor sem ele precisar ler os gerados.
 - **Editar arquivo que outro agente está mexendo:** `memory/context/project-context.md` e
   índices (`docs/adr/README.md`) são pontos de colisão. Reler imediatamente antes, editar só
   a linha da própria decisão, nunca reescrever o arquivo. Quando um trecho desatualizado é de
@@ -69,4 +119,7 @@ Produz e mantém a documentação interna do projeto (docs/) nos padrões do rep
 |---|---|---|---|
 | 2026-08-01 | TCK-0002 · etapa `execute` do dev-loop `minimum-learning-slice` | `docs/specs/minimum-learning-slice/{spec,plan,tasks}.md` criados em `draft` a partir de `.dev-loop/minimum-learning-slice/requirements.md`; índice `docs/specs/README.md` atualizado; auditorias sem erro; handoff `[006]` para `code-reviewer`, ticket em `in_review` | L-001, L-003 |
 | 2026-08-01 | TCK-0004 · licença do projeto (como **`docs-writer#2`**, subagente spawnado com a instância principal ocupada no TCK-0002) | `ADR-0005-project-license.md` (`accepted`), `LICENSE` (MIT literal) e `LICENSE-CONTENT` (CC BY-SA 4.0, pt-BR + en-US) criados; regra "NC = leitura, não matéria-prima" propagada para `docs/content/content-standards.md` e `memory/context/content.md`; `README.md`, `project-context.md` e roadmap deixam de listar a licença como aberta; auditorias verdes; handoff `[006]` para `code-reviewer`, ticket em `in_review` | L-006, L-007, L-009 |
+| 2026-08-01 | TCK-0006 · convenções de leitura de fórmula e fronteira display × inline | Fronteira decidida por **obrigação diferenciada** (display = leitura integral; inline com argumento composto = agrupamento em palavras) com o *teste do argumento composto* como gatilho mecânico; tabela das 9 convenções e teste em `docs/content/accessibility.md`; glossário `subscrito (índice) \| subscript` com desambiguação do índice do radical em `i18n.md`; propagação para `AGENTS.md` §9.2 (sem renumeração), `.github/instructions/{content,core}`, `content-author`, `a11y-ux-reviewer`, `/new-topic`, `/a11y-audit` e o checklist de `published`; inventário do passivo do piloto com veredito item a item; sync (9 gerados) e `--check` limpos; auditorias verdes; handoff `[005]` → `code-reviewer` | L-021, L-009, L-013 |
+| 2026-08-01 | TCK-0006 · correção do `[006] REJECT` (loop 1/3, `code-reviewer#8`) | B1 (inventário perdeu `(x+3)^2` — padrão de busca derivado dos exemplos) e B3 (regra não chegou a `exercise-designer` nem a `/new-exercise-set`) resolvidos: **uma** causa raiz, registrada como **adendo em `L-021`**, não lição nova. B2: total corrigido para **22 pontos** (8+14), também em `memory/context/content.md`. B4: gatilho novo "sinal unário à frente de base elevada" (custo zero verificado). S1–S4 acatadas; Mermaid revalidado no parser; 3 gerados; auditorias verdes; handoff `[008]` → `code-reviewer` | L-021 (adendo), L-013 |
+| 2026-08-01 | TCK-0006 · correção do `[009] REJECT` (loop 2/3, `code-reviewer#8`) | B5 (gatilho novo não chegou ao lado da teoria; **checklist de `published` mais frouxo que a norma** — `-x^2` atravessava o portão) resolvido de forma **estrutural**: teste renomeado para "teste de marcação de agrupamento" com partes (a) e (b) nomeadas, aviso de "não cite só (a)" no documento-fonte, e o portão passando a **referenciar o veredito** em vez de reenunciar; 10 pontos atualizados, `grep` de verificação sem zeros nos 20 arquivos. B6: `CORRECTION` `[010]` com `Corrige: [004]`. S1 (critério unário × binário próprio do gatilho (b)2) e S2 (`prompt` → `stem`) acatadas. Inventário revalidado: **22, inalterado**; Mermaid, `--check` e auditorias verdes | L-021 (2º adendo), L-010 |
 | 2026-08-01 | TCK-0004 · correção do `[007] REJECT` (loop 1/3, `code-reviewer#4`), como `docs-writer#2` | B1 resolvido: regra de compatibilidade tornada **imperativa** em `AGENTS.md` (§9.7 nova; §9.6 sem "preferência"; sem plágio → §9.8), `.github/instructions/{content,core}.instructions.md`, `.claude/agents/{content-author,researcher}.md`, `prompts/bootstrap-session.md` e `CONTRIBUTING.md`; S1–S4 acatadas (divergência do *Livro Aberto*, jurisdição do domínio público, prevalência do `legalcode`, artefatos de memória no log); `sync-ai-adapters.py` rodado (9 arquivos) e `--check` limpo; auditorias verdes; handoff `[009]` → `code-reviewer` | L-009 (adendo), L-010 |

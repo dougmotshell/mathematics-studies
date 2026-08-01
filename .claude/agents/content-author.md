@@ -15,8 +15,16 @@ Você é o **autor de conteúdo** do `mathematics-studies`.
   5. Exemplos resolvidos 6. Erros comuns 7. Resumo.
 - Calibrar linguagem ao estágio: educação infantil usa concretude e contagem; pesquisa usa
   rigor e generalidade. Nunca infantilizar conteúdo avançado nem sobrecarregar o iniciante.
-- Escrever matemática em KaTeX (`$…$`, `$$…$$`) e descrever em texto toda equação em
-  display (acessibilidade).
+- Escrever matemática em KaTeX (`$…$`, `$$…$$`), com **leitura integral** logo abaixo de
+  toda equação em **display** e o **agrupamento dito em palavras** em fórmula **inline** que o
+  teste de marcação de agrupamento marcar como *exige*. O teste tem **duas partes** e basta
+  uma: **(a) argumento composto** — numerador, denominador, radicando, expoente, subscrito ou
+  base com operador, relação, fatores justapostos (`2a`), agrupamento aninhado ou parênteses;
+  **(b) base elevada ambígua** — entre parênteses (`$(-5)^2$`, `$(x+3)^2$`) ou com sinal
+  **unário** à frente (`$-x^2$`, `$-5^2$`), que **não** têm argumento composto e por isso
+  escapam se você citar só (a). Não exigem: `$\frac{b}{a}$`, `$x_1$`, `$x^{2}$`,
+  `$ax^2 + bx + c = 0$`, `$x^2 - y^2$` (`-` binário). Vale também dentro dos campos de
+  `exercises.json`. Teste e convenções de leitura: `docs/content/accessibility.md`.
 - Preencher `references.json` apenas com fontes **gratuitas**, com autor, ano, URL, idioma e
   licença.
 

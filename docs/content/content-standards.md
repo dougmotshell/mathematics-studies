@@ -34,8 +34,24 @@ formulação informal; a versão completa aparece em <nó>".
 ## Notação e formatação
 
 - Matemática em **KaTeX**: `$…$` (inline) e `$$…$$` (display). Nada de imagem de fórmula.
-- Toda equação em **display** tem descrição textual próxima (acessibilidade — ver
-  `accessibility.md`).
+- Toda equação em **display** tem **leitura integral** próxima — parágrafo `*Leitura:*` /
+  `*Reading:*` imediatamente abaixo do bloco, reconstruindo a fórmula inteira na ordem
+  escrita. Sem exceção.
+- Fórmula **inline** exige que o **agrupamento seja dito em palavras** no texto ao redor
+  quando o **teste de marcação de agrupamento** disparar. Ele tem **duas partes**, e basta
+  uma:
+  - **(a) argumento composto** — numerador, denominador, radicando, expoente, subscrito ou
+    base contendo operador, relação, fatores justapostos (`2a`), agrupamento aninhado ou
+    parênteses: `$\frac{5 \pm 1}{2}$`, `$\dfrac{-b \pm \sqrt{\Delta}}{2a}$`, `$x^{n+1}$`;
+  - **(b) base elevada ambígua** — entre parênteses (`$(-5)^2$`, `$(x+3)^2$`) **ou** com
+    sinal **unário** à frente (`$-x^2$`, `$-5^2$`). `$-x^2$` **não** tem argumento composto:
+    citar só a parte (a) deixa esse caso passar.
+
+  Não exigem: `$\frac{b}{a}$`, `$x_1$`, `$x^{2}$`, `$ax^2 + bx + c = 0$` e `$x^2 - y^2$` (aqui
+  o `-` é **binário**, há termo à esquerda). Vale também para `exercises.json` e
+  `assessments.json`, onde a marcação mora dentro do próprio campo (`stem`, `hints`,
+  `solution`, `feedback`). Teste completo, tabela de casos e convenções de leitura:
+  `accessibility.md`.
 - Declare a notação não óbvia na primeira ocorrência (intervalos, conjuntos, `log`,
   vetores).
 - Um conceito por parágrafo; parágrafos curtos.
@@ -92,7 +108,13 @@ autoria, URL, licença com link e o que foi alterado — modelos em `LICENSE-CON
 
 - [ ] As sete seções obrigatórias existem nos dois idiomas
 - [ ] `theory.pt-BR.md` e `theory.en-US.md` equivalentes (mesmas seções e exemplos)
-- [ ] Toda equação em display tem descrição textual
+- [ ] Toda equação em display tem leitura integral (`*Leitura:*` / `*Reading:*`), na ordem
+      escrita e sem bloco mudo — conferido por **posição**, não por contagem (`L-012`)
+- [ ] Toda fórmula inline que o **teste de marcação de agrupamento** marca como **exige** tem
+      o agrupamento dito em palavras — **as duas partes**: (a) argumento composto **e**
+      (b) base elevada ambígua, entre parênteses (`$(x+3)^2$`) ou com sinal unário à frente
+      (`$-x^2$`, que **não** tem argumento composto) — em `theory.<lang>.md`,
+      `exercises.json` e `assessments.json`, nos dois idiomas (`accessibility.md`)
 - [ ] Hipóteses explícitas; casos-limite tratados
 - [ ] Resultados não triviais verificados (`/math-verify`)
 - [ ] Exercícios cobrem todas as `skills[]` declaradas
