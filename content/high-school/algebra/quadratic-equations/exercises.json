@@ -1,0 +1,261 @@
+{
+  "nodeId": "high-school/algebra/quadratic-equations",
+  "version": 1,
+  "items": [
+    {
+      "id": "qe-001",
+      "type": "multiple-choice",
+      "difficulty": 1,
+      "skills": ["identify-quadratic-coefficients"],
+      "bloom": "remember",
+      "stem": {
+        "pt-BR": "Na equação $x^2 - 4x + 5 = 0$, quais são os coeficientes $a$, $b$ e $c$?",
+        "en-US": "In the equation $x^2 - 4x + 5 = 0$, what are the coefficients $a$, $b$ and $c$?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": { "pt-BR": "$a = 1$, $b = -4$, $c = 5$", "en-US": "$a = 1$, $b = -4$, $c = 5$" },
+          "correct": true,
+          "feedback": {
+            "pt-BR": "Isso. O sinal faz parte do coeficiente: em $-4x$, temos $b = -4$.",
+            "en-US": "Correct. The sign belongs to the coefficient: in $-4x$, we have $b = -4$."
+          }
+        },
+        {
+          "id": "b",
+          "text": { "pt-BR": "$a = 1$, $b = 4$, $c = 5$", "en-US": "$a = 1$, $b = 4$, $c = 5$" },
+          "correct": false,
+          "feedback": {
+            "pt-BR": "Você ignorou o sinal negativo. O termo é $-4x$, então $b = -4$, não $4$.",
+            "en-US": "You dropped the minus sign. The term is $-4x$, so $b = -4$, not $4$."
+          }
+        },
+        {
+          "id": "c",
+          "text": { "pt-BR": "$a = 0$, $b = -4$, $c = 5$", "en-US": "$a = 0$, $b = -4$, $c = 5$" },
+          "correct": false,
+          "feedback": {
+            "pt-BR": "Quando $x^2$ aparece sem número na frente, o coeficiente é $1$, não $0$ — e $a = 0$ nem seria uma equação do segundo grau.",
+            "en-US": "When $x^2$ appears with no number in front, the coefficient is $1$, not $0$ — and $a = 0$ would not even be a quadratic equation."
+          }
+        },
+        {
+          "id": "d",
+          "text": { "pt-BR": "$a = 1$, $b = -4$, $c = -5$", "en-US": "$a = 1$, $b = -4$, $c = -5$" },
+          "correct": false,
+          "feedback": {
+            "pt-BR": "O termo independente é $+5$; você trocou o sinal de $c$.",
+            "en-US": "The constant term is $+5$; you flipped the sign of $c$."
+          }
+        }
+      ],
+      "hints": [
+        {
+          "pt-BR": "Compare a equação com a forma geral $ax^2 + bx + c = 0$.",
+          "en-US": "Compare the equation with the general form $ax^2 + bx + c = 0$."
+        },
+        {
+          "pt-BR": "O sinal que está antes de cada termo pertence ao coeficiente.",
+          "en-US": "The sign in front of each term belongs to the coefficient."
+        }
+      ],
+      "solution": {
+        "pt-BR": "Escrevendo $x^2 - 4x + 5 = 0$ na forma $ax^2 + bx + c = 0$: o termo em $x^2$ é $1 \\cdot x^2$, logo $a = 1$; o termo em $x$ é $-4x$, logo $b = -4$; o termo independente é $+5$, logo $c = 5$.",
+        "en-US": "Writing $x^2 - 4x + 5 = 0$ as $ax^2 + bx + c = 0$: the $x^2$ term is $1 \\cdot x^2$, so $a = 1$; the $x$ term is $-4x$, so $b = -4$; the constant term is $+5$, so $c = 5$."
+      },
+      "estimatedSeconds": 45,
+      "verified": { "method": "inspeção algébrica", "date": "2026-08-01" }
+    },
+    {
+      "id": "qe-002",
+      "type": "multiple-choice",
+      "difficulty": 2,
+      "skills": ["interpret-discriminant"],
+      "bloom": "apply",
+      "stem": {
+        "pt-BR": "Quantas raízes reais tem a equação $x^2 - 4x + 5 = 0$?",
+        "en-US": "How many real roots does the equation $x^2 - 4x + 5 = 0$ have?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": { "pt-BR": "Nenhuma", "en-US": "None" },
+          "correct": true,
+          "feedback": {
+            "pt-BR": "Isso: $\\Delta = 16 - 20 = -4 < 0$, então não há raiz real.",
+            "en-US": "Right: $\\Delta = 16 - 20 = -4 < 0$, so there is no real root."
+          }
+        },
+        {
+          "id": "b",
+          "text": { "pt-BR": "Uma", "en-US": "One" },
+          "correct": false,
+          "feedback": {
+            "pt-BR": "Uma única raiz exigiria $\\Delta = 0$. Aqui $\\Delta = -4$, que é negativo.",
+            "en-US": "A single root would require $\\Delta = 0$. Here $\\Delta = -4$, which is negative."
+          }
+        },
+        {
+          "id": "c",
+          "text": { "pt-BR": "Duas", "en-US": "Two" },
+          "correct": false,
+          "feedback": {
+            "pt-BR": "Você provavelmente calculou $\\Delta = 16 + 20 = 36$: atenção ao sinal em $\\Delta = b^2 - 4ac$ quando $c > 0$.",
+            "en-US": "You likely computed $\\Delta = 16 + 20 = 36$: mind the sign in $\\Delta = b^2 - 4ac$ when $c > 0$."
+          }
+        },
+        {
+          "id": "d",
+          "text": { "pt-BR": "Infinitas", "en-US": "Infinitely many" },
+          "correct": false,
+          "feedback": {
+            "pt-BR": "Uma equação do segundo grau com $a \\neq 0$ tem no máximo duas raízes; infinitas soluções só ocorreriam numa identidade como $0 = 0$.",
+            "en-US": "A quadratic with $a \\neq 0$ has at most two roots; infinitely many solutions would only occur in an identity such as $0 = 0$."
+          }
+        }
+      ],
+      "hints": [
+        {
+          "pt-BR": "O sinal de $\\Delta$ decide a quantidade de raízes reais — você não precisa calcular as raízes.",
+          "en-US": "The sign of $\\Delta$ decides the number of real roots — you do not need to compute them."
+        },
+        {
+          "pt-BR": "Calcule $\\Delta = b^2 - 4ac$ com $a = 1$, $b = -4$, $c = 5$.",
+          "en-US": "Compute $\\Delta = b^2 - 4ac$ with $a = 1$, $b = -4$, $c = 5$."
+        }
+      ],
+      "solution": {
+        "pt-BR": "$\\Delta = (-4)^2 - 4 \\cdot 1 \\cdot 5 = 16 - 20 = -4$. Como $\\Delta < 0$, a equação não tem raízes reais (a parábola $y = x^2 - 4x + 5$ não cruza o eixo $x$).",
+        "en-US": "$\\Delta = (-4)^2 - 4 \\cdot 1 \\cdot 5 = 16 - 20 = -4$. Since $\\Delta < 0$, the equation has no real roots (the parabola $y = x^2 - 4x + 5$ does not cross the $x$-axis)."
+      },
+      "estimatedSeconds": 90,
+      "verified": { "method": "cálculo do discriminante conferido numericamente", "date": "2026-08-01" }
+    },
+    {
+      "id": "qe-003",
+      "type": "numeric",
+      "difficulty": 3,
+      "skills": ["solve-quadratic"],
+      "bloom": "apply",
+      "stem": {
+        "pt-BR": "Qual é a maior raiz real de $x^2 - 5x + 6 = 0$?",
+        "en-US": "What is the largest real root of $x^2 - 5x + 6 = 0$?"
+      },
+      "answer": 3,
+      "tolerance": 0,
+      "hints": [
+        {
+          "pt-BR": "Comece calculando $\\Delta = b^2 - 4ac$, com $b = -5$.",
+          "en-US": "Start by computing $\\Delta = b^2 - 4ac$, with $b = -5$."
+        },
+        {
+          "pt-BR": "Com $\\Delta = 1$, a fórmula dá $x = \\frac{5 \\pm 1}{2}$ — escolha o maior valor.",
+          "en-US": "With $\\Delta = 1$, the formula gives $x = \\frac{5 \\pm 1}{2}$ — pick the larger value."
+        }
+      ],
+      "solution": {
+        "pt-BR": "$\\Delta = (-5)^2 - 4 \\cdot 1 \\cdot 6 = 25 - 24 = 1$. Então $x = \\frac{5 \\pm 1}{2}$, ou seja, $x_1 = 3$ e $x_2 = 2$. A maior raiz é $3$. Conferindo: $3^2 - 5 \\cdot 3 + 6 = 0$.",
+        "en-US": "$\\Delta = (-5)^2 - 4 \\cdot 1 \\cdot 6 = 25 - 24 = 1$. Then $x = \\frac{5 \\pm 1}{2}$, that is, $x_1 = 3$ and $x_2 = 2$. The largest root is $3$. Check: $3^2 - 5 \\cdot 3 + 6 = 0$."
+      },
+      "estimatedSeconds": 120,
+      "verified": { "method": "raízes calculadas e substituídas de volta na equação", "date": "2026-08-01" }
+    },
+    {
+      "id": "qe-004",
+      "type": "multiple-choice",
+      "difficulty": 4,
+      "skills": ["interpret-discriminant"],
+      "bloom": "analyze",
+      "stem": {
+        "pt-BR": "Para quais valores de $k$ a equação $x^2 + kx + 9 = 0$ tem exatamente uma raiz real?",
+        "en-US": "For which values of $k$ does the equation $x^2 + kx + 9 = 0$ have exactly one real root?"
+      },
+      "options": [
+        {
+          "id": "a",
+          "text": { "pt-BR": "$k = 6$ ou $k = -6$", "en-US": "$k = 6$ or $k = -6$" },
+          "correct": true,
+          "feedback": {
+            "pt-BR": "Isso: $\\Delta = k^2 - 36 = 0$ dá $k = \\pm 6$, e cada valor gera uma equação com raiz dupla.",
+            "en-US": "Right: $\\Delta = k^2 - 36 = 0$ gives $k = \\pm 6$, and each value yields an equation with a double root."
+          }
+        },
+        {
+          "id": "b",
+          "text": { "pt-BR": "Apenas $k = 6$", "en-US": "Only $k = 6$" },
+          "correct": false,
+          "feedback": {
+            "pt-BR": "Você resolveu $k^2 = 36$ considerando só a raiz positiva. Como $(-6)^2 = 36$ também, $k = -6$ serve igualmente."
+            ,
+            "en-US": "You solved $k^2 = 36$ keeping only the positive root. Since $(-6)^2 = 36$ as well, $k = -6$ works too."
+          }
+        },
+        {
+          "id": "c",
+          "text": { "pt-BR": "$k = 3$ ou $k = -3$", "en-US": "$k = 3$ or $k = -3$" },
+          "correct": false,
+          "feedback": {
+            "pt-BR": "Você tomou a raiz quadrada de $9$ em vez de resolver $k^2 - 4 \\cdot 1 \\cdot 9 = 0$, que dá $k^2 = 36$.",
+            "en-US": "You took the square root of $9$ instead of solving $k^2 - 4 \\cdot 1 \\cdot 9 = 0$, which gives $k^2 = 36$."
+          }
+        },
+        {
+          "id": "d",
+          "text": { "pt-BR": "Nenhum valor de $k$", "en-US": "No value of $k$" },
+          "correct": false,
+          "feedback": {
+            "pt-BR": "A condição $\\Delta = 0$ é uma equação em $k$ e tem solução: $k^2 = 36$.",
+            "en-US": "The condition $\\Delta = 0$ is an equation in $k$ and it does have solutions: $k^2 = 36$."
+          }
+        }
+      ],
+      "hints": [
+        {
+          "pt-BR": "\"Exatamente uma raiz real\" corresponde a qual condição sobre $\\Delta$?",
+          "en-US": "\"Exactly one real root\" corresponds to which condition on $\\Delta$?"
+        },
+        {
+          "pt-BR": "Monte $\\Delta = k^2 - 4 \\cdot 1 \\cdot 9$ e iguale a zero.",
+          "en-US": "Write $\\Delta = k^2 - 4 \\cdot 1 \\cdot 9$ and set it to zero."
+        }
+      ],
+      "solution": {
+        "pt-BR": "Uma única raiz real ocorre quando $\\Delta = 0$. Aqui $a = 1$, $b = k$, $c = 9$, logo $\\Delta = k^2 - 36$. De $k^2 - 36 = 0$ vem $k^2 = 36$ e, portanto, $k = 6$ ou $k = -6$. Conferindo com $k = 6$: $x^2 + 6x + 9 = (x+3)^2 = 0$, cuja única raiz é $x = -3$.",
+        "en-US": "A single real root occurs when $\\Delta = 0$. Here $a = 1$, $b = k$, $c = 9$, so $\\Delta = k^2 - 36$. From $k^2 - 36 = 0$ we get $k^2 = 36$, hence $k = 6$ or $k = -6$. Check with $k = 6$: $x^2 + 6x + 9 = (x+3)^2 = 0$, whose only root is $x = -3$."
+      },
+      "estimatedSeconds": 180,
+      "verified": { "method": "discriminante resolvido em k e fatoração conferida", "date": "2026-08-01" }
+    },
+    {
+      "id": "qe-005",
+      "type": "numeric",
+      "difficulty": 4,
+      "skills": ["solve-quadratic"],
+      "bloom": "apply",
+      "stem": {
+        "pt-BR": "As raízes de $2x^2 - 7x + 3 = 0$ são $x_1$ e $x_2$. Qual é o valor de $x_1 + x_2$?",
+        "en-US": "The roots of $2x^2 - 7x + 3 = 0$ are $x_1$ and $x_2$. What is the value of $x_1 + x_2$?"
+      },
+      "answer": 3.5,
+      "tolerance": 0.001,
+      "unit": null,
+      "hints": [
+        {
+          "pt-BR": "Você pode resolver a equação, mas há um caminho mais curto: a soma das raízes é $-b/a$.",
+          "en-US": "You can solve the equation, but there is a shortcut: the sum of the roots is $-b/a$."
+        },
+        {
+          "pt-BR": "Cuidado: $a = 2$, não $1$.",
+          "en-US": "Careful: $a = 2$, not $1$."
+        }
+      ],
+      "solution": {
+        "pt-BR": "Pelas relações de Girard, $x_1 + x_2 = -\\frac{b}{a} = -\\frac{-7}{2} = 3,5$. Conferindo pelo caminho longo: $\\Delta = 49 - 24 = 25$, $x = \\frac{7 \\pm 5}{4}$, ou seja, $x_1 = 3$ e $x_2 = 0,5$, cuja soma é $3,5$.",
+        "en-US": "By Vieta's formulas, $x_1 + x_2 = -\\frac{b}{a} = -\\frac{-7}{2} = 3.5$. Checking the long way: $\\Delta = 49 - 24 = 25$, $x = \\frac{7 \\pm 5}{4}$, that is, $x_1 = 3$ and $x_2 = 0.5$, whose sum is $3.5$."
+      },
+      "estimatedSeconds": 150,
+      "verified": { "method": "Girard confrontado com o cálculo direto das raízes", "date": "2026-08-01" }
+    }
+  ]
+}

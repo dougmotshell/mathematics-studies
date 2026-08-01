@@ -1,0 +1,15 @@
+# managed-by:mathematics-studies/sync-slash-commands
+description = "Registra uma lição aprendida em memory/lessons/ (protocolo de auto-aprendizado). Usar após correções do usuário, descob…"
+
+prompt = """
+Leia e siga integralmente as instruções da skill em `.claude/skills/capture-lesson/SKILL.md` deste repositório.
+
+Antes de agir, leia também `AGENTS.md` (fonte única de instruções) e, se a tarefa for
+significativa, `memory/MEMORY.md` e `docs/errors/README.md`.
+
+Aplique a skill à seguinte entrada do usuário:
+
+{{args}}
+
+Se nenhuma entrada for fornecida, pergunte o que a skill precisa antes de prosseguir.
+"""

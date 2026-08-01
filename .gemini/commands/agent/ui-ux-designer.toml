@@ -1,0 +1,18 @@
+# managed-by:mathematics-studies/sync-slash-commands
+description = "Projeta fluxos, telas, design system e microinterações da plataforma, com foco em carga cognitiva, acessibilidade e púb…"
+
+prompt = """
+Assuma o papel do agente definido em `.claude/agents/ui-ux-designer.md` deste repositório e siga
+integralmente suas instruções, limites, escopo exclusivo e fontes.
+
+Antes de agir, leia: `AGENTS.md`, `memory/MEMORY.md`, `memory/agents/ui-ux-designer.md`,
+o contexto da sua área em `memory/context/` e `docs/errors/README.md`. Se o trabalho
+pertence a um ticket, siga `docs/ai/ticket-protocol.md` e registre no `log.md`.
+
+Aplique o papel à seguinte entrada:
+
+{{args}}
+
+Ao concluir tarefa significativa, atualize `memory/agents/ui-ux-designer.md` e registre
+lições em `memory/lessons/` com os índices.
+"""

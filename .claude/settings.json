@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(./**)",
+      "Bash(git status)",
+      "Bash(git log:*)",
+      "Bash(git diff:*)",
+      "Bash(git branch:*)",
+      "Bash(bash scripts/audit-ai-surface.sh)",
+      "Bash(bash scripts/audit-content.sh)",
+      "Bash(python3 scripts/sync-slash-commands.py:*)",
+      "Bash(bash tools/dev-loop.sh:*)",
+      "Bash(bash tools/agent-handoff.sh:*)",
+      "Bash(python3 -c:*)",
+      "Bash(node --version)",
+      "Bash(npm run lint:*)",
+      "Bash(npm run test:*)",
+      "Bash(npm run build:*)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Write(./.claude/commands/**)",
+      "Write(./.github/prompts/**)",
+      "Write(./.github/chatmodes/**)",
+      "Write(./.gemini/commands/**)"
+    ]
+  }
+}

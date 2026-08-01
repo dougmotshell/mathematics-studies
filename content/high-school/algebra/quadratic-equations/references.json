@@ -1,0 +1,23 @@
+{
+  "nodeId": "high-school/algebra/quadratic-equations",
+  "items": [
+    {
+      "author": "OpenStax",
+      "year": "2021",
+      "title": "Algebra and Trigonometry 2e — Quadratic Equations",
+      "url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/2-5-quadratic-equations",
+      "language": "en-US",
+      "license": "CC BY 4.0",
+      "covers": "Definição, fatoração, completamento de quadrado, fórmula geral e discriminante, com exercícios."
+    },
+    {
+      "author": "OpenStax",
+      "year": "2020",
+      "title": "Intermediate Algebra 2e — Solve Quadratic Equations Using the Quadratic Formula",
+      "url": "https://openstax.org/books/intermediate-algebra-2e/pages/9-3-solve-quadratic-equations-using-the-quadratic-formula",
+      "language": "en-US",
+      "license": "CC BY 4.0",
+      "covers": "Dedução e aplicação da fórmula geral; uso do discriminante para prever o número de soluções."
+    }
+  ]
+}

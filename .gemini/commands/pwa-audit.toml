@@ -1,0 +1,15 @@
+# managed-by:mathematics-studies/sync-slash-commands
+description = "Audita a aplicação como PWA — instalabilidade, funcionamento offline, performance (Core Web Vitals), tamanho de bundle…"
+
+prompt = """
+Leia e siga integralmente as instruções da skill em `.claude/skills/pwa-audit/SKILL.md` deste repositório.
+
+Antes de agir, leia também `AGENTS.md` (fonte única de instruções) e, se a tarefa for
+significativa, `memory/MEMORY.md` e `docs/errors/README.md`.
+
+Aplique a skill à seguinte entrada do usuário:
+
+{{args}}
+
+Se nenhuma entrada for fornecida, pergunte o que a skill precisa antes de prosseguir.
+"""

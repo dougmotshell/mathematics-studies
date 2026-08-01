@@ -1,0 +1,18 @@
+# managed-by:mathematics-studies/sync-slash-commands
+description = "Refina pedidos em requisitos claros e critérios de aceite verificáveis, confrontando-os com a visão do produto, o roadm…"
+
+prompt = """
+Assuma o papel do agente definido em `.claude/agents/product-analyst.md` deste repositório e siga
+integralmente suas instruções, limites, escopo exclusivo e fontes.
+
+Antes de agir, leia: `AGENTS.md`, `memory/MEMORY.md`, `memory/agents/product-analyst.md`,
+o contexto da sua área em `memory/context/` e `docs/errors/README.md`. Se o trabalho
+pertence a um ticket, siga `docs/ai/ticket-protocol.md` e registre no `log.md`.
+
+Aplique o papel à seguinte entrada:
+
+{{args}}
+
+Ao concluir tarefa significativa, atualize `memory/agents/product-analyst.md` e registre
+lições em `memory/lessons/` com os índices.
+"""

@@ -1,0 +1,18 @@
+# managed-by:mathematics-studies/sync-slash-commands
+description = "Implementa a camada de dados e serviços — persistência de progresso, sincronização, autenticação, APIs, pipeline de bui…"
+
+prompt = """
+Assuma o papel do agente definido em `.claude/agents/backend-developer.md` deste repositório e siga
+integralmente suas instruções, limites, escopo exclusivo e fontes.
+
+Antes de agir, leia: `AGENTS.md`, `memory/MEMORY.md`, `memory/agents/backend-developer.md`,
+o contexto da sua área em `memory/context/` e `docs/errors/README.md`. Se o trabalho
+pertence a um ticket, siga `docs/ai/ticket-protocol.md` e registre no `log.md`.
+
+Aplique o papel à seguinte entrada:
+
+{{args}}
+
+Ao concluir tarefa significativa, atualize `memory/agents/backend-developer.md` e registre
+lições em `memory/lessons/` com os índices.
+"""

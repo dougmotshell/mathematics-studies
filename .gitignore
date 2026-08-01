@@ -1,0 +1,99 @@
+# ==========================================================================
+# .gitignore — mathematics-studies
+# Plataforma de estudos de matemática (conteúdo Markdown/JSON + aplicação web).
+# Regra geral: versionar conteúdo, documentação e código; ignorar binários
+# grandes, artefatos gerados e configurações locais de ferramentas.
+# ==========================================================================
+
+# --- Configurações locais de ferramentas de IA -----------------------------
+.claude/settings.local.json
+.claude/settings.local.json.*
+.codex/*.local.*
+.gemini/*.local.*
+.mcp.local.json
+
+# --- Estado efêmero do dev-loop (briefings entre agents) --------------------
+.dev-loop/
+
+# --- Handoff local entre CLIs (contrato transitório) ------------------------
+.agent-handoff.md
+
+# --- Node / build da aplicação web ------------------------------------------
+node_modules/
+.next/
+out/
+dist/
+build/
+.turbo/
+.vercel/
+coverage/
+playwright-report/
+test-results/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+
+# --- Python (scripts, verificação simbólica com SymPy) ----------------------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- Mídia bruta (vídeos/áudios de aula) ------------------------------------
+# Arquivos grandes demais para o git (limite GitHub: 100 MB/arquivo).
+# Versionar apenas ponteiros/manifests; hospedar mídia externamente ou via LFS.
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.mp3
+*.wav
+*.m4a
+*.aac
+*.flac
+
+# --- Sistema operacional ----------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# --- Editores / IDEs --------------------------------------------------------
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json.example
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-workspace
+
+# --- Temporários e rascunhos ------------------------------------------------
+*.tmp
+*.temp
+*.bak
+*.orig
+scratchpad/
+tmp/
+.cache/
+
+# --- Logs -------------------------------------------------------------------
+*.log
+logs/
+
+# --- Ambientes / segredos ---------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key

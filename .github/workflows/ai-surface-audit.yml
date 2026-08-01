@@ -1,0 +1,30 @@
+name: AI surface & content audit
+
+# Garante que a superfície de IA (agents, skills, adapters dos quatro CLIs) e o acervo
+# permaneçam consistentes. Roda em PR, no push para main e semanalmente.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Auditoria da superfície de IA
+        run: bash scripts/audit-ai-surface.sh
+
+      - name: Adapters gerados estão atualizados
+        run: python3 scripts/sync-slash-commands.py --check
+
+      - name: Auditoria determinística do conteúdo
+        run: bash scripts/audit-content.sh

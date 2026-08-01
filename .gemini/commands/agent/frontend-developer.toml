@@ -1,0 +1,18 @@
+# managed-by:mathematics-studies/sync-slash-commands
+description = "Implementa a interface da plataforma web/PWA — componentes, rotas, renderização de conteúdo com KaTeX, exercícios inter…"
+
+prompt = """
+Assuma o papel do agente definido em `.claude/agents/frontend-developer.md` deste repositório e siga
+integralmente suas instruções, limites, escopo exclusivo e fontes.
+
+Antes de agir, leia: `AGENTS.md`, `memory/MEMORY.md`, `memory/agents/frontend-developer.md`,
+o contexto da sua área em `memory/context/` e `docs/errors/README.md`. Se o trabalho
+pertence a um ticket, siga `docs/ai/ticket-protocol.md` e registre no `log.md`.
+
+Aplique o papel à seguinte entrada:
+
+{{args}}
+
+Ao concluir tarefa significativa, atualize `memory/agents/frontend-developer.md` e registre
+lições em `memory/lessons/` com os índices.
+"""

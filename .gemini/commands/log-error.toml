@@ -1,0 +1,15 @@
+# managed-by:mathematics-studies/sync-slash-commands
+description = "Registra um erro não-trivial em docs/errors/ para não repeti-lo — comando que falhou por causa evitável, afirmação mate…"
+
+prompt = """
+Leia e siga integralmente as instruções da skill em `.claude/skills/log-error/SKILL.md` deste repositório.
+
+Antes de agir, leia também `AGENTS.md` (fonte única de instruções) e, se a tarefa for
+significativa, `memory/MEMORY.md` e `docs/errors/README.md`.
+
+Aplique a skill à seguinte entrada do usuário:
+
+{{args}}
+
+Se nenhuma entrada for fornecida, pergunte o que a skill precisa antes de prosseguir.
+"""

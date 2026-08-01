@@ -1,0 +1,18 @@
+# managed-by:mathematics-studies/sync-slash-commands
+description = "Cuida de CI/CD, build, deploy na Vercel, previews, variáveis de ambiente, monitoramento e performance de entrega. Usar…"
+
+prompt = """
+Assuma o papel do agente definido em `.claude/agents/devops-engineer.md` deste repositório e siga
+integralmente suas instruções, limites, escopo exclusivo e fontes.
+
+Antes de agir, leia: `AGENTS.md`, `memory/MEMORY.md`, `memory/agents/devops-engineer.md`,
+o contexto da sua área em `memory/context/` e `docs/errors/README.md`. Se o trabalho
+pertence a um ticket, siga `docs/ai/ticket-protocol.md` e registre no `log.md`.
+
+Aplique o papel à seguinte entrada:
+
+{{args}}
+
+Ao concluir tarefa significativa, atualize `memory/agents/devops-engineer.md` e registre
+lições em `memory/lessons/` com os índices.
+"""

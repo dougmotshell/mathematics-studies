@@ -1,0 +1,15 @@
+# managed-by:mathematics-studies/sync-slash-commands
+description = "Revisa criticamente uma spec (docs/specs/<slug>/) antes da aprovação — completude, critérios de aceite verificáveis, re…"
+
+prompt = """
+Leia e siga integralmente as instruções da skill em `.claude/skills/spec-review/SKILL.md` deste repositório.
+
+Antes de agir, leia também `AGENTS.md` (fonte única de instruções) e, se a tarefa for
+significativa, `memory/MEMORY.md` e `docs/errors/README.md`.
+
+Aplique a skill à seguinte entrada do usuário:
+
+{{args}}
+
+Se nenhuma entrada for fornecida, pergunte o que a skill precisa antes de prosseguir.
+"""

@@ -1,0 +1,22 @@
+{
+  "id": "high-school/algebra/quadratic-equations",
+  "stage": "high-school",
+  "area": "algebra",
+  "title": {
+    "pt-BR": "Equações do segundo grau",
+    "en-US": "Quadratic equations"
+  },
+  "summary": {
+    "pt-BR": "Como reconhecer, resolver e interpretar equações do segundo grau, usando o discriminante para prever quantas soluções reais existem antes de calculá-las.",
+    "en-US": "How to recognize, solve and interpret quadratic equations, using the discriminant to predict how many real solutions exist before computing them."
+  },
+  "prerequisites": [],
+  "difficulty": 3,
+  "estimatedMinutes": 45,
+  "tags": ["equations", "polynomials", "discriminant"],
+  "skills": ["identify-quadratic-coefficients", "solve-quadratic", "interpret-discriminant"],
+  "status": "draft",
+  "languages": ["pt-BR", "en-US"],
+  "updatedAt": "2026-08-01",
+  "notes": "Nó piloto: serve de referência de formato para novos nós (ver docs/content/)."
+}

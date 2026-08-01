@@ -1,0 +1,15 @@
+# managed-by:mathematics-studies/sync-slash-commands
+description = "Cria ou atualiza diagramas C4 (Context, Container, Component) em Mermaid dentro de docs/architecture/. Usar ao document…"
+
+prompt = """
+Leia e siga integralmente as instruções da skill em `.claude/skills/c4-diagram/SKILL.md` deste repositório.
+
+Antes de agir, leia também `AGENTS.md` (fonte única de instruções) e, se a tarefa for
+significativa, `memory/MEMORY.md` e `docs/errors/README.md`.
+
+Aplique a skill à seguinte entrada do usuário:
+
+{{args}}
+
+Se nenhuma entrada for fornecida, pergunte o que a skill precisa antes de prosseguir.
+"""
