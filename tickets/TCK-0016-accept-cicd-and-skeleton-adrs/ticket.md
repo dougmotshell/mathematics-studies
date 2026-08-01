@@ -2,7 +2,7 @@
 id: TCK-0016
 title: Registrar o aceite dos ADR-0006 e ADR-0007
 type: docs
-status: in_review
+status: done
 owner: platform-architect
 priority: P1
 size: P
@@ -53,7 +53,7 @@ que L-010 exige para ADR aceito (e que foi corretamente omitida enquanto estavam
       `README.md`, `memory/context/`, `docs/product/roadmap.md`. Onde a fonte for canônica,
       rodar `python3 scripts/sync-ai-adapters.py`.
 - [x] 7. `docs/adr/README.md` e `memory/context/project-context.md` refletem o aceite.
-- [~] 8. `bash scripts/audit-ai-surface.sh` e `bash scripts/audit-content.sh` sem erros.
+- [x] 8. `bash scripts/audit-ai-surface.sh` e `bash scripts/audit-content.sh` sem erros.
 
 ### Requisitos transversais (marcar todos)
 
@@ -85,4 +85,47 @@ que L-010 exige para ADR aceito (e que foi corretamente omitida enquanto estavam
 
 ## Resultado final
 
-<preenchido pelo qa-validator ao marcar `done`>
+**`done` em 2026-08-01, validado pelo `qa-validator#11`** — 8 de 8 critérios com evidência
+reproduzida na validação (`log.md` `[016]`), 0 defeitos, 1 devolução no ciclo (`[009]`, sync não
+executado, fechada em `[010]`). Ambiente da validação: `HEAD` `dea3303`, Node v24.14.1,
+Python 3.12.3; sem preview (entrega documental). `sync-ai-adapters.py --check`,
+`audit-ai-surface.sh` e `audit-content.sh` → **exit 0 nos três**, medidos duas vezes, a segunda
+depois da última edição do TCK-0015 no workflow.
+
+**O que passa a valer.** `ADR-0006` e `ADR-0007` estão `accepted` desde 2026-08-01, decisor
+Douglas Silva. Ticket pode criar e alterar pipeline, `package.json`, `src/` e dependências com
+fundamento — não mais como hipótese. Ficam fixados: **previews por PR ligados** (sem
+autenticação, sem domínio de produção), **produção publica no push/merge em `main`**, **projeto
+Astro na raiz**, **`src/content-contract/` como único leitor do acervo**, **URL com prefixo de
+idioma em minúsculas** (`/pt-br/…`, `/en-us/…`, contrato público) e **Node ≥ 22.12.0**. Ficam
+proibidos sem ADR novo: segredo no repositório, telemetria de visitante, CDN de terceiro, URL em
+caixa mista, renderização por requisição, trocar o gerador, mover o repositório para uma
+organização ou monetizar o projeto. A contradição de governança que originou o ticket — o
+TCK-0015 construindo sob ADRs `proposed` — está resolvida **no registro**; o aceite autoriza
+aquele trabalho e **não** atesta que ele esteja correto.
+
+**O que continua aberto, apesar do aceite.** Verificado item a item contra `plan.md:132-142`:
+**onde** roda o portão de validação do RF-18 (exercido pelo TCK-0015, aberto em 9 pontos dos
+dois ADRs e dos dois C4), biblioteca de UI dentro da ilha, ferramenta de teste, mecanismo da
+camada offline/service worker, momento em que a matemática vira HTML, ferramenta de Markdown →
+HTML, e cada dependência nova. Fora dos ADRs e ainda do ticket: os números do orçamento de
+performance (RNF-8). Nenhum item que era decisão de ticket foi absorvido pelo aceite. Pendente
+de **ato humano**: proteção de branch em `main` — sem ela, o portão de mérito é informativo.
+
+**Dívidas.** D-1: a convenção de emenda editorial (`docs/adr/README.md:9-16`) tem duas metades
+não equivalentes; o QA decidiu que vale *"emenda quando a frase falsa não é a decisão;
+`superseded` quando é"*, falta a redação. D-2: a lista "o que continua sendo decisão de ticket"
+não é exaustiva contra `plan.md` (faltam o modelo concreto de renderização e o RNF-8). D-3:
+`plan.md:132-142` envelheceu — os itens 1 e 2 já não são decisão de ticket.
+
+**Para quem for commitar.** O sync carregou junto a edição do TCK-0006 em
+`.github/instructions/core.instructions.md`, que o `dea3303` deixou **fora** do commit
+(`git show HEAD:… | grep -c "agrupamento dito em palavras"` → 0, working tree → 1). Portanto
+`core.instructions.md` e os **6** gerados derivados de `core` (`.cursor/rules/core.mdc`,
+`.windsurf/rules/core.md`, `.agents/rules/core.md`, `.rules`, `.clinerules`,
+`.junie/guidelines.md`) levam **os dois textos**: o aceite e a norma de leitura de fórmula.
+Os 3 gerados de `app` levam só o aceite. **Não reverter** — não é arraste, é estado prévio do
+working tree. Encaminhados ao `tech-lead`: `screen-states.md:689,833` (ticket novo,
+`ui-ux-designer`), a pendência do `ADR-0003` aberta no TCK-0003, a promoção das duas notas de
+memória a `L-026` (`retrospective-curator`) e a referência desatualizada em
+`tickets/TCK-0015-.../ticket.md:89-90`.

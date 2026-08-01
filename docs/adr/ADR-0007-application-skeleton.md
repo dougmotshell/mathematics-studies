@@ -1,16 +1,19 @@
 # ADR-0007 — Esqueleto da aplicação: gerador concreto, diretórios e leitura do acervo
 
-- **Status:** proposed
-- **Data:** 2026-08-01
-- **Decisores:** proposta do `platform-architect` (TCK-0011); **aceite pendente** de Douglas
-  Silva
+- **Status:** accepted
+- **Data:** 2026-08-01 (proposto e aceito no mesmo dia)
+- **Decisores:** Douglas Silva (aceite em 2026-08-01, registrado no TCK-0016); proposta do
+  `platform-architect` (TCK-0011)
 - **Relacionados:** ADR-0003 (stack aceita), ADR-0002 (bilinguismo), ADR-0005 (licença),
-  ADR-0006 (CI/CD, `proposed`), TCK-0011, TCK-0014,
-  `docs/specs/minimum-learning-slice/` (tasks 5–11)
+  ADR-0006 (CI/CD, `accepted`), TCK-0011, TCK-0014, TCK-0015 (implementação), TCK-0016
+  (aceite), `docs/specs/minimum-learning-slice/` (tasks 5–11)
 
-> **Este ADR está `proposed`.** Ele é **especificação, não instalação**: nenhum arquivo de
-> projeto, `package.json` ou dependência foi criado por ele, e nenhum ticket deve criá-los
-> antes do aceite. Depois do aceite, o ticket da task 5 vira trabalho mecânico.
+> **Este ADR está `accepted` desde 2026-08-01.** As duas perguntas que ele levava ao aceite
+> foram respondidas pelo usuário: **URL com prefixo de idioma em minúsculas** (`/pt-br/`,
+> `/en-us/`) e **projeto na raiz** do repositório. Ticket pode criar `package.json`, `src/` e
+> dependências com base nele. O que este ADR **não** decide continua não decidido: biblioteca
+> de UI, ferramenta de teste, mecanismo da camada offline, momento em que a matemática vira
+> HTML e **onde** o portão de validação do acervo roda.
 
 ## Contexto
 
@@ -87,9 +90,9 @@ O critério usado para separar o que entra aqui do que fica com o ticket:
 em 2026-08-01: <https://docs.astro.build/en/install-and-setup/>); o ambiente local tem
 v24.14.1, verificado no mesmo dia.
 
-**2. O projeto vive na raiz do repositório.** `package.json`, `astro.config.mjs` e `src/` na
-raiz; `content/`, `docs/`, `scripts/`, `tools/`, `memory/` e `tickets/` seguem exatamente como
-estão.
+**2. O projeto vive na raiz do repositório** — proposta confirmada por **Douglas Silva em
+2026-08-01**, no aceite. `package.json`, `astro.config.mjs` e `src/` na raiz; `content/`,
+`docs/`, `scripts/`, `tools/`, `memory/` e `tickets/` seguem exatamente como estão.
 
 **3. Estrutura de diretórios** (o que não está listado não é criado por este ADR):
 
@@ -116,8 +119,8 @@ Também gitignored: `node_modules/` e o diretório de cache do gerador (`.astro/
   `"type": "module"`, `"license": "MIT"` (`ADR-0005`);
 - `"engines": { "node": ">=22.12.0" }`;
 - `scripts`: `dev`, `build`, `preview` (do gerador) e `validate:content` como **ponto de
-  entrada nomeado** do validador entregue pelo TCK-0014 (hoje `bash scripts/validate-content.sh`,
-  Python 3 — confirmar o nome final, já que o ticket segue em curso). O **resultado exigido**
+  entrada nomeado** do validador entregue pelo TCK-0014 (`bash scripts/validate-content.sh`,
+  Python 3 — ticket fechado, nome confirmado). O **resultado exigido**
   é o do RF-18: nó que viole o contrato **não vira página publicada**, e a falha é visível e
   registrada. **Onde o portão roda — script `prebuild`, job de CI, ou os dois — é decisão do
   ticket de pipeline**, não deste ADR (`docs/specs/minimum-learning-slice/plan.md`, item 5 das
@@ -169,8 +172,8 @@ interatividade. Regras:
 - recurso que exija hidratar a página inteira está mal desenhado e volta para redesenho
   (`ADR-0003`).
 
-**7. Forma da URL bilíngue: prefixo de idioma em minúsculas**, com o caminho da taxonomia
-intacto:
+**7. Forma da URL bilíngue: prefixo de idioma em minúsculas** — proposta confirmada por
+**Douglas Silva em 2026-08-01**, no aceite —, com o caminho da taxonomia intacto:
 
 ```
 /pt-br/high-school/algebra/quadratic-equations/
@@ -184,6 +187,11 @@ dentro de `src/content-contract/`; nos arquivos, nos campos localizados e no atr
 documento continua valendo a grafia canônica `pt-BR` / `en-US`. A raiz `/` é uma **página
 estática de escolha de idioma**: detectar idioma por cabeçalho exigiria execução no servidor,
 que esta arquitetura não tem.
+
+**Fechado no aceite:** a grafia em caixa mista deixa de ser opção viva — nenhum documento,
+diagrama ou rota deve apresentá-la como alternativa disponível. Ela permanece apenas onde é
+registro histórico da decisão (as listas de alternativas acima). Voltar atrás exige ADR novo e,
+depois da primeira publicação, também redirect (L-003).
 
 Alternativas descartadas, uma linha cada:
 
@@ -221,8 +229,11 @@ aplicação). As ilhas são folhas do desenho: recebem dado, não vão buscá-lo
 mostra biblioteca de UI, ferramenta de teste, camada offline nem o momento em que a matemática
 vira HTML — nada disso é decidido aqui.
 
-**Estado atual × proposta:** só a caixa `content/` existe. **Todo o resto é proposta** — não há
-uma linha de aplicação escrita, e este ADR não escreve nenhuma.
+**Estado no aceite (2026-08-01):** este ADR continua sendo **especificação, não instalação** —
+ele não cria arquivo nenhum. Quem cria é o **TCK-0015**, que estava em revisão quando o ADR foi
+aceito; o aceite autoriza aquele trabalho e dá o critério de conformidade contra o qual ele é
+julgado, mas não atesta que a entrega esteja correta. Antes do TCK-0015 só existia a caixa
+`content/`.
 
 **Fontes:** `ADR-0003`; `ADR-0001` (metadados em `meta.json`);
 `docs/specs/minimum-learning-slice/plan.md` (camadas e decisões deixadas ao ticket);
@@ -238,6 +249,37 @@ serviço externo. `dependencies` com um único pacote é também uma decisão de
 privacidade**: menos terceiros no navegador, menos superfície para rastreio (RNF-7).
 
 ## Consequências
+
+**O que passa a valer com o aceite (2026-08-01)**
+
+- **`/pt-br/` e `/en-us/` são a forma da URL pública**, com o caminho da taxonomia intacto. É
+  contrato público: link de terceiro, rota emitida, `sitemap`, alternador de idioma e `hreflang`
+  usam essa grafia. A grafia canônica `pt-BR` / `en-US` continua valendo nos arquivos, nos campos
+  localizados e no atributo `lang` — a tradução entre as duas vive em **um** mapa, em
+  `src/content-contract/`.
+- **O projeto mora na raiz**: `package.json`, `astro.config.mjs`, `src/` e `public/` na raiz;
+  ticket não cria variante em `app/`.
+- **`src/content-contract/` é a única fronteira com o acervo** e não importa nada do gerador.
+- **Ticket pode instalar dependência**, sob a regra dura: tudo que chega ao navegador precisa de
+  justificativa no log e revisão do `security-auditor`; ativos servidos da própria origem.
+
+**O que fica proibido sem ADR novo**
+
+- **URL em caixa mista, sufixo de idioma, `?lang=` ou domínio por idioma** — a forma está
+  fechada; mudar depois da primeira publicação exige também redirect (L-003).
+- **CDN de terceiro** para fonte, ativo ou biblioteca (RNF-7).
+- **Usar as coleções de conteúdo do gerador** para ler `content/`: quebra a independência do
+  contrato de dados exigida pelo `ADR-0003`.
+- **Renderização por requisição** e qualquer estado no servidor (`ADR-0003`).
+- **Trocar o gerador** (Astro) ou baixar o piso de Node abaixo de 22.12.0.
+
+**O que continua sendo decisão de ticket, apesar do aceite**
+
+- Biblioteca de UI dentro da ilha, ferramenta de teste, mecanismo da camada offline/service
+  worker e o momento em que a matemática vira HTML (build × execução).
+- A ferramenta que converte Markdown em HTML — apresentação, não contrato.
+- **Onde** o portão de validação do acervo roda (`ADR-0006`, pendência 1).
+- Cada dependência nova, uma a uma, com a justificativa no log do ticket que a introduz.
 
 **Positivas**
 
@@ -268,18 +310,20 @@ privacidade**: menos terceiros no navegador, menos superfície para rastreio (RN
 **O que fica mais difícil depois desta decisão**
 
 - **Mudar a forma da URL depois da primeira publicação** exige ADR + redirect (L-003, `ADR-0001`).
-  Antes da primeira publicação, é trocar uma linha do mapa — por isso a pergunta ao usuário é
-  agora.
+  Enquanto não houver publicação, é trocar uma linha do mapa — foi por isso que a pergunta foi
+  feita antes do primeiro deploy, e não depois.
 - Renderização por requisição continua fora: o que não cabe na build cabe na ilha, ou não cabe.
 - Usar as coleções de conteúdo do gerador passa a exigir ADR que revise a restrição de
   independência do contrato de dados.
 
-## Perguntas ao usuário (no aceite)
+## Respostas do usuário no aceite (Douglas Silva, 2026-08-01)
 
-1. **URL: `/pt-br/` (proposto) ou `/pt-BR/`?** Depois da primeira publicação, mudar custa
-   redirect. A recomendação é minúsculas, pela sensibilidade a maiúsculas dos hosts estáticos.
-2. **Projeto na raiz (proposto) ou em `app/`?** A raiz é mais simples para o host e para o
-   caminho até `content/`; `app/` deixa a raiz do repositório mais limpa.
+1. **URL:** prefixo de idioma **em minúsculas** — `/pt-br/`, `/en-us/`. A pergunta está
+   encerrada; a caixa mista deixa de ser opção (item 7 da Decisão).
+2. **Onde mora o projeto:** **raiz** do repositório (item 2 da Decisão).
+
+Nenhuma pergunta deste ADR segue aberta. O que permanece aberto é o que ele decidiu **não**
+decidir — a lista está em "O que continua sendo decisão de ticket".
 
 ## Impacto
 
@@ -288,9 +332,11 @@ privacidade**: menos terceiros no navegador, menos superfície para rastreio (RN
   RF-17).
 - **Plataforma:** cria o esqueleto sobre o qual todas as tasks 5–11 acontecem; fixa a fronteira
   entre acervo, leitor, páginas e ilhas.
-- **Processo/agentes:** depois do aceite, o `frontend-developer` e o `devops-engineer` ganham o
-  ticket de bootstrap (task 5 depende dele) e `memory/context/frontend.md` passa a registrar
-  estrutura e URL como decididas (L-010). Antes do aceite, tudo aqui é hipótese declarada.
+- **Processo/agentes:** com o aceite, o `frontend-developer` e o `devops-engineer` passam a ter
+  fundamento para o bootstrap (ticket TCK-0015; a task 5 depende dele). A propagação exigida por
+  L-010 foi feita no TCK-0016: `memory/context/frontend.md`, `memory/context/devops.md`,
+  `memory/context/project-context.md`, `docs/architecture/c4-context.md` e `c4-container.md`,
+  `AGENTS.md`, `README.md`, `prompts/bootstrap-session.md` e `.github/instructions/`.
 
 ## Como reverter
 

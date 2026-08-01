@@ -7,6 +7,8 @@ applyTo: "src/**,app/**,api/**,tests/**,e2e/**"
 > Stack decidida em `docs/adr/ADR-0003-platform-stack.md` (`accepted`): **site estático
 > orientado a conteúdo com ilhas de interatividade** e progresso **local-first sem conta**
 > (IndexedDB). Framework, banco ou serviço fora disso exige ADR novo.
+> Esqueleto decidido em `ADR-0007` (`accepted`, 2026-08-01): projeto **Astro na raiz**,
+> `src/{content-contract,pages,layouts,components,islands,styles}`.
 
 - **Nenhuma implementação sem spec aprovada** (`docs/specs/<slug>/`) e ticket
   (`tickets/TCK-NNNN-<slug>/`).
@@ -20,6 +22,14 @@ applyTo: "src/**,app/**,api/**,tests/**,e2e/**"
 - **Deploy estático portátil**: a build produz arquivos servíveis por qualquer host estático.
   Recurso proprietário da Vercel que quebre isso exige ADR.
 - Identificadores em **en-US**; comentários e mensagens de commit (corpo) em **pt-BR**.
+- **URL pública: prefixo de idioma em minúsculas** (`/pt-br/…`, `/en-us/…`) com a taxonomia
+  intacta (`ADR-0007`). Caixa mista está descartada; mudar exige ADR + redirect. A grafia
+  `pt-BR` / `en-US` continua nos arquivos, nos campos localizados e no atributo `lang` — a
+  tradução entre as duas vive em **um** mapa, em `src/content-contract/`.
+- **`src/content-contract/` não importa nada do gerador** — é o único ponto que conhece o
+  formato do acervo (`grep -rn "astro" src/content-contract/` deve sair vazio).
+- **Dependência que chega ao navegador** exige justificativa no log do ticket e revisão do
+  `security-auditor`; ativos e fontes vêm da **própria origem**, nunca de CDN de terceiro.
 - **i18n**: nenhuma string voltada ao usuário hard-coded — tudo em catálogo pt-BR/en-US.
 - **Acessibilidade** é requisito: semântica correta, foco visível, operação por teclado,
   contraste, alvo de toque ≥ 24 px, `prefers-reduced-motion`. Matemática renderizada com

@@ -1,15 +1,18 @@
 # ADR-0006 — Integração contínua, previews e publicação
 
-- **Status:** proposed
-- **Data:** 2026-08-01
-- **Decisores:** proposta do `platform-architect` (TCK-0011); **aceite pendente** de Douglas
-  Silva
-- **Relacionados:** ADR-0003 (stack aceita), ADR-0007 (esqueleto da aplicação, `proposed`),
-  TCK-0011, TCK-0003, `docs/specs/minimum-learning-slice/` (task 11)
+- **Status:** accepted
+- **Data:** 2026-08-01 (proposto e aceito no mesmo dia)
+- **Decisores:** Douglas Silva (aceite em 2026-08-01, registrado no TCK-0016); proposta do
+  `platform-architect` (TCK-0011)
+- **Relacionados:** ADR-0003 (stack aceita), ADR-0007 (esqueleto da aplicação, `accepted`),
+  TCK-0011, TCK-0003, TCK-0015 (implementação), TCK-0016 (aceite),
+  `docs/specs/minimum-learning-slice/` (task 11)
 
-> **Este ADR está `proposed`.** Enquanto não for aceito, nenhum ticket pode criar ou alterar
-> pipeline com base nele. O workflow que já existe (`.github/workflows/ai-surface-audit.yml`)
-> continua valendo como está — este ADR **descreve o que ele é** e propõe o restante.
+> **Este ADR está `accepted` desde 2026-08-01.** Ticket pode criar e alterar pipeline com base
+> nele. A única pergunta que ele deixara em aberto ao usuário — previews por PR — foi
+> respondida no aceite: **ativados** (item iii). O que este ADR **não** decide continua não
+> decidido: **onde** o portão de publicação roda é do ticket (pendência 1), e a proteção de
+> branch em `main` continua dependendo de ato do usuário (pendência 2).
 
 ## Contexto
 
@@ -83,13 +86,14 @@ assim que existirem, **o validador do contrato de conteúdo** (TCK-0014) e **a b
 aplicação** como verificação (build que quebra reprova o PR). A execução semanal agendada
 permanece: ela detecta deriva sem commit. Nenhuma etapa nova exige serviço externo.
 
-**(iii) Previews por branch: ativos por PR (alternativa 1), sem autenticação.** Justificativa
-falseável: o repositório é **público** e o acervo é licenciado CC BY-SA 4.0 (`ADR-0005`) — o
-conteúdo `draft` já é legível por qualquer pessoa no GitHub, então o preview não amplia a
-exposição; ele apenas a torna navegável. Salvaguardas: preview nunca recebe o domínio de
-produção, e nó sem paridade de idioma continua fora das rotas publicadas (`ADR-0002`). **A
-pergunta segue aberta ao usuário no aceite** — se a resposta for "não expor rascunho
-navegável", a decisão vira a alternativa 3 (previews desligados) e o restante do ADR não muda.
+**(iii) Previews por branch: ativos por PR (alternativa 1), sem autenticação** — proposta
+confirmada por **Douglas Silva em 2026-08-01**, no aceite. Justificativa falseável: o
+repositório é **público** e o acervo é licenciado CC BY-SA 4.0 (`ADR-0005`) — o conteúdo
+`draft` já é legível por qualquer pessoa no GitHub, então o preview não amplia a exposição; ele
+apenas a torna navegável. Salvaguardas: preview nunca recebe o domínio de produção, e nó sem
+paridade de idioma continua fora das rotas publicadas (`ADR-0002`). Desligar os previews depois
+é mudança de decisão registrada — uma linha de configuração no painel do host, mais a emenda
+deste ADR.
 
 **(iv) Gatilho do deploy em produção: push/merge em `main` (alternativa 1)**, com a regra
 complementar de que `main` só recebe merge com o job do Actions verde. Essa regra depende de
@@ -128,9 +132,13 @@ qual comando implementa cada caixa, **onde** o portão de publicação roda (scr
 job de CI ou ambos) nem em que runtime — os três são do ticket de implementação (task 11 da
 spec da fatia mínima; `plan.md`, item 5).
 
-**Estado atual × proposta:** apenas a caixa "GitHub Actions" existe hoje, e parcialmente — sem
-validador e sem build, porque a aplicação não existe. **Todo o resto é proposta**, incluindo o
-bloqueio de merge, o preview e o deploy de produção.
+**Estado no aceite (2026-08-01):** a caixa "GitHub Actions" existe desde antes deste ADR; o
+validador do acervo existe desde o TCK-0014; a build da aplicação existe desde o esqueleto do
+`ADR-0007`. A implementação do restante — validador e build de verificação no workflow,
+publicação e previews na Vercel — é o **TCK-0015**, que estava em revisão quando este ADR foi
+aceito: o aceite autoriza aquele trabalho, não atesta que ele esteja correto. Continua **não
+implementado, por depender de ato humano**, o bloqueio de merge (proteção de branch —
+pendência 2).
 
 **Fontes:** `.github/workflows/ai-surface-audit.yml`; `ADR-0003`; `ADR-0005`;
 `docs/specs/minimum-learning-slice/tasks.md` (task 11).
@@ -159,6 +167,39 @@ o que torna esta decisão gratuita; ambas são falseáveis por inspeção.
 disponibilidade é assumido e aceito para um projeto sem receita.
 
 ## Consequências
+
+**O que passa a valer com o aceite (2026-08-01)**
+
+- **Ticket pode criar e alterar `.github/workflows/` e a configuração de publicação** com base
+  neste ADR — a proibição que vigorava enquanto ele era `proposed` caiu. O `devops-engineer`
+  passa a ter a decisão como fundamento, não como hipótese.
+- **Dois portões, papéis separados, são norma**: Actions decide mérito (o que entra em `main`),
+  o caminho de publicação decide o que chega ao aluno. Um pipeline que junte os dois papéis num
+  só contraria esta decisão.
+- **Previews por PR ficam ligados**, sem autenticação, sem domínio de produção.
+- **Produção publica no push/merge em `main`**, sem promoção manual.
+- **A configuração feita no painel do host tem de ser espelhada** em `memory/context/devops.md`
+  — ela não está no Git e, sem o registro, some da memória do projeto.
+
+**O que fica proibido sem ADR novo**
+
+- **Segredo no repositório ou no pipeline** (token de publicação, chave de API, credencial de
+  serviço). A promessa "nenhum segredo" é parte da decisão — falseável por
+  `grep -rn "secrets\." .github/workflows/`.
+- **Vercel Web Analytics, Speed Insights ou qualquer telemetria de visitante** — é coleta e
+  exige ADR de privacidade com LGPD/COPPA (`ADR-0003`).
+- **Mover o repositório para uma organização do GitHub** ou **monetizar o projeto**: as duas
+  quebram a elegibilidade do plano gratuito descrita acima.
+- **Recurso proprietário do host que quebre a portabilidade** da saída estática (`ADR-0003`).
+
+**O que continua sendo decisão de ticket, apesar do aceite**
+
+- **Onde o portão de publicação roda** — script do projeto, job de CI ou os dois — e em que
+  runtime (pendência 1; `plan.md`, item 5). O ADR exige o resultado: nó reprovado não vira
+  página publicada.
+- Quais comandos compõem o job, sua ordem, cache, matriz e nomes de etapa.
+- O momento de acrescentar novas verificações ao job, desde que nenhuma exija serviço externo
+  ou segredo.
 
 **Positivas**
 
@@ -199,28 +240,34 @@ disponibilidade é assumido e aceito para um projeto sem receita.
 
 ## Pendências desta decisão
 
-1. **Runtime do validador no caminho de publicação.** O portão que impede publicar acervo
-   reprovado só existe se o validador for executável **onde a publicação acontece** — o que
-   torna a escolha do lugar (script do projeto × job de CI) uma decisão do ticket, e não deste
-   ADR (`plan.md`, item 5). O TCK-0014 o entregou em **Python 3**
+O aceite **não** fecha o que este ADR decidiu não decidir. Estado em 2026-08-01:
+
+1. **Aberta — runtime e lugar do portão no caminho de publicação.** O portão que impede
+   publicar acervo reprovado só existe se o validador for executável **onde a publicação
+   acontece** — o que torna a escolha do lugar (script do projeto × job de CI) uma decisão do
+   ticket, e não deste ADR (`plan.md`, item 5). O TCK-0014 o entregou em **Python 3**
    (`scripts/validate-content.sh`), enquanto a build da aplicação roda em Node — a imagem de
    build do host precisa ter os dois. Se não tiver, a alternativa é rodar o gate no Actions e
-   publicar artefato já validado. **Verificação obrigatória no ticket de implementação**, com
-   evidência no log; até lá, a consequência "push direto em `main` com acervo inválido não
-   publica" é **hipótese**, não fato.
-2. **Proteção de branch em `main`** — ato do usuário no GitHub; sem ela, a consequência "não
-   pode ser mesclado" é falsa.
-3. **Resposta do usuário sobre previews** (item iii).
+   publicar artefato já validado. O **TCK-0015 exerceu essa escolha** e estava em revisão no
+   momento do aceite; enquanto ele não fechar com evidência, a consequência "push direto em
+   `main` com acervo inválido não publica" segue sendo **exigência**, não fato observado.
+   Aceitar este ADR não transfere a decisão para cá: o lugar do portão continua sendo do
+   ticket, hoje e nas trocas futuras.
+2. **Aberta — proteção de branch em `main`.** Ato do usuário no GitHub; sem ela, a consequência
+   "não pode ser mesclado" é falsa e a checagem é apenas informativa.
+3. **Fechada em 2026-08-01 — previews por PR** (item iii): o usuário optou por **ativados**.
 
 ## Impacto
 
 - **Conteúdo (`content/`):** nenhum — nenhuma URL pública muda, nenhum arquivo é tocado.
 - **Plataforma:** define onde a validação do acervo roda e o que impede uma publicação ruim;
   não altera a stack decidida em `ADR-0003`.
-- **Processo/agentes:** o `devops-engineer` ganha um ticket de implementação **após o aceite**;
-  até lá, nenhum agente cria ou altera `.github/workflows/` com base neste ADR. Ao ser aceito,
-  este ADR precisa ser propagado para `memory/context/devops.md` e para o
-  `docs/architecture/c4-context.md` (L-010).
+- **Processo/agentes:** com o aceite, o `devops-engineer` passa a ter fundamento para criar e
+  alterar `.github/workflows/` e a configuração de publicação — o ticket de implementação é o
+  TCK-0015. A propagação exigida por L-010 foi feita no TCK-0016: `memory/context/devops.md`,
+  `docs/architecture/c4-context.md`, `docs/architecture/c4-container.md`,
+  `memory/context/project-context.md`, `AGENTS.md`, `README.md`, `prompts/bootstrap-session.md`
+  e `.github/instructions/`.
 
 ## Como reverter
 

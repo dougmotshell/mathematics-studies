@@ -274,9 +274,10 @@ Cada critério é verificável e falharia se a implementação estivesse errada.
 - **Exibir o nó `draft` ao público?** RF-5 e CA-16 assumem que sim, com rótulo visível.
   Alternativa: esconder nós não `published` do índice e alcançá-los só por URL direta. Decisão
   humana.
-- **Qual a forma da URL bilíngue?** Prefixo de idioma (`/pt-BR/high-school/…`), sufixo,
-  parâmetro ou domínio separado. RF-17 só exige que o caminho da taxonomia apareça íntegro; a
-  forma exata depende do modelo de roteamento e é decisão humana/`ADR-0003`.
+- ~~**Qual a forma da URL bilíngue?**~~ **Respondida em 2026-08-01** (Douglas Silva, TCK-0016):
+  prefixo de idioma **em minúsculas** — `/pt-br/high-school/…`, `/en-us/high-school/…` — com o
+  caminho da taxonomia íntegro, como RF-17 exige. Registro em `ADR-0007` (`accepted`); caixa
+  mista, sufixo, parâmetro e domínio por idioma estão descartados.
 - **O rótulo de rascunho fica visível também no índice**, ou só na página do nó?
 
 ## Métricas de sucesso

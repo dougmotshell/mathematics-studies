@@ -32,8 +32,16 @@ exercícios interativos com feedback diagnóstico e acompanhamento de progresso.
    estruturais. A stack está **decidida** (`docs/adr/ADR-0003-platform-stack.md`,
    `accepted`): site estático com ilhas de interatividade e progresso local-first
    (IndexedDB). **Backend, conta, login e telemetria identificável exigem ADR novo.**
+   Também decididos em 2026-08-01: projeto **Astro na raiz** e **URL com prefixo de idioma em
+   minúsculas** (`/pt-br/…`, `/en-us/…`, `ADR-0007`); Actions como portão de mérito, Vercel
+   publicando por integração Git com previews por PR, **sem segredo no repositório e sem
+   analytics do host** (`ADR-0006`).
 6. **Acessibilidade WCAG 2.2 AA** é requisito de entrada: teclado, foco visível, contraste,
-   fórmulas em KaTeX com descrição textual (nunca imagem de fórmula).
+   fórmulas em KaTeX (nunca imagem de fórmula). Equação em **display** exige leitura textual
+   integral logo abaixo; fórmula **inline** exige o **agrupamento dito em palavras** quando
+   algum argumento é composto **ou** a base elevada é ambígua — entre parênteses ou com sinal
+   unário à frente (`$\frac{5 \pm 1}{2}$`, `$(x+3)^2$`, `$-x^2$` sim; `$\frac{b}{a}$`,
+   `$x_1$`, `$ax^2 + bx + c$` não) — regra em `docs/content/accessibility.md`.
 7. **Custo zero.** Free tier e soluções estáticas; qualquer gasto exige aprovação explícita.
 8. **Privacidade de menores.** O público inclui crianças: minimização de dados; qualquer
    coleta identificável exige ADR tratando LGPD/COPPA **antes** da implementação.

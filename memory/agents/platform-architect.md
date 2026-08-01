@@ -61,10 +61,23 @@ Desenha a arquitetura da plataforma web/PWA — estrutura da aplicação, modelo
 - **Declarar no log todo arquivo tocado, inclusive os da própria área** (AGENTS.md §10,
   regra 2). Reescrevi `docs/architecture/*` sem declarar e virou defeito bloqueante — o
   `qa-validator` não valida o que não foi declarado.
-- **Diagrama C4 não mistura decidido com proposto**: desde o TCK-0011, CI/CD, previews e
-  gatilho de deploy remetem ao `ADR-0006` (`proposed`) e o esqueleto ao `ADR-0007`
-  (`proposed`) — `PROPOSTO` sem ADR nomeado é órfão e volta como defeito. Afirmação absoluta
-  do tipo "nada aqui é hipótese" é armadilha.
+- **Diagrama C4 não mistura decidido com proposto**: `PROPOSTO` sem ADR nomeado é órfão e volta
+  como defeito. Afirmação absoluta do tipo "nada aqui é hipótese" é armadilha. Desde o aceite
+  do TCK-0016 (2026-08-01) **não há mais `PROPOSTO` nos níveis Context e Container** —
+  `ADR-0003`, `ADR-0006` e `ADR-0007` estão todos `accepted`; o que sobra é `EM ABERTO
+  (ticket)`, que o aceite **não** apaga.
+- **Aceitar ADR ≠ implementar, e ≠ atestar a implementação.** Quando o ticket de execução já
+  está em revisão (TCK-0015 no TCK-0016), escrever no ADR "o aceite autoriza aquele trabalho,
+  não afirma que ele esteja correto" — senão o ADR vira certificado de qualidade de código que
+  ele não reviu. Vale também para "Estado atual × proposta": o parágrafo tem de virar "Estado
+  no aceite" e datar o que já existia.
+- **Decisão tomada mata a grafia alternativa em toda parte, inclusive em ADR aceito antigo**
+  (aplicação de L-013 no TCK-0016): mantida como opção viva, a alternativa descartada vira
+  informação falsa. Fronteira que uso: some de tudo que a apresente como **escolha disponível**
+  (perguntas ao usuário, rótulo de diagrama, "como alternativa", pergunta em aberto de spec);
+  **fica** só onde é registro histórico da própria decisão (lista de alternativas consideradas
+  e descartadas). O rótulo Mermaid do `ADR-0003` mostrava `/pt-BR/…` — ADR aceito que **não**
+  decidia URL: generalizado, com nota de "emenda editorial" no cabeçalho e sem tocar na decisão.
 - **`docs/adr/README.md` é editado por vários agentes** — sempre edição cirúrgica da linha do
   próprio ADR, nunca reescrita do arquivo.
 - **Régua para arbitrar ADR × ticket** (L-020): permanência observável de fora. "Se eu trocar
@@ -81,7 +94,15 @@ Desenha a arquitetura da plataforma web/PWA — estrutura da aplicação, modelo
 - **ADR `proposed` do qual um ticket depende é bloqueio, não pendência decorativa.** Entregar
   o esqueleto como `proposed` significa que a task 5 da fatia mínima não começa sem aceite
   humano — declarar isso no handoff e no relatório, senão o executor descobre sozinho e
-  improvisa.
+  improvisa. **Desfecho observado (TCK-0011 → TCK-0015 → TCK-0016):** o executor não esperou; o
+  usuário autorizou a execução e o registro ficou para trás, produzindo um ticket implementando
+  sob ADR que se proibia a si mesmo. Autorização do usuário destrava a **execução**, não
+  substitui o **aceite** — quando eu escrever "nenhum ticket pode X antes do aceite", pedir o
+  ticket de aceite no mesmo handoff, e não só avisar.
+- **Ao aceitar, a lista de "o que continua sendo decisão de ticket" é seção obrigatória do
+  ADR** (L-011/L-020 na forma positiva). Sem ela, o aceite é lido como fechamento geral e a
+  próxima entrega trata o mecanismo como decidido. As três seções que uso: *o que passa a
+  valer* · *o que fica proibido sem ADR novo* · *o que continua sendo decisão de ticket*.
 - **Gratuidade tem condição de elegibilidade, não só limite:** GitHub Actions é grátis porque
   o repositório é **público** (`gh repo view --json visibility` → `PUBLIC`), e a Vercel Hobby
   porque a conta é **pessoal** e o uso **não comercial** (projeto de organização não conecta no
@@ -101,6 +122,32 @@ Desenha a arquitetura da plataforma web/PWA — estrutura da aplicação, modelo
 - **Marcação tem duas direções** (adendo de L-013): corrigi um "marcar de mais" e entreguei um
   "marcar de menos" na mesma malha. Receita barata: listar **cada** nó e **cada** `Rel` do bloco
   e escrever ao lado a fonte que o sustenta; o que ficar sem fonte é o defeito.
+- **Quando outro ticket detém o direito de rodar o sync, a propagação não para — o log é que
+  carrega a dívida.** No TCK-0016 editei `.github/instructions/{core,app}` sem rodar
+  `sync-ai-adapters.py` (direito exclusivo do TCK-0006 até fechar) e declarei os **9 arquivos**
+  a regenerar. `.claude/agents/<nome>.md` **não** derruba o `--check` (o adapter só embute o
+  front matter); uma regra em `.github/instructions/` derruba nove arquivos.
+- **Dívida declarada tem validade: expira quando o impedimento acaba** (defeito bloqueante do
+  `[009]` no TCK-0016). Deixei o critério 8 em `[~]` porque o TCK-0006 detinha o sync; ele
+  fechou e commitou **durante** a minha execução, e o `[~]` virou dispensa de critério de
+  aceite. Regra: antes de entregar com dívida atribuída, **reverificar o impedimento** —
+  `grep -m1 "^status:" tickets/TCK-NNNN-*/ticket.md` e `git log --oneline -3` — e, se tiver
+  caído, executar. Bloqueio externo não se presume estável só porque era verdade quando comecei.
+- **Prova de atribuição por `HEAD` caduca com o commit alheio.** Provei a autoria do `OUTDATED`
+  comparando o texto do outro ticket nos gerados com `git show HEAD:<fonte>`; o `dea3303`
+  entrou depois e o método parou de discriminar (o texto passa a aparecer dos dois lados). O
+  revisor refez por **regeneração em cópia no scratchpad** e chegou à mesma conclusão. Método
+  robusto: regenerar num clone/cópia e comparar, não confiar em `HEAD` como linha de base móvel.
+- **Sync pode carregar edição não commitada de terceiro — declarar antes que pareça arraste.**
+  O TCK-0006 fechou deixando `core.instructions.md` fora do commit (`git show HEAD:… | grep -c`
+  → 0), então o meu sync propagou o texto dele para os 6 gerados de `core`. Verificação barata
+  ao rodar o sync: `diff` do `git status --porcelain` antes × depois, `find -mmin -3` e mtime
+  dos arquivos do ticket vizinho — prova, no mesmo log, o que foi e o que não foi tocado.
+- **Parser de Mermaid neste ambiente:** `mermaid.parse` em Node puro falha com
+  `purify.addHook is not a function`. Precisa de DOM — `jsdom` do cache do npx
+  (`/home/douglas-silva/.npm/_npx/27e1695deffacbeb/node_modules`), com `navigator` injetado por
+  `Object.defineProperty` (é getter-only no Node 24). Sem isso, a "falha" é do harness, não do
+  diagrama.
 - Auditorias relevantes ao encerrar: `bash scripts/audit-ai-surface.sh` e
   `bash scripts/audit-content.sh` (ambas devem sair com exit 0).
 
@@ -108,6 +155,8 @@ Desenha a arquitetura da plataforma web/PWA — estrutura da aplicação, modelo
 
 | Data | Ticket/Tarefa | Resultado | Lição relacionada |
 |---|---|---|---|
+| 2026-08-01 | TCK-0016 — correção do `[009] REJECT` (loop 1/3) | Defeito único: `sync-ai-adapters.py` não rodado. O impedimento (TCK-0006 com o direito exclusivo) **caiu durante a execução** — fechou e commitou em `dea3303` —, e a dívida declarada virou dispensa de critério. Sync rodado (9 gerados), auditorias exit 0 nas duas, edição não commitada de terceiro em `core.instructions.md` declarada com prova; 3 sugestões acatadas (contagem 6→5 por `CORRECTION`, convenção de emenda editorial em `docs/adr/README.md`, pendências roteadas ao `tech-lead`). Reincidência: **negativa** nas duas famílias | L-025 |
+| 2026-08-01 | TCK-0016 — aceite do `ADR-0006` (CI/CD) e do `ADR-0007` (esqueleto) | `accepted` com as 3 decisões do usuário (URL minúscula, previews por PR, projeto na raiz); consequências em 3 seções (passa a valer / proibido sem ADR novo / continua do ticket); `PROPOSTO` eliminado por classe nos dois C4 e `EM ABERTO (ticket)` preservado (4 ocorrências); grafia `/pt-BR/` removida como opção viva, inclusive do rótulo Mermaid do `ADR-0003` (emenda editorial) e da pergunta em aberto da spec; varredura da raiz com propagação para `AGENTS.md`, `README.md`, `prompts/`, `.github/instructions/{core,app}`, `.claude/agents/platform-architect.md` e `memory/context/{frontend,devops,project-context}`; sync **não** rodado (direito do TCK-0006), 9 arquivos declarados; 5 blocos Mermaid reparseados, 0 falhas; `audit-content.sh` exit 0 | L-010, L-011, L-013, L-020 |
 | 2026-08-01 | TCK-0011 — correção do `[006] REJECT` (loop 1/3) | B1: `ADR-0007` fechava `prebuild` como lugar do portão do RF-18, que a spec aprovada dá ao ticket — trocado por resultado exigido, com varredura de `prebuild`/"portão da build" nos 3 documentos + memória; B2: `Rel(build, validator)` sem marcador → `EM ABERTO (ticket)`, mais varredura nó a nó e correção do excesso em `ci`; S1–S4 acatadas. Terceira ocorrência da família hoje: adendos em L-011, L-013 e L-020, sem lição nova | L-011, L-013, L-020 |
 | 2026-08-01 | TCK-0011 — C4 Container + ADR de CI/CD + esqueleto da aplicação | `c4-container.md` (3 marcadores: decidido / `PROPOSTO (ADR-NNNN)` / `EM ABERTO (ticket)`), `ADR-0006` (CI/CD, `proposed`, custo zero com fonte e data) e `ADR-0007` (esqueleto: Astro, raiz, `src/content-contract/`, `package.json` mínimo, URL `/pt-br/`, `proposed`); `c4-context.md` sem `PROPOSTO` órfão; nenhuma linha de código, nenhum `package.json`; auditorias verdes | L-020 |
 | 2026-08-01 | TCK-0003 — aceite do `ADR-0003` (stack da plataforma) | `accepted`: opção C (estático + ilhas) + persistência local-first sem conta; consequências, restrição do contrato de dados e propagação para README/memória; auditorias verdes; handoff → `code-reviewer` | L-008 |

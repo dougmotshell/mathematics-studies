@@ -3,7 +3,12 @@
 - **Status:** accepted
 - **Data:** 2026-08-01
 - **Decisores:** Douglas Silva (decisão registrada em 2026-08-01)
-- **Relacionados:** ADR-0001, ADR-0002, TCK-0003
+- **Relacionados:** ADR-0001, ADR-0002, TCK-0003; detalhado por ADR-0006 (CI/CD) e ADR-0007
+  (esqueleto), ambos `accepted` em 2026-08-01
+- **Emenda editorial (2026-08-01, TCK-0016):** o rótulo do diagrama exibia `/pt-BR/… ·
+  /en-US/…` como ilustração de "HTML por idioma". Este ADR **não** decide a forma da URL — quem
+  a decide é o `ADR-0007`, que fixou o prefixo em **minúsculas**. O rótulo foi generalizado para
+  não afirmar uma grafia que a decisão posterior descartou. Nenhuma decisão foi alterada.
 
 > **Este ADR está `accepted`.** O aceite **destrava a frente de plataforma**: os tickets de
 > `frontend-developer`, `backend-developer` e `devops-engineer` deixam de estar bloqueados
@@ -83,7 +88,7 @@ Alternativas descartadas, uma linha cada:
 ```mermaid
 flowchart LR
     C["content/<br/>Markdown + JSON<br/>(contrato estável)"] --> B["Build estática<br/>(gerador de site)"]
-    B --> H["HTML por idioma<br/>/pt-BR/… · /en-US/…<br/>matemática acessível"]
+    B --> H["HTML por idioma<br/>uma rota estática por idioma<br/>matemática acessível"]
     H --> I["Ilha interativa<br/>(só onde há exercício)"]
     I --> D[("IndexedDB<br/>progresso local<br/>do dispositivo")]
     H --> S["Conteúdo visitado<br/>disponível offline"]

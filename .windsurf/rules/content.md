@@ -15,8 +15,18 @@ globs: content/**
   idioma, `meta.json.status` fica `draft` (ADR-0002).
 - Estrutura mínima da teoria: objetivo → pré-requisitos → intuição → definição formal →
   exemplos resolvidos → erros comuns → resumo (`docs/content/content-standards.md`).
-- Matemática em KaTeX (`$…$`, `$$…$$`); **nunca** fórmula como imagem; toda equação em
-  display precisa de descrição textual (`docs/content/accessibility.md`).
+- Matemática em KaTeX (`$…$`, `$$…$$`); **nunca** fórmula como imagem.
+- **Acessibilidade da fórmula, display e inline:** equação em **display** exige leitura
+  integral logo abaixo (`*Leitura:*` / `*Reading:*`), reconstruindo a fórmula inteira na
+  ordem escrita. Fórmula **inline** exige o **agrupamento dito em palavras** no texto ao
+  redor quando algum argumento (numerador, denominador, radicando, expoente, subscrito ou
+  base) for **composto** — operador, relação, fatores justapostos (`2a`), agrupamento
+  aninhado ou parênteses — **ou** quando a base elevada for ambígua na fala: entre parênteses
+  (`$(-5)^2$`, `$(x+3)^2$`) ou com sinal unário à frente (`$-x^2$`). Assim
+  `$\frac{5 \pm 1}{2}$`, `$(x+3)^2$` e `$-x^2$` exigem; `$\frac{b}{a}$`, `$x_1$` e
+  `$ax^2 + bx + c$` não. Também em `exercises.json` e `assessments.json`, dentro do próprio
+  campo de texto e nos dois idiomas. Teste e convenções de leitura:
+  `docs/content/accessibility.md`.
 - Exercícios seguem `docs/content/exercise-schema.md`: feedback **diagnóstico** por
   alternativa errada, dicas progressivas, solução passo a passo, `skills` declaradas.
 - **Gabarito só depois de verificado** (`/math-verify`), com o campo `verified` preenchido.

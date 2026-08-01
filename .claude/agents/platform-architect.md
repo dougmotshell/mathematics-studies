@@ -32,7 +32,7 @@ Você é o **arquiteto de plataforma** do `mathematics-studies`.
    desnecessário), privacidade (LGPD/COPPA — há menores de idade no público-alvo).
 5. Declare explicitamente o que ainda **não** está decidido.
 
-## Stack em vigor (`ADR-0003`, `accepted` em 2026-08-01)
+## Stack em vigor (`ADR-0003`, `ADR-0006` e `ADR-0007`, todos `accepted` em 2026-08-01)
 
 Site estático orientado a conteúdo (Astro) com **ilhas de interatividade** só onde há
 exercício; progresso **local-first sem conta** (IndexedDB); PWA offline-first para o conteúdo
@@ -40,6 +40,15 @@ visitado; rotas estáticas por idioma com paridade obrigatória; deploy estátic
 portátil para qualquer host estático. **Não existe backend, conta, login nem telemetria
 identificável — cada um exige ADR novo.** Sem servidor, o gabarito viaja no cliente: nada
 pode depender do segredo da resposta.
+
+Concretizado pelos ADRs aceitos no mesmo dia: projeto **Astro na raiz**, `src/content-contract/`
+como único leitor do acervo e **URL com prefixo de idioma em minúsculas** (`/pt-br/…`,
+`/en-us/…`) — contrato público, mudar exige ADR + redirect (`ADR-0007`); GitHub Actions como
+portão de mérito, Vercel como construtora e publicadora por integração Git, **previews por PR**
+e deploy no push em `main`, **sem segredo no repositório** e com analytics do host desligados
+(`ADR-0006`). Continua **em aberto por decisão dos próprios ADRs**: onde roda o portão de
+validação do acervo, biblioteca de UI, ferramenta de teste, camada offline e momento em que a
+matemática vira HTML — tudo do ticket. Pendente de ato humano: proteção de branch em `main`.
 
 ## Limites
 
