@@ -2,22 +2,31 @@
   "nodeId": "high-school/algebra/quadratic-equations",
   "items": [
     {
-      "author": "OpenStax",
+      "author": "OpenStax (Rice University)",
       "year": "2021",
-      "title": "Algebra and Trigonometry 2e — Quadratic Equations",
+      "title": "Algebra and Trigonometry 2e — 2.5 Quadratic Equations",
       "url": "https://openstax.org/books/algebra-and-trigonometry-2e/pages/2-5-quadratic-equations",
       "language": "en-US",
-      "license": "CC BY 4.0",
-      "covers": "Definição, fatoração, completamento de quadrado, fórmula geral e discriminante, com exercícios."
+      "license": "CC BY-NC-SA 4.0",
+      "covers": "Objetivos da seção: resolver equações quadráticas por fatoração (propriedade do produto nulo), pela propriedade da raiz quadrada, por completamento de quadrado e pela fórmula resolutiva. Traz ainda o discriminante (número e natureza das soluções), aplicações do teorema de Pitágoras e a lista '2.5 Section Exercises'. Verificado em 2026-08-01; licença lida no rodapé da própria página (CC BY-NC-SA, não CC BY): uso comercial vedado e derivados sob a mesma licença."
     },
     {
-      "author": "OpenStax",
+      "author": "OpenStax (Rice University)",
       "year": "2020",
-      "title": "Intermediate Algebra 2e — Solve Quadratic Equations Using the Quadratic Formula",
+      "title": "Intermediate Algebra 2e — 9.3 Solve Quadratic Equations Using the Quadratic Formula",
       "url": "https://openstax.org/books/intermediate-algebra-2e/pages/9-3-solve-quadratic-equations-using-the-quadratic-formula",
       "language": "en-US",
-      "license": "CC BY 4.0",
-      "covers": "Dedução e aplicação da fórmula geral; uso do discriminante para prever o número de soluções."
+      "license": "CC BY-NC-SA 4.0",
+      "covers": "Dedução da fórmula resolutiva por completamento de quadrado a partir da forma padrão; resolução passo a passo com exemplos; uso do discriminante para prever o número e o tipo (real ou complexo) das soluções; critério para escolher o método mais adequado de resolução; 'Section 9.3 Exercises'. Verificado em 2026-08-01; licença lida no rodapé da própria página (CC BY-NC-SA, não CC BY)."
+    },
+    {
+      "author": "Luiz Amorim e Bruno Vianna (Colégio Pedro II); coord. Fabio Simas e Augusto Teixeira — Projeto Livro Aberto de Matemática (IMPA/OBMEP)",
+      "year": "2021",
+      "title": "Livro Aberto de Matemática — Ensino Médio: Função Quadrática (versão do aluno, v1.1 de 26/07/2021)",
+      "url": "https://github.com/livro-aberto/tex-design-development/blob/master/Cap%C3%ADtulos%20prontos%20-%20Aluno/Fun%C3%A7%C3%A3o%20Quadr%C3%A1tica.pdf",
+      "language": "pt-BR",
+      "license": "CC BY-NC-SA (versão não declarada; leitura mais restritiva — a página do projeto declara 'BY-NC-SA' e o selo do colofão do PDF mostra apenas BY-SA)",
+      "covers": "Cobertura mais ampla que o nó: capítulo de 85 páginas sobre a FUNÇÃO quadrática (queda livre, forma canônica, máximos e mínimos, parábola), não sobre a equação isolada. É relevante aqui pela seção 'Organizando: interseção com os eixos coordenados' (p. 47-49), que apresenta a fórmula resolutiva x = (-b ± √Δ)/(2a) com Δ = b² - 4ac e analisa os três casos de sinal de Δ para os zeros da função — inclusive registrando que o nome 'fórmula de Bhaskara' é atribuição equivocada consagrada no Brasil. Gratuidade e licença verificadas em 2026-08-01 na página oficial do projeto (https://livroaberto.uniriotec.br/sobre/) e no colofão do próprio PDF."
     }
   ]
 }
