@@ -10,6 +10,7 @@
 | [`architecture/`](architecture/) | Diagramas C4 da plataforma e do pipeline de conteúdo |
 | [`adr/`](adr/) | Decisões registradas (ADRs numerados) |
 | [`specs/`](specs/) | Spec-Driven Development: spec → plan → tasks |
+| [`design/`](design/) | Desenho de UI/UX por spec: estados de tela, fluxos, textos de interface bilíngues |
 | [`errors/`](errors/) | Registro de erros (anti-repetição) |
 | [`ai/`](ai/) | Superfície de IA: protocolo de tickets e handoff entre CLIs |
 | [`DOC-STANDARDS.md`](DOC-STANDARDS.md) | Padrões de documentação (C4 + ADR + SDD) |
