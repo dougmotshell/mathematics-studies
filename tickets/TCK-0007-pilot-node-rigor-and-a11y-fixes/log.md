@@ -54,3 +54,75 @@
   (`references.json`) — são arquivos e defeitos distintos.
 - Resultado: ok — `status: triaged`, `owner: content-author`. Aguardando ordem de execução.
 - Lição: n/a — não resolve `REJECT`.
+
+## [003] ACTION — 2026-08-01 19:10 — tech-lead
+- Ação: **re-escopo** do ticket a pedido da cadeia do TCK-0006 (três pontos do revisor: (a)
+  ponteiro do critério 5, (b) `size` diante de 22 pontos, (c) tratamento de
+  `exercises.json:224/225`). Editado o `ticket.md`; `[001]` e `[002]` **não** foram tocados
+  (log append-only) — esta entrada é a fonte corrente do escopo.
+- Motivo: o inventário que dimensiona este ticket mudou. `TCK-0006/log.md` `[007]` §2 fixa
+  **22 pontos** (8 em `theory.*.md`, 14 em `exercises.json`), confirmados em duas recontagens
+  independentes, contra os 18 de `[004]` §4. Escopo dimensionado por número obsoleto é escopo
+  errado.
+
+### (a) Critério 5 — ponteiro no lugar do parêntese
+
+O critério **não estava quebrado**: ele já referenciava "o critério 7 do TCK-0006". O defeito
+era o parêntese explicativo (`\dfrac` do Resumo + "as 10 `\frac` de `exercises.json`"), que
+enumerava o conjunto **antigo e menor** e, lido isolado, contradizia o ponteiro. Ponteiro e
+cópia divergem sempre que a fonte muda; quem lê acredita na cópia, que está ao alcance dos
+olhos. Trocado por ponteiro nominal à tabela de `[007]` §2, com a nota de que ela
+**substitui** `[004]` §4 e de que "não exige" e "ATENDIDO como está" também exigem veredito
+registrado. **Nenhuma lista foi copiada para o `ticket.md`** — a fonte continua sendo uma só.
+
+### (b) `size` — reavaliado, e a resposta foi dividir, não engordar
+
+22 pontos com paridade obrigatória não cabem em `M`. Mas antes do tamanho há um problema de
+**área**: 14 dos 22 pontos estão em `exercises.json`, artefato do `exercise-designer`
+(`AGENTS.md` §10) — mantê-los aqui obrigaria o `content-author` a editar a área de outro
+agente. Aplicado o critério da minha própria memória (agrupar por **artefato + evento que a
+pendência condiciona**):
+
+| Ticket | Artefato | Pontos | Evento que condiciona | Owner |
+|---|---|---|---|---|
+| TCK-0007 (este) | `theory.pt-BR.md` · `theory.en-US.md` | 8 | sair de `draft` | `content-author` |
+| **TCK-0018** (novo) | `exercises.json` | 14 | sair de `draft` (só 224/225) · aplicar a norma (13) | `exercise-designer` |
+
+Diffs disjuntos, sem dependência entre os dois, revisores independentes em cada um. Com o
+recorte, **`size: M` se mantém aqui** (2 arquivos, 8 pontos, 4 defeitos de rigor/a11y) — a
+alternativa era um `G` de 3 arquivos cruzando duas áreas. Registro a divergência: sem a
+divisão, este ticket seria `G`.
+
+### (c) `exercises.json:224/225` — entra como prioritário, mas **não** como correção matemática
+
+`$x^2 + 6x + 9 = (x+3)^2 = 0$` está **matematicamente correto** — não há afirmação falsa a
+corrigir, e nenhuma verificação numérica acusaria nada. O defeito é de **acessibilidade com
+consequência matemática**: lido linearmente, "x mais três ao quadrado" descreve tanto
+$(x+3)^2$ quanto $x + 3^2$, que são polinômios diferentes — é o único ponto do lote de 22 em
+que a leitura errada **muda o objeto**, não a estética. Classificar como "erro matemático"
+mandaria o executor procurar uma conta errada que não existe; classificar como "estilo inline"
+o rebaixaria a melhoria. Fica como **defeito de a11y com teste matemático**.
+
+Consequências, todas no **TCK-0018** (não aqui):
+1. É o **critério 1** de lá, e o único dos 14 pontos que **condiciona `draft`**. Reclassifico
+   aqui a pendência 4 do TCK-0005 `[011]` ("não condiciona `draft`"): ela foi julgada quando o
+   item era "10 `\frac` inline", antes de `[007]` §2 revelar a ocorrência de 224/225. É a mesma
+   classe da pendência 3 (conteúdo didático inacessível), e não uma questão de regra. Mudança
+   de critério registrada, não silenciosa.
+2. **Cadeia:** o `math-reviewer` passa a ser obrigatório no TCK-0018 — que sem isso teria só
+   `a11y-ux-reviewer` + `i18n-steward` —, porque o teste de aceite ("a partir só das palavras,
+   o revisor escreve **um** polinômio, e é $(x+3)^2$") é juízo matemático, não tipográfico.
+   Assinatura dupla: `math-reviewer` **e** `a11y-ux-reviewer`, às cegas, sem ver o LaTeX.
+3. **Aqui a cadeia não muda.** O `math-reviewer` continua com os critérios 1, 2 e 7 (hipótese
+   $\Delta \ge 0$) — nenhum deles alcança `exercises.json`.
+
+### Outras edições no `ticket.md`
+
+- Critério 10 passa a exigir também `bash scripts/validate-content.sh` exit 0, e a declarar
+  que exit 0 do auditor não é evidência de contrato íntegro — o auditor aceita em silêncio
+  `"correct": "false"` e título não-string (TCK-0014 `[010]`, agora **TCK-0017**).
+- "Fora de escopo" ganha `exercises.json` → TCK-0018, com teste (`git diff --name-only`).
+- "Arquivos-alvo" reduzido aos dois `theory.*.md`; `related` e a dependência dura atualizados.
+- Status permanece **`triaged`**, sem `HANDOFF` (L-005). Owner inalterado.
+- Resultado: ok — escopo de 22 → 8 pontos aqui; `git status --short content/` → vazio.
+- Lição: n/a — não resolve `REJECT`.

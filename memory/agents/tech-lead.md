@@ -36,6 +36,37 @@ Orquestrador técnico — recebe todo ticket novo, faz triagem, decide a abordag
 - Dependência dura registrada: **TCK-0007 depende do TCK-0006** (o critério 5 do 0007 aplica
   a regra de fórmula inline que o 0006 decide). As demais são independentes; 0008 e 0006
   disputam `sync-ai-adapters.py` se rodarem juntos.
+- **Escopo dimensionado por número obsoleto é escopo errado.** O TCK-0007 foi triado contra
+  "18 pontos"; `TCK-0006/log.md` `[007]` §2 refez o inventário e deu **22**. Antes de mexer no
+  `size`, conferir **onde** os pontos caem: 14 dos 22 estavam em `exercises.json`, artefato do
+  `exercise-designer` — o problema era de **área**, não de tamanho. Recorte por artefato
+  (TCK-0007 = `theory.*.md`, TCK-0018 = `exercises.json`) manteve os dois em `M`, com diffs
+  disjuntos e revisores independentes; sem a divisão, seria um `G` cruzando duas áreas.
+- **Regra de escrita de critério de aceite:** critério que depende de lista mantida em outro
+  lugar **aponta e não enumera** (L-024). Foi o parêntese "resumindo" o inventário que
+  envelheceu e passou a contradizer o ponteiro no mesmo critério.
+- **Duas ferramentas discordando sobre o mesmo fato é dívida estrutural, não bug plural.**
+  No TCK-0017 (auditor × validador de conteúdo) a saída foi **delegar** — uma fonte de verdade
+  por pergunta ("este arquivo carrega?" = validador; "este acervo é coerente?" = auditor) — e
+  não corrigir as 4 instâncias em paralelo, que deixaria as duas implementações de pé. O que
+  tornou a decisão defensável foi a **medição já existente** ("nenhum dos sete casos tem o
+  auditor como o mais estrito", `TCK-0014/log.md` `[010]`) mais um **critério de
+  não-regressão** com 7 fixtures da área exclusiva do auditor. Delegar sem essa prova seria
+  perder cobertura no escuro.
+- **Invariante vale mais que lista de casos** ao fechar divergência entre ferramentas: exigir
+  vereditos idênticos as fundiria numa só; a restrição certa é assimétrica — *proibido o
+  validador sair 1 e o auditor sair 0* —, vale para entradas que ninguém escreveu ainda, e o
+  teste dela precisa provar que **reprova** quando violada de propósito.
+- **Reclassificar julgamento de outro agente é legítimo quando há fato novo** — e o registro
+  vai no ticket novo, nunca editando o log alheio (append-only, `done` não reabre). Feito duas
+  vezes em 2026-08-01: a pendência 4 do TCK-0005 ("inline não condiciona `draft`") passou a
+  condicionar **em uma** das 14 ocorrências, porque `[007]` §2 mostrou que ali a leitura errada
+  troca o polinômio.
+- **Ambiguidade de leitura não é erro matemático.** `$(x+3)^2$` está correto; o defeito é de
+  a11y **com teste matemático**. A classificação muda a cadeia: obriga o `math-reviewer` num
+  ticket que seria só de a11y, com assinatura dupla (reconstrução às cegas por ele **e** pelo
+  `a11y-ux-reviewer`). Chamar de "erro matemático" mandaria o executor procurar conta errada
+  que não existe; chamar de "estilo inline" o rebaixaria a melhoria.
 
 ## Últimas execuções
 
@@ -43,3 +74,5 @@ Orquestrador técnico — recebe todo ticket novo, faz triagem, decide a abordag
 |---|---|---|---|
 | 2026-08-01 | Diagnóstico do backlog (dev-loop `analyze-open-tickets`) | Backlog priorizado; TCK-0001 triado para `researcher`; TCK-0002 apontado para retomada em `plan` | — |
 | 2026-08-01 | Triagem das pendências herdadas dos TCK-0001…0005 | 15 pendências agrupadas em 6 tickets (TCK-0006…TCK-0011), todos `triaged` sem handoff | L-005 (triagem ≠ handoff), L-010, L-013 |
+| 2026-08-01 | Re-escopo do TCK-0007 (22 pontos do `[007]` §2 do TCK-0006) | Critério 5 vira ponteiro; ticket dividido por artefato → TCK-0018 (`exercises.json`, `exercise-designer`, P1) criado; `size: M` mantido nos dois; 224/225 classificado como a11y com teste matemático e assinatura dupla | **L-024** (nova), L-021, L-012 |
+| 2026-08-01 | Ticket dos defeitos do `audit-content.py` (achado do TCK-0014 `[010]`) | **TCK-0017** criado e triado (`bug`, P1, M, `backend-developer`): recorte = **delegar** o contrato de arquivo ao validador, com invariante de não-divergência e 7 fixtures de não-regressão | L-019 (adendo), L-013, L-018, L-011, L-002 |

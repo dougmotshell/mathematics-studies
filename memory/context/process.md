@@ -5,7 +5,7 @@
 > qualquer ticket que mude esse conhecimento. Conhecimento generalizável sobre **erros** vai
 > para `memory/lessons/`, não para cá.
 
-**Última atualização:** 2026-08-01 (triagem das pendências herdadas dos TCK-0001…0005)
+**Última atualização:** 2026-08-01 (re-escopo do TCK-0007 e abertura dos TCK-0017 e TCK-0018)
 
 ## Estado atual
 
@@ -23,6 +23,25 @@
   em `blocked: human-input`) → `0011` C4 Container + ADR de CI/CD (`platform-architect`, P3,
   antes do primeiro ticket de aplicação). Acionar com `/ticket-loop TCK-NNNN` quando o
   usuário pedir execução — triagem não dispara ninguém (L-005).
+- **Backlog aferido em 2026-08-01, 19:35** (lido do campo `status:` de cada `ticket.md`, não de
+  memória): `done` — 0001, 0002, 0003, 0004, 0005, 0011, 0012, 0013, 0014; **em curso** — 0006
+  `in_validation`, 0015 `in_progress` (`devops-engineer`), 0016 `in_review`
+  (`platform-architect`); **`triaged` sem handoff** — 0007 (`content-author`, P1), 0008
+  (`tech-lead`, P2), 0009 (`backend-developer`, P2), **0017** (`backend-developer`, P1),
+  **0018** (`exercise-designer`, P1); **`blocked: human-input`** — 0010 (`researcher`, P2 —
+  licença do *Livro Aberto*, dono: usuário).
+- **Ordem recomendada a partir daqui:** `0017` (auditor de conteúdo delega o contrato ao
+  validador — é portão de CI e hoje aprova gabarito errado em silêncio) → `0007` ‖ `0018`
+  (metades disjuntas do nó piloto, ambas dependem do `0006` fechar) → `0008` → `0009`.
+  `0010` só sai com decisão humana.
+- **Duas ferramentas sobre `content/`, com papéis distintos e uma fronteira em disputa até o
+  TCK-0017:** `scripts/validate-content.py` (TCK-0014, `done`) responde "este arquivo pode ser
+  carregado?" — por nó, chamado pelo `prebuild` do `package.json` e pelo CI
+  (`ai-surface-audit.yml:64`); `scripts/audit-content.py` responde "este acervo é coerente?" —
+  grafo de pré-requisitos, `references.json`, `content/paths/`, portões de `published`
+  (`:51` do mesmo CI). **Enquanto o TCK-0017 não rodar, `exit 0` de `audit-content.sh` não é
+  evidência de contrato íntegro** (aceita `"correct": "false"` como gabarito válido e título
+  não-string); em ticket de conteúdo, rodar também `bash scripts/validate-content.sh`.
 
 ## Pegadinhas conhecidas
 

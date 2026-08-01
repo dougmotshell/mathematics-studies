@@ -8,7 +8,7 @@ priority: P1
 size: M
 created: 2026-08-01
 updated: 2026-08-01
-related: [TCK-0005, TCK-0006]
+related: [TCK-0005, TCK-0006, TCK-0018]
 ---
 
 # TCK-0007 — Corrigir os defeitos de rigor e de acessibilidade que prendem o nó piloto em draft
@@ -71,10 +71,14 @@ Cada critério é observável e falharia se a implementação estivesse errada.
       $-b \pm \frac{\sqrt{\Delta}}{2a}$. Teste: lendo só o texto da célula (sem ver o LaTeX),
       o revisor reconstrói **duas** expressões distintas e diz qual é a errada. Falha se a
       distinção depender de enxergar a barra de fração.
-- [ ] 5. Cada ocorrência listada no critério 7 do **TCK-0006** (`\dfrac` do Resumo, 143-144 /
-      140-141; as 10 `\frac` de `exercises.json`) está tratada conforme a regra decidida lá,
-      e o log registra o par ocorrência → ação, inclusive os "nada a fazer" com o motivo.
-      Falha se qualquer ocorrência da lista ficar sem veredito.
+- [ ] 5. Cada ocorrência **de `theory.pt-BR.md` / `theory.en-US.md`** do inventário corrente
+      do TCK-0006 — `tickets/TCK-0006-formula-reading-conventions/log.md` `[007]` §2, tabela
+      "`theory.pt-BR.md` / `theory.en-US.md` — 8 pontos (4 por idioma)", que **substitui** a
+      contagem de `[004]` §4 — está tratada conforme a regra decidida lá, e o log registra o
+      par ocorrência → ação, inclusive os "nada a fazer" com o motivo. Falha se qualquer
+      ocorrência daquela tabela (inclusive as marcadas "não exige" e "ATENDIDO como está")
+      ficar sem veredito. As 14 ocorrências de `exercises.json` **não** são deste ticket —
+      são o **TCK-0018**. O ponteiro é a fonte; nenhuma lista é copiada para cá.
 - [ ] 6. Paridade pt-BR/en-US: toda alteração existe nos **dois** arquivos, na mesma seção e
       na mesma ordem; nenhuma informação em um idioma só. Teste (L-012 — por ordem, não por
       contagem): `grep -n '^\$\$\|^\*Leitura:\*' theory.pt-BR.md` e
@@ -88,9 +92,12 @@ Cada critério é observável e falharia se a implementação estivesse errada.
       entrega. Falha se o status mudar aqui: publicar é decisão de ticket próprio.
 - [ ] 9. Escopo e URLs: `git diff --name-status -- content/` mostra apenas `M` (nenhum `R`),
       restrito ao nó `high-school/algebra/quadratic-equations`; nenhum slug renomeado (L-003).
-- [ ] 10. `bash scripts/audit-content.sh` → `0 erros · 0 avisos`, exit 0 (capturado sem
-      pipe). Declarar no log o **alcance**: o auditor não verifica descrição de fórmula
-      (L-012), logo os critérios 1–6 se sustentam por leitura adversarial, não pelo exit 0.
+- [ ] 10. `bash scripts/audit-content.sh` **e** `bash scripts/validate-content.sh` → exit 0
+      (capturados sem pipe; o auditor com `0 erros · 0 avisos`). Declarar no log o **alcance**:
+      o auditor não verifica descrição de fórmula (L-012) e, desde o TCK-0014 `[010]`,
+      sabe-se que ele aceita em silêncio `"correct": "false"` e título não-string (**TCK-0017**)
+      — exit 0 do auditor **não** é evidência de contrato íntegro. Os critérios 1–6 se
+      sustentam por leitura adversarial, não por exit 0.
 
 ### Requisitos transversais (marcar todos)
 
@@ -109,17 +116,23 @@ Cada critério é observável e falharia se a implementação estivesse errada.
 - Reescrever partes do nó não listadas nos critérios; o texto aprovado em TCK-0005 fica.
 - Alterar a **regra** de fórmula inline: é o TCK-0006. Aqui só se **aplica** o que lá ficou
   decidido.
+- **Tocar `exercises.json`** — as 14 ocorrências do inventário `[007]` §2 (7 por idioma),
+  inclusive a de 224/225, são o **TCK-0018** (`exercise-designer`). Artefato de outra área e
+  diff disjunto: `git diff --name-only -- content/` deste ticket não pode listar
+  `exercises.json`.
 - Renderização/MathML e parte 2 do `/a11y-audit` — dependem da aplicação, que não existe.
 
 ## Contexto e referências
 
 - Origem: `TCK-0005/log.md` `[006]` (veredito do enunciado), `[008]` §7 itens 1-3,
   `[010]` pendências 1-4, `[011]` "Pendências herdadas" 1-4 e "Pontos de julgamento" (a) e (b).
-- **Dependência dura:** o critério 5 exige o TCK-0006 entregue (critério 7 de lá).
+- **Dependência dura:** o critério 5 exige o TCK-0006 entregue (critério 7 de lá). O
+  inventário corrente é `TCK-0006/log.md` `[007]` §2 — **22 pontos**, dos quais **8 aqui**
+  (`theory.*.md`) e 14 no TCK-0018 (`exercises.json`).
 - ADRs aplicáveis: `ADR-0002` (paridade obrigatória), `ADR-0001` (slug é URL pública),
   `ADR-0005` (nenhum trecho de fonte NC incorporado — as 3 referências do nó são NC).
-- Arquivos-alvo: `content/high-school/algebra/quadratic-equations/theory.pt-BR.md`,
-  `theory.en-US.md`, e — conforme o veredito do TCK-0006 — `exercises.json`.
+- Arquivos-alvo: `content/high-school/algebra/quadratic-equations/theory.pt-BR.md` e
+  `theory.en-US.md` — **só estes dois**. `exercises.json` saiu do escopo (TCK-0018).
 - Lições relevantes: **L-014** (hipótese pertence ao enunciado — é a lição que originou o
   item 1); **L-012** (descrição de fórmula se confere por ordem); **L-003** (slug é URL);
   **L-002** (verificar antes de publicar resposta); **L-009** (fonte NC é leitura, não
