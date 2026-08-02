@@ -77,3 +77,31 @@
 - [L-018 · fixing-the-cause-is-not-fixing-the-outcome](lessons/fixing-the-cause-is-not-fixing-the-outcome.md)
   — o defeito sobrevive mudando de forma: verificar a promessa da funcionalidade encenada
   inteira, não o caso citado no `REJECT`.
+- [L-019 · a-validator-only-protects-what-it-can-see](lessons/a-validator-only-protects-what-it-can-see.md)
+  — portão que não enxerga o objeto (inclusive subnó abaixo do alvo) ou perde o veredito na
+  saída quebrada (stdout **e** stderr) aprova conteúdo defeituoso em silêncio; contém adendo
+  de reincidência: registrar a **classe** do defeito, não a lista de casos corrigidos.
+- [L-020 · public-contract-goes-to-adr-mechanism-goes-to-ticket](lessons/public-contract-goes-to-adr-mechanism-goes-to-ticket.md)
+  — contrato público e permanente vai para ADR; mecanismo trocável fica com o ticket — e ADR
+  `proposed` do qual um ticket depende bloqueia o ticket, o que precisa ser declarado.
+- [L-021 · a-norm-that-names-the-strict-case-leaves-the-frequent-case-unruled](lessons/a-norm-that-names-the-strict-case-leaves-the-frequent-case-unruled.md)
+  — o caso que a norma não nomeia fica permitido; fechar a lacuna é dar a ele obrigação
+  diferente e mais barata, com gatilho inspecionável, testado contra o artefato real; com
+  adendos: padrão de varredura e alvos de propagação vêm da definição, não dos exemplos; e
+  quem reenuncia a regra cita o veredito do teste — checklist referencia, nunca reenuncia.
+- [L-022 · writing-a-rule-is-not-applying-it](lessons/writing-a-rule-is-not-applying-it.md)
+  — regra em seção terminal não governa o corpo do documento: enunciar na seção estrutural,
+  nomear as exceções e varrer item a item (prosa **e** diagrama) antes de entregar; com adendo
+  sobre pares simétricos, na família de `L-013` e `L-021`.
+- [L-023 · a-collection-wide-license-claim-does-not-bind-each-work](lessons/a-collection-wide-license-claim-does-not-bind-each-work.md)
+  — licença declarada "do projeto" não vincula cada obra: no *Livro Aberto de Matemática* o
+  selo varia por capítulo (15 BY-SA × 13 BY-NC-SA em 28); auditar todos os artefatos, validar o
+  automatismo contra leitura direta e, em divergência, concluir "indeterminado".
+- [L-024 · a-pointer-with-a-copy-beside-it-is-not-a-pointer](lessons/a-pointer-with-a-copy-beside-it-is-not-a-pointer.md)
+  — ponteiro com cópia enumerada ao lado são **duas** fontes, e o leitor obedece a que está ao
+  alcance dos olhos; nomear a âncora (arquivo + entrada + seção) e não enumerar. Teste: se a
+  fonte dobrar amanhã, o texto fica **errado** ou só incompleto?
+- [L-025 · authorization-to-execute-is-not-acceptance-of-the-decision](lessons/authorization-to-execute-is-not-acceptance-of-the-decision.md)
+  — autorização do usuário destrava execução, aceite de ADR fixa decisão; ADR `proposed` cujos
+  artefatos já existem é sintoma detectável, e quem escreve "nenhum ticket pode X antes do
+  aceite" sai do ticket pedindo também o ticket de aceite.

@@ -4,12 +4,17 @@ Plataforma **gratuita e aberta** de estudos de matemática — da matemática ma
 avançada, organizada de forma didática, bilíngue (**pt-BR** / **en-US**) e com exercícios
 interativos, feedback imediato e acompanhamento de progresso.
 
-> **Estado:** bootstrap. O repositório contém, neste momento, a **superfície de IA** e os
-> padrões de trabalho (documentação, conteúdo, memória, agentes). A aplicação ainda não foi
-> implementada, mas a stack já está **decidida** em
+> **Estado:** bootstrap. O repositório contém a **superfície de IA**, os padrões de trabalho
+> (documentação, conteúdo, memória, agentes) e o **esqueleto da aplicação**; as telas de
+> aprendizado ainda não existem. A stack está **decidida** em
 > [`docs/adr/ADR-0003-platform-stack.md`](docs/adr/ADR-0003-platform-stack.md) (`accepted`,
 > 2026-08-01): site estático orientado a conteúdo com ilhas de interatividade, progresso
 > local-first no próprio dispositivo (IndexedDB) e deploy estático — sem backend e sem conta.
+> O esqueleto (projeto **Astro na raiz**, URL `/pt-br/…` e `/en-us/…`) está em
+> [`ADR-0007`](docs/adr/ADR-0007-application-skeleton.md) e a publicação (Actions como portão
+> de mérito, Vercel como publicadora, previews por PR) em
+> [`ADR-0006`](docs/adr/ADR-0006-continuous-integration-and-publication.md) — ambos `accepted`
+> em 2026-08-01.
 
 ## O que este projeto é
 

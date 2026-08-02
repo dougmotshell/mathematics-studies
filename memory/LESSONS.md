@@ -34,6 +34,22 @@ Lição superada não é apagada: registre uma **nova** lição referenciando a 
   **enunciado**, não ao parágrafo seguinte; a omissão não gera afirmação falsa, gera afirmação
   mal-formada — que nenhuma verificação numérica pega.
 
+- [L-023](lessons/a-collection-wide-license-claim-does-not-bind-each-work.md) — 2026-08-01 — conteúdo —
+  declaração de licença "do projeto" não vincula cada obra: no *Livro Aberto de Matemática* o
+  selo variou **por capítulo** (15 BY-SA × 13 BY-NC-SA em 28); auditar todos os artefatos e, em
+  divergência, concluir "indeterminado" — nunca o mais permissivo.
+
+- [L-024](lessons/a-pointer-with-a-copy-beside-it-is-not-a-pointer.md) — 2026-08-01 — process —
+  ponteiro com cópia enumerada ao lado não é ponteiro, são **duas fontes**: quando a fonte muda,
+  a cópia passa a contradizê-la em silêncio e é nela que o leitor acredita. Nomear a âncora
+  (arquivo + entrada + seção) e não enumerar itens ao lado.
+
+- [L-025](lessons/authorization-to-execute-is-not-acceptance-of-the-decision.md) — 2026-08-01 — process —
+  autorização do usuário destrava a **execução**; o aceite de ADR fixa a **decisão** — um não
+  substitui o outro. ADR `proposed` cujos artefatos já existem no working tree é sintoma
+  detectável; quem escreve "nenhum ticket pode X antes do aceite" sai do ticket pedindo também
+  o ticket de aceite.
+
 ## Erro
 
 - [L-002](lessons/verify-before-publishing-answers.md) — 2026-08-01 — conteúdo —
@@ -67,6 +83,25 @@ Lição superada não é apagada: registre uma **nova** lição referenciando a 
   corrigir a causa citada no `REJECT` não é corrigir o modo de falha: encenar a promessa da
   funcionalidade inteira (estado zerado, sequência realista, mais de um disparo) em vez de
   reproduzir só o caso citado.
+- [L-019](lessons/a-validator-only-protects-what-it-can-see.md) — 2026-08-01 — backend —
+  portão que não enxerga o objeto (nó sem `meta.json`, subnó abaixo do alvo, caminho errado) ou
+  que perde o veredito na saída quebrada (`| head`, `>&-`, `> /dev/full`, em stdout **e**
+  stderr) aprova conteúdo defeituoso em silêncio. **Com adendo de reincidência no próprio
+  TCK-0014** (REJECT [006]): corrigir os casos citados não é corrigir a classe — a regra vale
+  para toda a travessia e para todos os canais (ver L-013 e L-018). **Segundo adendo,
+  TCK-0015** (REJECT [006]): a classe vale fora do validador — passo de CI com `if grep …`
+  fica verde quando o alvo não existe (`grep` sai `2`), e portão certo posto em só um dos
+  caminhos que chegam ao aluno protege só aquele caminho. **Terceiro adendo, TCK-0015**
+  (REJECT [010]): afrouxar um detector para eliminar falso positivo é reescrevê-lo, e o novo
+  precisa da bateria **inteira** — trocar regra de classe por lista de casos deixou 8 de 18
+  vetores passarem calados (protocolo relativo, aspas simples, `ping`, tag em maiúscula).
+- [L-022](lessons/writing-a-rule-is-not-applying-it.md) — 2026-08-01 — design —
+  regra escrita em seção terminal (riscos, notas) não governa o corpo do documento: ela nasce
+  na seção estrutural, com as exceções nomeadas, e só está aplicada depois de varrer item a
+  item — foi assim que "mover foco **ou** anunciar" foi violada em 3 dos 13 estados no mesmo
+  documento que a definia. **Adendo (loop 2):** a varredura alcança diagrama e rótulo, não só
+  prosa, e regra escrita para um lado de um par simétrico (idioma, sentido, extremo) deixa o
+  outro **permitido** — ver `L-013` e `L-021`, da mesma família.
 
 ## Sucesso
 
@@ -90,3 +125,17 @@ Lição superada não é apagada: registre uma **nova** lição referenciando a 
   conteúdo — descrição de fórmula em display se verifica pela **ordem** das ocorrências
   (alternância estrita fórmula → descrição), não pela contagem; e descrever é ler a
   estrutura, não nomear a fórmula.
+- [L-020](lessons/public-contract-goes-to-adr-mechanism-goes-to-ticket.md) — 2026-08-01 —
+  plataforma — o que separa ADR de ticket é a **permanência observável de fora** (URL,
+  formato de dado, custo → ADR; biblioteca, cache, momento de renderização → ticket); teste:
+  "se eu trocar isto em seis meses, quem quebra?".
+- [L-021](lessons/a-norm-that-names-the-strict-case-leaves-the-frequent-case-unruled.md) —
+  2026-08-01 — conteúdo — norma que nomeia só o caso estrito **permite** o caso deixado de
+  fora; feche a lacuna com obrigação **diferenciada** e gatilho mecânico (teste do argumento
+  composto: display pede leitura integral, inline pede o agrupamento em palavras), e rode o
+  teste contra o conteúdo real antes de publicar a norma. **Adendo (REJECT do TCK-0006):**
+  padrão de busca e lista de propagação se derivam da **definição da classe** e dos artefatos
+  que a regra nomeia — nunca das ocorrências e dos arquivos que você já tinha em mãos.
+  **2º adendo:** quem *reenuncia* uma regra cita o **veredito do teste**, não a lista de
+  gatilhos; checklist e portão **referenciam, nunca reenunciam** — senão o gatilho novo passa
+  pelo portão antigo.

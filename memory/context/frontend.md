@@ -9,32 +9,36 @@
 
 ## Estado atual
 
-- Aplicação **não iniciada** — nenhum código, nenhuma dependência instalada.
+- **Esqueleto entregue pelo TCK-0015** em 2026-08-01 (em revisão quando esta nota foi escrita):
+  projeto Astro na raiz, `src/` criado, uma página mínima por idioma. Índice, leitor e player
+  são as tasks 5–8.
 - **Stack decidida em 2026-08-01** (`ADR-0003`, aceito): gerador de site estático orientado a
   conteúdo (**Astro**) com **ilhas de interatividade**; progresso **local-first sem conta**
   em **IndexedDB**; deploy estático na **Vercel**.
 - Ainda **não decididos** (implementação, não ADR): biblioteca de UI dentro das ilhas,
   framework de testes, estratégia/ferramenta de service worker e o **momento de renderização
   do KaTeX** (build × runtime).
-- **Esqueleto da aplicação: proposto, não decidido** (`ADR-0007`, `proposed` desde 2026-08-01,
-  TCK-0011). Enquanto não for aceito pelo usuário, **nada disso é fato** — é a hipótese em
-  avaliação: Astro como gerador concreto; projeto na raiz do repositório; `src/` com
-  `content-contract/`, `pages/`, `layouts/`, `components/`, `islands/`, `styles/`;
-  `package.json` mínimo (só `astro`, `private: true`, `engines.node >= 22.12.0`, com
-  `validate:content` como ponto de entrada nomeado do validador); URL com prefixo de idioma em
-  minúsculas (`/pt-br/…`, `/en-us/…`) e taxonomia intacta. O aceite destrava a task 5 da fatia
-  mínima.
+- **Esqueleto da aplicação: decidido** (`ADR-0007`, **`accepted`** em 2026-08-01 por Douglas
+  Silva, TCK-0016). Vale como fato: Astro como gerador concreto; projeto **na raiz** do
+  repositório; `src/` com `content-contract/`, `pages/`, `layouts/`, `components/`, `islands/`,
+  `styles/`; `package.json` mínimo (só `astro`, `private: true`, `engines.node >= 22.12.0`, com
+  `validate:content` como ponto de entrada nomeado do validador); **URL com prefixo de idioma
+  em minúsculas** (`/pt-br/…`, `/en-us/…`) e taxonomia intacta — a grafia em caixa mista está
+  **descartada** e voltar a ela exige ADR novo. `src/content-contract/` não importa nada do
+  gerador; dependência que chegue ao navegador exige justificativa no log e revisão do
+  `security-auditor`; nada de CDN de terceiro.
 - **Não decidido, e nenhum ADR deve decidir:** **onde** roda o portão que impede publicar
   acervo reprovado — script do projeto, job de CI ou os dois. A spec aprovada atribui isso ao
   ticket (`docs/specs/minimum-learning-slice/plan.md`, item 5). O ADR só exige o **resultado**:
   nó que viole o contrato não vira página publicada, com falha visível e registrada (RF-18).
-- **CI/CD e publicação: propostos** (`ADR-0006`, `proposed`) — GitHub Actions como portão de
-  merge, Vercel como construtor/publicador, previews por PR, deploy no push em `main`.
-  Nenhum ticket implementa pipeline antes do aceite.
+- **CI/CD e publicação: decididos** (`ADR-0006`, **`accepted`** em 2026-08-01) — GitHub Actions
+  como portão de mérito, Vercel como construtora/publicadora por integração Git, **previews por
+  PR ativados**, deploy no push em `main`. Sem segredo no repositório; Vercel Web Analytics e
+  Speed Insights **desligados** (ligar exige ADR de privacidade).
 - **C4 Container desenhado** em `docs/architecture/c4-container.md` (2026-08-01): acervo,
   validador, build, host, páginas por idioma, ilha, camada offline e progresso local, com o
-  contrato de cada fronteira. O que não tem ADR aceito está marcado `PROPOSTO (ADR-NNNN)`; o
-  que é decisão de ticket, `EM ABERTO (ticket)`.
+  contrato de cada fronteira. Depois do aceite dos ADR-0006/0007 **não há mais marcador
+  `PROPOSTO`** neste nível; o que é decisão de ticket segue como `EM ABERTO (ticket)`.
 
 ## Pegadinhas conhecidas
 

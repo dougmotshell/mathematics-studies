@@ -2,7 +2,7 @@
 id: TCK-0010
 title: Esclarecer a licença do Livro Aberto de Matemática (BY-SA ou BY-NC-SA)
 type: research
-status: triaged
+status: blocked: human-input
 owner: researcher
 priority: P2
 size: P

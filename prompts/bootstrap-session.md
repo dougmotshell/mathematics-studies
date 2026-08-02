@@ -30,7 +30,9 @@ acompanhamento de progresso.
 5. **Nenhuma implementação sem spec aprovada** (`docs/specs/`) e sem ADR para decisões
    estruturais. A stack está decidida (`ADR-0003`, `accepted`): site estático com ilhas de
    interatividade e progresso local-first (IndexedDB). **Backend, conta, login e telemetria
-   identificável exigem ADR novo** — não presumir que existam.
+   identificável exigem ADR novo** — não presumir que existam. Também decididos em 2026-08-01:
+   projeto **Astro na raiz** e URL `/pt-br/…` · `/en-us/…` (`ADR-0007`); Actions como portão de
+   mérito, Vercel publicando por integração Git, previews por PR (`ADR-0006`).
 6. Acessibilidade (WCAG 2.2 AA), funcionamento offline, custo zero e privacidade de menores
    (LGPD/COPPA) são requisitos, não desejos.
 7. **Não** fazer commit, push, deploy ou qualquer gasto sem pedido explícito.

@@ -21,3 +21,14 @@ ocorrências justificadas uma a uma. Diagrama, tabela e rótulo entram na revis�
 peso do texto. Complementa [[adr-decides-constraints-not-implementation-timing]] (o *quê*) e
 [[accepting-an-adr-means-updating-the-rules-agents-read]] (varrer da raiz, não de uma lista
 escolhida a dedo).
+
+**Adendo — 2026-08-01, `TCK-0011` (reincidência, com uma distinção que importa):** a classe do
+defeito de marcação tem **duas direções**, e varrer só uma não é varrer a classe. No
+`c4-container.md` encontrei e corrigi um caso de **marcar de mais** (um boundary inteiro
+rotulado `PROPOSTO` contendo build que o `ADR-0003` já exige) e, satisfeito com a correção,
+entreguei com um caso de **marcar de menos** na mesma malha de relações — uma `Rel` sem
+marcador entre duas marcadas. Achar uma ocorrência **aumenta** a chance de haver outra, e a
+busca tem de ser pela dimensão (aqui: "toda `Rel` e todo nó do bloco, um a um, cada um com sua
+fonte"), não pelo termo do defeito já encontrado. Receita barata que teria pego: listar as
+relações do diagrama e escrever ao lado de cada uma a fonte que a sustenta; a que ficar sem
+fonte é o defeito.

@@ -42,6 +42,13 @@ identificável — cada um exige ADR novo.** Fóruns e certificados ainda não t
 arquitetural. O que o ADR **não** decide (biblioteca de UI, de testes, service worker,
 momento de renderização do KaTeX) é decisão de implementação, tomada no ticket.
 
+O **esqueleto** e a **publicação** também estão decididos desde 2026-08-01: projeto **Astro na
+raiz** do repositório, com `src/content-contract/` como único leitor de `content/`
+(`ADR-0007`, `accepted`), e **URL com prefixo de idioma em minúsculas** — `/pt-br/…`,
+`/en-us/…` — com a taxonomia intacta; GitHub Actions como portão de mérito, Vercel como
+construtora e publicadora por integração Git, **previews por PR** e deploy no push em `main`
+(`ADR-0006`, `accepted`). Sem segredo no repositório e sem analytics do host.
+
 ## 2. Convenções de idioma (OBRIGATÓRIO)
 
 Há **dois planos de idioma** neste repositório; não confundi-los:
@@ -226,8 +233,19 @@ Detalhamento em `docs/content/`. Regras duras:
 
 1. **Notação:** LaTeX renderizado por KaTeX; delimitadores `$…$` (inline) e `$$…$$`
    (display). Nada de imagem de fórmula quando o LaTeX resolve.
-2. **Acessibilidade da matemática:** toda fórmula em display precisa de descrição textual
-   (`alt`/`aria-label` ou parágrafo de leitura) — ver `docs/content/accessibility.md`.
+2. **Acessibilidade da matemática — display e inline têm obrigações diferentes, e nenhuma
+   delas é opcional.** Fórmula em **display** (`$$…$$`) exige **leitura integral** logo
+   abaixo (`*Leitura:*` / `*Reading:*`), reconstruindo a fórmula inteira na ordem escrita.
+   Fórmula **inline** (`$…$`) exige que o **agrupamento seja dito em palavras** no texto ao
+   redor quando algum argumento — numerador, denominador, radicando, expoente, subscrito ou
+   base — for **composto**: contém operador, relação, fatores justapostos (`2a`), agrupamento
+   aninhado ou parênteses; **ou** quando a base elevada for ambígua na fala — entre parênteses
+   (`$(-5)^2$`, `$(x+3)^2$`) ou com sinal unário à frente (`$-x^2$`, cuja leitura serve para
+   $-(x^2)$ e $(-x)^2$). Assim, `$\frac{5 \pm 1}{2}$`, `$\dfrac{-b \pm \sqrt{\Delta}}{2a}$`,
+   `$(x+3)^2$` e `$-x^2$` exigem; `$\frac{b}{a}$`, `$x_1$` e `$ax^2 + bx + c$` não (a
+   justaposição de nível externo não dispara). Vale também para `exercises.json` e
+   `assessments.json`, onde a marcação mora dentro do próprio campo de texto. Teste completo
+   e tabela de convenções de leitura: `docs/content/accessibility.md`.
 3. **Estrutura mínima de um `theory.<lang>.md`:** objetivo de aprendizagem → pré-requisitos
    → intuição → definição formal → exemplos resolvidos → erros comuns → resumo.
 4. **Exercícios:** seguem `docs/content/exercise-schema.md` — enunciado bilíngue, tipo,
@@ -441,6 +459,12 @@ Apenas um agente pode editar o mesmo working tree por vez.
   interatividade e progresso local-first em IndexedDB. **Não assumir backend, conta, login
   nem telemetria identificável** — cada um exige ADR novo. O que o ADR não decide continua
   hipótese até o ticket decidir.
+- **URL pública com prefixo de idioma em minúsculas** (`/pt-br/…`, `/en-us/…`) — `ADR-0007`,
+  `accepted`. É contrato público como o slug: mudar exige ADR + redirect. A grafia `pt-BR` /
+  `en-US` continua valendo em arquivo, dado e atributo `lang`.
+- **Pipeline e publicação decididos** (`ADR-0006`, `accepted`): Actions barra o merge, Vercel
+  constrói e publica, previews por PR ligados. **Nenhum segredo no repositório**; analytics do
+  host desligados — ligar telemetria de visitante exige ADR de privacidade.
 - **Não renomear slugs** de `content/` (fazem parte da URL pública) sem ADR + redirect.
 - **Não publicar conteúdo monolíngue** — ver seção 2b.
 - **Não afirmar matemática sem verificar**: resultado não trivial passa por `/math-verify`

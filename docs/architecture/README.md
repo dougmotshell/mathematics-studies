@@ -5,8 +5,8 @@ seguindo [`../DOC-STANDARDS.md`](../DOC-STANDARDS.md).
 
 | Documento | Nível | Estado |
 |---|---|---|
-| [c4-context.md](c4-context.md) | Context | Decidido, exceto CI/CD e previews por branch (`ADR-0006`, `proposed`) — stack aceita em ADR-0003, 2026-08-01 |
-| [c4-container.md](c4-container.md) | Container | Decidido pelo ADR-0003; automação de build/deploy `PROPOSTO` (`ADR-0006`) e esqueleto concreto `PROPOSTO` (`ADR-0007`) — nada implementado |
+| [c4-context.md](c4-context.md) | Context | Decidido — ADR-0003 (stack), ADR-0006 (CI/CD, previews, deploy), todos `accepted` em 2026-08-01; sem marcador `PROPOSTO` |
+| [c4-container.md](c4-container.md) | Container | Decidido — ADR-0003, ADR-0006 e ADR-0007, `accepted` em 2026-08-01; sem marcador `PROPOSTO`. Restam itens `EM ABERTO (ticket)`; implementação em curso pelo TCK-0015 |
 
 > Regra permanente: elemento ainda não decidido é marcado no diagrama — não desenhar hipótese
 > como se fosse fato, e o marcador tem de citar a fonte pendente. Três marcadores em uso:
